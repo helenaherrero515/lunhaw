@@ -1,96 +1,145 @@
-# Lunhaw (Monorepo)
+ <p align="center">
+  <img src="assets/logo/logo.png" alt="Lunhaw logo" width="140">
+</p>
 
-> *"Discover your space. Explore your city. Go greener."*
+<h1 align="center">Lunhaw</h1>
 
-**Lunhaw** is a public-spaces and green-mobility web application for Metro Manila (NCR), Philippines. It connects urban residents, students, and daily commuters with nearby parks, gardens, municipal libraries, and barangay reading centers while enabling cooler, shaded walking and transit routes.
+<p align="center">
+  <b>Discover your space. Explore your city. Go greener.</b><br>
+  Discover public parks, gardens, libraries, and reading centers across Metro Manila,<br>
+  and find more accessible ways to explore the city.
+</p>
+
+<p align="center">
+  <a href="https://nextjs.org/"><img alt="Next.js" src="https://img.shields.io/badge/Next.js-App%20Router-111111?style=flat&logo=nextdotjs&logoColor=white"></a>
+  <a href="https://react.dev/"><img alt="React" src="https://img.shields.io/badge/React-UI%20Library-149ECA?style=flat&labelColor=20232A&logo=react&logoColor=white"></a>
+  <a href="https://www.typescriptlang.org/"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-Strict-3178C6?style=flat&labelColor=1E3A5F&logo=typescript&logoColor=white"></a>
+  <a href="https://supabase.com/"><img alt="Supabase" src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat&labelColor=1E3A2E&logo=supabase&logoColor=white"></a>
+  <a href="https://vitest.dev/"><img alt="Vitest" src="https://img.shields.io/badge/Vitest-Testing-FCC72B?style=flat&labelColor=3A3200&logo=vitest&logoColor=black"></a>
+  <a href="https://playwright.dev/"><img alt="Playwright" src="https://img.shields.io/badge/Playwright-E2E-45BA4B?style=flat&labelColor=1B3B1E&logo=playwright&logoColor=white"></a>
+  <a href="https://pnpm.io/"><img alt="pnpm" src="https://img.shields.io/badge/pnpm-Monorepo-F69220?style=flat&logo=pnpm&logoColor=white"></a>
+</p>
+
+<p align="center">
+  <img alt="Public Spaces" src="https://img.shields.io/badge/Public%20Spaces-245C43?style=flat-square&labelColor=26332D">
+  <img alt="Green Mobility" src="https://img.shields.io/badge/Green%20Mobility-6B9B72?style=flat-square&labelColor=26332D">
+  <img alt="Green Index" src="https://img.shields.io/badge/Green%20Index-98D746?style=flat-square&labelColor=26332D">
+  <img alt="Community" src="https://img.shields.io/badge/Community-B7F9ED?style=flat-square&labelColor=26332D">
+  <img alt="Data Integrity" src="https://img.shields.io/badge/Data%20Integrity-Verified-245C43?style=flat-square&labelColor=26332D">
+</p>
+
+<p align="center">
+  <a href="#about">About</a> ·
+  <a href="#what-you-can-explore">Explore</a> ·
+  <a href="#tech-stack">Tech Stack</a> ·
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#green-index">Green Index</a> ·
+  <a href="#data-integrity">Data Integrity</a> ·
+  <a href="#project-layout">Project Layout</a> ·
+  <a href="#faq">FAQ</a>
+</p>
 
 ---
 
-## Non-Negotiable Core Principle: Radical Data Integrity
-Lunhaw **never** invents, extrapolates, or hallucinates routes, fares, opening hours, or facility amenities. Every detail displayed across the interface carries one of three explicit labels:
-1. **Verified:** Official source + last-verified date.
-2. **Estimate:** Derived via transparent mathematical models with a methodology note.
-3. **Not available yet:** Explicit omission rather than speculation.
+## About
+
+**Lunhaw** is a public-space discovery and green-mobility platform designed for Metro Manila (NCR), Philippines. It helps urban residents, students, and daily commuters discover public spaces, reconnect with nature, and find places to learn, relax, and spend time in their communities.
+
+Parks, gardens, public libraries, and barangay reading centers can be difficult to discover when information is scattered across different sources. Lunhaw brings these destinations together in one accessible experience.
+
+With interactive maps, saved places, and environmental insights, Lunhaw encourages people to explore their cities more intentionally and make informed decisions about where to go.
+
+Lunhaw is built around three core ideas:
+
+| Pillar | Brand Color | What it represents |
+| :-- | :-- | :-- |
+| **Discover** | `#245C43` (Forest Green) | Find public spaces, parks, gardens, and learning destinations |
+| **Understand** | `#98D746` (Lunhaw Green) | Explore environmental insights and understand how estimates are calculated |
+| **Explore** | `#6B9B72` (Leaf Green) | Discover routes and make public spaces easier to reach |
 
 ---
 
-## Monorepo Architecture
+## What you can explore
 
-The repository is organized as a **Turborepo** + **pnpm** monorepo:
+- 🗺️ **Interactive NCR Map (`/map`):** Explore public spaces across Metro Manila using map pins, facility previews, and available location information.
+- 🌳 **Public Space Discovery (`/`):** Find parks, gardens, public libraries, barangay reading centers, and other supported public facilities.
+- 🌿 **Green Index:** Explore environmental indicators and modeled insights, with transparent explanations of the data and methodology used.
+- 🧭 **Route Planning:** Select a destination and choose the “How to go there?” action to begin a supported route-planning flow.
+- 📚 **Libraries & Reading Centers:** Discover learning-oriented public spaces and review available facility information.
+- ❤️ **Saved Places (`/saved`):** Bookmark places and revisit destinations you want to explore.
+- 👤 **Profile (`/profile`):** Access account settings and supported personalization features.
+- 🦗 **Lunti, the Grasshopper:** Meet Lunhaw's friendly mascot, representing curiosity, discovery, and greener cities.
+- 📱 **Mobile-First Experience:** Navigate the app using a streamlined mobile interface with Home, Map, Saved, and Profile tabs.
 
-```text
-lunhaw/
-├── apps/
-│   └── web/                   # Production Next.js 14 (App Router) web application
-│       ├── public/            # Static assets (mascot.png)
-│       ├── src/
-│       │   ├── app/           # App router: layout.tsx, page.tsx, globals.css, providers.tsx
-│       │   ├── components/    # Small, typed, reusable UI components (Header, Hero, Journey, etc.)
-│       │   ├── content/       # Single source of truth for all copy (lunhaw-content.ts)
-│       │   ├── lib/           # Auth service interface, Supabase client, Zustand store, utils
-│       │   ├── scenes/        # React Three Fiber + drei 3D scenes (HeroScene, JourneyScene, etc.)
-│       │   └── tests/         # Unit and component tests (Vitest + Testing Library)
-│       ├── e2e/               # Playwright end-to-end smoke tests
-│       ├── playwright.config.ts
-│       └── vitest.config.ts
-├── packages/
-│   ├── config/
-│   │   ├── eslint/            # Shared ESLint configuration
-│   │   ├── tailwind/          # Shared Tailwind CSS presets and design tokens
-│   │   └── typescript/        # Shared tsconfig bases (base, nextjs, react-library)
-│   └── ui/                    # Shared UI primitives, clsx/twMerge utilities
-├── docs/                      # Factory Markdown Documentation (FMD) suite
-├── .github/workflows/         # GitHub Actions CI workflow
-├── pnpm-workspace.yaml
-├── turbo.json
-└── package.json
-```
+*Routes, facility details, and environmental insights depend on available data and implemented integrations.*
 
 ---
 
 ## Tech Stack
 
-- **Framework:** [Next.js 14](https://nextjs.org/) (App Router) + [TypeScript](https://www.typescriptlang.org/) (Strict mode)
-- **Styling & Tokens:** [Tailwind CSS](https://tailwindcss.com/) with CSS variables mapping to brand design tokens
-- **UI Components:** [Radix UI Primitives](https://www.radix-ui.com/) (Dialog, Tabs, Slot) & [Lucide React](https://lucide.dev/)
-- **3D Graphics:** [Three.js](https://threejs.org/) + [React Three Fiber](https://r3f.docs.pmnd.rs/) + [@react-three/drei](https://github.com/pmndrs/drei)
-- **Animation & Scrolling:** [GSAP 3](https://gsap.com/) + [ScrollTrigger](https://gsap.com/scrolltrigger/) + [@studio-freight/lenis](https://github.com/darkroomengineering/lenis) smooth scroll
-- **Form Management:** [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) validation
-- **State Management:** [Zustand](https://zustand.docs.pmnd.rs/) (client state) + [TanStack Query v5](https://tanstack.com/query) (server state)
-- **Authentication:** [Supabase Auth](https://supabase.com/) abstracted behind an `AuthService` interface with mock fallback for local development
-- **Testing:** [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/) + [Playwright](https://playwright.dev/) for E2E
-- **Monorepo Tooling:** [Turborepo](https://turbo.build/) + [pnpm](https://pnpm.io/)
+### Core Technologies
+
+| Category | Technology | Purpose |
+| :-- | :-- | :-- |
+| **Framework** | [Next.js](https://nextjs.org/) (App Router) | Application routing, layouts, and rendering |
+| **UI Library** | [React](https://react.dev/) | Interactive, component-based interface |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) | Type-safe application logic and data contracts |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | Responsive styling and reusable design tokens |
+| **UI Primitives** | [Radix UI](https://www.radix-ui.com/) | Accessible dialogs, tabs, and interactive components |
+| **Icons** | [Lucide](https://lucide.dev/) | Consistent interface iconography |
+| **3D Graphics** | [Three.js](https://threejs.org/) | Optional interactive 3D scenes |
+| **3D React Integration** | [React Three Fiber](https://r3f.docs.pmnd.rs/) | Declarative 3D scenes in React |
+| **3D Utilities** | [Drei](https://github.com/pmndrs/drei) | Helpers for React Three Fiber |
+| **Animation** | [GSAP](https://gsap.com/) | Motion and scroll-linked animations |
+| **Forms** | [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) | Form management and validation |
+| **Client State** | [Zustand](https://zustand.docs.pmnd.rs/) | Lightweight client-side state management |
+| **Server State** | [TanStack Query](https://tanstack.com/query) | Data fetching, caching, and synchronization |
+| **Authentication** | [Supabase Auth](https://supabase.com/docs/guides/auth) | Account registration and session management |
+| **Database** | [Supabase](https://supabase.com/) / [PostgreSQL](https://www.postgresql.org/) | Persistent facility and application data |
+| **Unit Testing** | [Vitest](https://vitest.dev/) | Unit and component tests |
+| **E2E Testing** | [Playwright](https://playwright.dev/) | Browser workflow testing |
+| **Monorepo Tooling** | [Turborepo](https://turbo.build/) + [pnpm](https://pnpm.io/) | Workspace management and build orchestration |
+
+### Architecture & Quality Suite
+
+- **Styling & Design System:**
+  - Semantic CSS custom properties based on Lunhaw's green color palette.
+  - Reusable UI primitives and consistent spacing, typography, and border-radius tokens.
+  - Mobile-first responsive layouts.
+  - Accessible interaction states and reduced-motion support.
+
+- **Data & State Management:**
+  - Separate facility data, client interaction state, and server-managed information.
+  - Centralized facility validation and source attribution.
+  - Persistent saved places according to the configured storage and authentication model.
+  - Clear handling of missing, outdated, or unverified information.
+
+- **Authentication & Security:**
+  - Supabase Auth integration when configured.
+  - Server-side protection for private data and privileged operations.
+  - Appropriate database access controls and Row Level Security policies.
+  - Development-only mock authentication where implemented.
+
+- **Testing & Quality Assurance:**
+  - Unit tests for utilities, environmental calculations, and domain logic.
+  - Component tests for map previews, navigation, forms, and saved-place interactions.
+  - End-to-end tests for core discovery and route-planning workflows.
+  - Data-integrity checks to prevent unsupported information from being presented as verified.
+  - Accessibility and responsive-layout checks.
 
 ---
 
-## Design Tokens
-
-- **Palette:**
-  - Off-White canvas: `#F7F7F0` (`--bg`)
-  - Deep text foreground: `#26332D` (`--fg`)
-  - Forest Green primary: `#245C43` (`--primary`)
-  - Button Green: `#3F8F2E` (`--button-green`)
-  - Lime accent: `#98D746` (`--lime`)
-  - Mint secondary surface: `#B7F9ED` (`--mint`)
-  - Leaf green: `#6B9B72` (`--leaf`)
-  - Footer background: `#26332D` (`--foot`)
-- **Typography:**
-  - Wordmark & display headers: `MedievalSharp` (via `next/font/google`)
-  - Interface & body: `Kufam` (via `next/font/google`)
-- **Shapes:**
-  - Pill buttons: `border-radius: 9999px`
-  - Rounded cards: `border-radius: 28px`
-  - Lime underline highlight (`.hl`) under key phrases
-
----
-
-## Getting Started
+## Quick Start
 
 ### Prerequisites
-- Node.js >= 20.0.0
-- pnpm >= 10.0.0 (`npm install -g pnpm`)
 
-### Installation
+- **Node.js:** Version supported by the repository's `package.json`.
+- **pnpm:** Version compatible with the workspace configuration.
+- **Git:** For cloning and version control.
+- **Supabase:** Optional for local development if a mock service is implemented; required for features that depend on a configured Supabase backend.
+
+### Installation & Run
+
 ```bash
 # Clone repository
 git clone https://github.com/helenaherrero515/lunhaw.git
@@ -98,56 +147,220 @@ cd lunhaw
 
 # Install dependencies
 pnpm install
+
+# Configure local environment variables if needed
+# Create apps/web/.env.local
+
+# Start the development server
+pnpm dev
 ```
 
+Open **[http://localhost:3000](http://localhost:3000)** in your browser.
+
 ### Environment Variables
-Copy the template or create `.env.local` inside `apps/web/`:
-```env
+
+Create `apps/web/.env.local` for the Supabase configuration:
+
+```dotenv
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 ```
-*(Note: If Supabase keys are omitted, the app automatically runs in Mock Auth mode with full functionality.)*
 
-### Development Scripts
-```bash
-# Start development server on http://localhost:3000
-pnpm dev
+These variables are examples. Replace them with the values for your Supabase project.
 
-# Build all monorepo packages and apps
-pnpm build
+**Security note:** Never expose a Supabase service-role key or other privileged secret through a `NEXT_PUBLIC_` environment variable.
 
-# Run Vitest unit & component tests
-pnpm test
+If the project supports mock authentication, use it only for local development and testing.
 
-# Run Playwright end-to-end smoke tests
-pnpm test:e2e
+---
 
-# Run ESLint across workspace
-pnpm lint
+## Verification & Scripts
+
+The following commands describe the intended workspace workflow. Confirm that each script exists in the root `package.json` before relying on it.
+
+| Command | Description |
+| :-- | :-- |
+| `pnpm dev` | Starts the development server |
+| `pnpm build` | Builds the application and configured workspace packages |
+| `pnpm lint` | Runs lint checks |
+| `pnpm test` | Runs unit and component tests |
+| `pnpm test:e2e` | Runs Playwright end-to-end tests |
+| `pnpm typecheck` | Runs TypeScript checks, if configured |
+| `pnpm test:all` | Runs the full validation suite, if configured |
+
+---
+
+## Green Index
+
+The **Green Index** is Lunhaw's environmental insight feature. It is intended to help users understand the presence of greenery and explore environmental context around urban spaces.
+
+### Goals
+
+- 🌳 Make information about urban greenery easier to understand.
+- 🌡️ Explain environmental estimates without presenting them as direct measurements.
+- 📊 Show calculations and their underlying assumptions.
+- 🌿 Encourage awareness of green spaces and their role in urban life.
+- 🔎 Communicate data limitations instead of presenting unsupported conclusions.
+
+### Calculation & Transparency
+
+Any simulated temperature reduction or environmental benefit must be based on a documented methodology.
+
+- Clearly identify input variables and their sources.
+- State assumptions and limitations.
+- Distinguish simulated results from measured environmental conditions.
+- Avoid treating a tree-count slider or visual simulation as a real-world environmental sensor.
+- Mark unavailable inputs or unsupported calculations accordingly.
+
+The Green Index must not imply that a modeled result is a verified measurement of current street temperature or air quality.
+
+---
+
+## Data Integrity
+
+Lunhaw follows a non-negotiable principle: **never invent information to make a place, route, or environmental result appear complete.**
+
+Every relevant data point must be classified using the following labels:
+
+| Status | Meaning | Example |
+| :-- | :-- | :-- |
+| **Verified** | Supported by an identifiable source and a recorded verification date where applicable | A library address confirmed by an official facility directory |
+| **Estimate** | Calculated through a transparent method with documented assumptions | A modeled journey duration or environmental estimate |
+| **Not available yet** | Cannot currently be substantiated or responsibly calculated | Unconfirmed opening hours or an unavailable fare |
+
+### Data Integrity Rules
+
+1. **Source attribution:** Facility information should reference its source.
+2. **Verification dates:** Record when information was last checked.
+3. **No fabricated routes:** Never generate unsupported directions, transfers, or fares.
+4. **No invented amenities:** Do not claim a facility has toilets, ramps, seating, or other amenities without evidence.
+5. **Transparent estimates:** Clearly identify modeled values and explain the methodology.
+6. **Honest omissions:** Show “Not available yet” when information cannot be verified.
+7. **Data freshness:** Recheck time-sensitive details such as schedules and facility access when feasible.
+
+### Recommended Facility Data Fields
+
+| Field | Purpose |
+| :-- | :-- |
+| `id` | Stable facility identifier |
+| `name` | Official or source-supported facility name |
+| `category` | Park, garden, library, reading center, or another supported category |
+| `address` | Source-supported address |
+| `latitude` / `longitude` | Facility coordinates with documented provenance |
+| `source_url` | Link to the supporting source |
+| `last_verified_at` | Date of last verification |
+| `verification_status` | Applicable data-integrity classification |
+| `opening_hours` | Published schedule when supported by a source |
+| `amenities` | Verified facility features |
+| `data_notes` | Methodology, caveats, and relevant limitations |
+
+These are recommended data fields; the actual database schema should be documented as it is implemented.
+
+---
+
+## Privacy & Location Permissions
+
+Lunhaw is designed to make public-space discovery accessible while respecting user privacy.
+
+- **Explore first:** Allow public discovery without requiring an account wherever supported.
+- **Permission at the right time:** Request location access when the user initiates a location-dependent action.
+- **Clear purpose:** Explain why location is needed for route planning.
+- **Data minimization:** Collect only the information required for the selected feature.
+- **Secure accounts:** Protect profile and private saved data through the configured authentication and authorization system.
+- **Respect user choice:** Provide a useful alternative when location permission is declined, where possible.
+
+---
+
+## Project Layout
+
+```text
+lunhaw/
+├── apps/
+│   └── web/
+│       ├── public/                # Static assets
+│       ├── src/
+│       │   ├── app/               # Next.js App Router
+│       │   │   ├── map/           # Interactive map
+│       │   │   ├── saved/         # Saved places
+│       │   │   └── profile/       # Profile and account
+│       │   ├── components/        # Shared interface components
+│       │   ├── content/           # Centralized application copy
+│       │   ├── lib/               # Services, data access, and utilities
+│       │   ├── scenes/             # Optional 3D scenes
+│       │   └── tests/              # Unit and component tests
+│       ├── e2e/                    # Playwright tests
+│       ├── playwright.config.ts
+│       └── vitest.config.ts
+├── assets/
+│   └── logo/
+│       └── logo.png               # Lunhaw logo
+├── packages/
+│   ├── config/                    # Shared development configurations
+│   └── ui/                        # Shared UI primitives
+├── docs/                           # Product and technical documentation
+├── .github/
+│   └── workflows/                  # CI workflows
+├── pnpm-workspace.yaml
+├── turbo.json
+└── package.json
 ```
 
----
-
-## Key Features & Page Sections
-
-1. **Header:** Sticky translucent pill navigation with mascot, wordmark, About anchor, and mobile dropdown hamburger.
-2. **Hero:** Brand headline, leaf pill badge, interactive 3D Metro Manila diorama with an animated hopping grasshopper mascot, and floating context chips.
-3. **Ticker Marquee:** Continuous ribbon with 3 core action phrases.
-4. **About ("Why Lunhaw"):** Civic narrative and animated stat counters (17 cities, 3 data tiers, 100% calculation transparency).
-5. **Pinned Scroll Journey:** 3-step interactive journey (Discover, Understand, Get there) synchronized with a 3D isometric walking path.
-6. **Feature Cards:** 5 modular cards (Explore, Commute, Green Index, Libraries, Saved) with 3D cursor tilt effects.
-7. **Green Index Simulator:** Interactive 3D street with tree slider (0 to 12 trees) and presets (Bare street, Some shade, Tree-lined) showing calculated microclimate temperature reduction.
-8. **Transparency Grid:** 3 data-integrity cards defining `Verified`, `Estimate`, and `Not available yet`, alongside the mandatory facility schedule disclaimer (`INV-002`).
-9. **Interactive Libraries:** 3D reading room with bouncing dropped books and a "Drop the books again" replay trigger.
-10. **Final Call to Action:** High-contrast band with quick links to explore or enter area manually.
-11. **Footer:** Comprehensive directory links, legal pages, newsletter signup with inline validation, and social links.
-12. **Auth Dialog:** Radix accessible dialog (Sign up / Log in tabs, show/hide password, Zod inline validation, mobile bottom-sheet styling, and focus-trapping).
+*This is a representative project layout; update it to match the actual repository.*
 
 ---
 
-## Assumptions & Follow-ups
+## Safety & Invariant Principles
 
-1. **Tech Stack & Hosting:** Configured for Vercel or containerized Docker deployment on Node.js 20+.
-2. **Supabase Integration:** Includes production-ready client setup alongside a seamless `MockAuthService` fallback when credentials are not yet populated.
-3. **Performance & 3D Optimization:** All Three.js / R3F scenes are dynamically imported with SSR disabled and lazy-loaded only when approaching viewport.
-4. **Reduced Motion:** Fully complies with `prefers-reduced-motion` by disabling 3D animations and infinite marquee loops.
+- **Radical Data Integrity:** No fabricated facility information, routes, fares, schedules, or environmental measurements.
+- **Verified Sources:** Relevant facility information must have traceable sources and verification dates where applicable.
+- **Transparent Estimates:** Every modeled result must identify its assumptions and methodology.
+- **Privacy by Design:** Location access should be requested only when needed for the selected workflow.
+- **Accessible Discovery:** Core public-space information should not depend exclusively on animation or visual-only controls.
+- **Reduced Motion:** Nonessential animations should respect `prefers-reduced-motion`.
+- **Honest Coverage:** Never imply that the public-space catalog covers every destination in NCR unless the available data supports that claim.
+- **Secure Data Access:** Private account information must be protected by appropriate authorization rules.
+
+---
+
+## FAQ
+
+**What is Lunhaw?**  
+Lunhaw is a public-space discovery and green-mobility platform designed to help people find parks, gardens, public libraries, barangay reading centers, and other supported facilities across Metro Manila.
+
+**What does “Discover your space. Explore your city. Go greener.” mean?**  
+It describes Lunhaw's goal of helping people discover useful public spaces, explore their surroundings, and make more informed choices about urban mobility.
+
+**Can I explore places without creating an account?**  
+Public discovery should remain accessible without mandatory registration wherever supported by the implemented application. Account-dependent features may require authentication.
+
+**How does the Green Index work?**  
+The Green Index presents environmental information and may include modeled estimates. Any calculation should document its methodology, assumptions, and limitations.
+
+**Does Lunhaw provide verified routes and fares?**  
+Only when supported by an appropriate data source or routing integration. Unverified information must not be presented as fact.
+
+**Why does Lunhaw ask for location permission?**  
+Location may be needed for a user-requested route-planning feature. Permission should be requested when that feature begins, rather than unnecessarily during initial browsing.
+
+**What does “Not available yet” mean?**  
+It means Lunhaw cannot currently verify or responsibly calculate the information. The app communicates the limitation rather than guessing.
+
+**Who is Lunti?**  
+Lunti is Lunhaw's grasshopper mascot, representing curiosity, exploration, and a greener approach to city life.
+
+---
+
+## Author
+
+| GitHub | Project |
+| :-- | :-- |
+| [@helenaherrero515](https://github.com/helenaherrero515) | Lunhaw — Public-Space Discovery & Green Mobility |
+
+---
+
+© 2026 Lunhaw. All rights reserved.
+
+<p align="center">
+  <b>Lunhaw</b><br>
+  Discover your space. Explore your city. Go greener. 🌿
+</p>
