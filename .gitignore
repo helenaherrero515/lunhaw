@@ -1,29 +1,136 @@
-# Dependencies
-node_modules
-.pnpm-store
+# ==============================================================================
+# Lunhaw Web Monorepo .gitignore
+# Protects sensitive data, credentials, environment variables, build artifacts,
+# local database dumps, temporary caches, and system files.
+# ==============================================================================
 
-# Next.js
+# ------------------------------------------------------------------------------
+# 1. Environment Variables & Secrets (CRITICAL)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.template
+*.env
+*.env.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# API keys, certificates, credentials, and private keys
+*.pem
+*.key
+*.crt
+*.cer
+*.pfx
+*.p12
+*.pkcs12
+*.der
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+secring.gpg
+secring.skr
+*.keystore
+*.jks
+master.key
+credentials.json
+client_secret*.json
+service-account*.json
+*.secret
+*.secrets
+*.token
+*.credentials
+
+# Supabase Local & Cloud Secrets
+.supabase/
+supabase/.temp/
+supabase/.branches/
+
+# ------------------------------------------------------------------------------
+# 2. Local Databases & Dumps
+# ------------------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.rdb
+*.sql.gz
+dump.rdb
+
+# ------------------------------------------------------------------------------
+# 3. Dependencies & Package Managers
+# ------------------------------------------------------------------------------
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+.yarn-cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ------------------------------------------------------------------------------
+# 4. Next.js, Turborepo & Build Artifacts
+# ------------------------------------------------------------------------------
 .next/
 out/
-
-# Turbo
-.turbo
-
-# Build outputs
-dist/
 build/
+dist/
+.turbo/
+.cache/
+.temp/
+.tmp/
+tmp/
+temp/
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
 
-# Environment variables
-.env
-.env*.local
-
-# Testing & Coverage
+# ------------------------------------------------------------------------------
+# 5. Testing, Coverage & Playwright Artifacts
+# ------------------------------------------------------------------------------
 coverage/
+.nyc_output/
 test-results/
 playwright-report/
 blob-report/
+playwright/.cache/
 
-# OS Files
+# ------------------------------------------------------------------------------
+# 6. IDE, Editors & Development Tools
+# ------------------------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*.swn
+*~
+.project
+.classpath
+.settings/
+
+# ------------------------------------------------------------------------------
+# 7. Operating System & System Cache
+# ------------------------------------------------------------------------------
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+[Dd]esktop.ini
 *.log
