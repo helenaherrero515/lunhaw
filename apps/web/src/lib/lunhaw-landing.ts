@@ -139,10 +139,21 @@ export function initLunhawVisuals() {
   function makeStage(canvas, o) {
     var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    if (T.SRGBColorSpace) {
+      renderer.outputColorSpace = T.SRGBColorSpace;
+    }
+    renderer.toneMapping = T.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.18;
+
     var scene = new T.Scene();
     var camera = new T.OrthographicCamera(-1, 1, 1, -1, -60, 120);
-    scene.add(new T.AmbientLight(0xffffff, .74));
-    var sun = new T.DirectionalLight(0xffffff, .78); sun.position.set(6, 12, 5); scene.add(sun);
+    scene.add(new T.AmbientLight(0xffffff, 0.95));
+    var sun = new T.DirectionalLight(0xffffff, 1.18);
+    sun.position.set(6, 12, 5);
+    scene.add(sun);
+    var hemi = new T.HemisphereLight(0xffffff, 0x98D746, 0.42);
+    scene.add(hemi);
+
     var st = { canvas: canvas, renderer: renderer, scene: scene, camera: camera, size: o.size, minHalfW: o.minHalfW || 0, cam: new T.Vector3(o.cam[0], o.cam[1], o.cam[2]), look: new T.Vector3((o.look || [0, 0, 0])[0], (o.look || [0, 0, 0])[1], (o.look || [0, 0, 0])[2]), visible: false, update: function () {} };
     function resize() {
       var w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
@@ -472,25 +483,25 @@ export function initLunhawVisuals() {
   (function () {
     var sec = document.querySelector('.why'); if (!sec) return;
     var eb = sec.querySelector('.eyebrow'), h = sec.querySelector('.statement'), sub = sec.querySelector('.sub'), big = sec.querySelector('.payoff'), hl = sec.querySelector('.hl2'), hop = sec.querySelector('.why-hopper'), decos = sec.querySelectorAll('.deco svg');
-    if (!eb || !h || !sub || !big || !hl || !hop) return;
-    var text = h.textContent.trim();
-    h.setAttribute('aria-label', text);
-    h.innerHTML = text.split(/\s+/).map(function (w) { return '<span class="w" aria-hidden="true">' + w + '</span>'; }).join(' ');
+    if (!h || !sub || !big || !hl || !hop) return;
     var words = h.querySelectorAll('.w');
-    gsap.set(words, { opacity: .14 });
+    if (!words.length) {
+      var text = h.textContent.trim();
+      h.setAttribute('aria-label', text);
+      h.innerHTML = text.split(/\s+/).map(function (w) { return '<span class="w" aria-hidden="true">' + w + '</span>'; }).join(' ');
+      words = h.querySelectorAll('.w');
+    }
     gsap.set(hl, { '--sw': 0 });
     var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true } });
-    tl.from(eb, { y: 20, opacity: 0, duration: .5 }, 0)
-      .to(words, { opacity: 1, duration: .5, stagger: .35 }, .2)
-      .from(sub, { y: 40, opacity: 0, duration: 1, ease: 'power2.out' }, 3.9)
-      .from(big, { y: 50, scale: .75, opacity: 0, duration: 1.1, ease: 'back.out(1.8)' }, 5.1)
-      .to(hl, { '--sw': 1, duration: 1 }, 6)
-      .fromTo(hop, { x: -100 }, { x: function () { return window.innerWidth / 2 - hop.offsetWidth / 2; }, duration: 7.2 }, 0)
-      .to(hop, { keyframes: { y: [0, -70, 0, -70, 0, -70, 0, -70, 0, -70, 0], easeEach: 'sine.inOut' }, duration: 7.2, ease: 'none' }, 0);
+    if (eb) tl.from(eb, { y: 20, opacity: 0, duration: .5 }, 0);
+    tl.to(sub, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 3.0)
+      .to(big, { y: 0, scale: 1, opacity: 1, duration: 1.1, ease: 'back.out(1.8)' }, 4.5)
+      .to(hl, { '--sw': 1, duration: 1 }, 5.5)
+      .to(hop, { keyframes: { y: [0, -50, 0, -50, 0, -50, 0, -50, 0, -50, 0], easeEach: 'sine.inOut' }, duration: 7.2, ease: 'none' }, 0);
     var speeds = [-.8, .5, -.4, .9, -.6, .3];
     decos.forEach(function (el, i) {
       var s = speeds[i % speeds.length];
-      tl.fromTo(el, { y: 160 * s, rotate: -12 * s }, { y: -200 * s, rotate: 14 * s, duration: 7.2 }, 0);
+      tl.fromTo(el, { y: 120 * s, rotate: -12 * s }, { y: -160 * s, rotate: 14 * s, duration: 7.2 }, 0);
     });
   })();
 
