@@ -483,7 +483,7 @@ export function initLunhawVisuals() {
   (function () {
     var sec = document.querySelector('.why'); if (!sec) return;
     var eb = sec.querySelector('.eyebrow'), h = sec.querySelector('.statement'), sub = sec.querySelector('.sub'), big = sec.querySelector('.payoff'), hl = sec.querySelector('.hl2'), hop = sec.querySelector('.why-hopper'), decos = sec.querySelectorAll('.deco svg');
-    if (!h || !sub || !big || !hl || !hop) return;
+    if (!h || !hop) return;
     var words = h.querySelectorAll('.w');
     if (!words.length) {
       var text = h.textContent.trim();
@@ -491,13 +491,13 @@ export function initLunhawVisuals() {
       h.innerHTML = text.split(/\s+/).map(function (w) { return '<span class="w" aria-hidden="true">' + w + '</span>'; }).join(' ');
       words = h.querySelectorAll('.w');
     }
-    gsap.set(hl, { '--sw': 0 });
+    if (hl) gsap.set(hl, { '--sw': 0 });
     var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true } });
     if (eb) tl.from(eb, { y: 20, opacity: 0, duration: .5 }, 0);
-    tl.to(sub, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 3.0)
-      .to(big, { y: 0, scale: 1, opacity: 1, duration: 1.1, ease: 'back.out(1.8)' }, 4.5)
-      .to(hl, { '--sw': 1, duration: 1 }, 5.5)
-      .to(hop, { keyframes: { y: [0, -50, 0, -50, 0, -50, 0, -50, 0, -50, 0], easeEach: 'sine.inOut' }, duration: 7.2, ease: 'none' }, 0);
+    if (sub) tl.to(sub, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 3.0);
+    if (big) tl.to(big, { y: 0, scale: 1, opacity: 1, duration: 1.1, ease: 'back.out(1.8)' }, 4.5);
+    if (hl) tl.to(hl, { '--sw': 1, duration: 1 }, 5.5);
+    tl.to(hop, { keyframes: { y: [0, -50, 0, -50, 0, -50, 0, -50, 0, -50, 0], easeEach: 'sine.inOut' }, duration: 7.2, ease: 'none' }, 0);
     var speeds = [-.8, .5, -.4, .9, -.6, .3];
     decos.forEach(function (el, i) {
       var s = speeds[i % speeds.length];

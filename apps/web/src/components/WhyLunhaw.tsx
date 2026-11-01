@@ -53,12 +53,6 @@ export function WhyLunhaw() {
             <span className="w">pass</span>{" "}
             <span className="w">through.</span>
           </h2>
-          <p className="sub">
-            Parks, quiet corners and libraries are all around us, but hard to find.
-          </p>
-          <p className="payoff">
-            <span className="hl2">Lunhaw brings them closer.</span>
-          </p>
         </div>
         <div className="ground" aria-hidden="true"></div>
         <span

@@ -370,8 +370,8 @@ footer .lock { font-style: italic; color: var(--foot-muted); font-size: 15px; ma
 /* why: pinned scroll story */
 .why { position: relative; background: radial-gradient(60% 55% at 50% 42%, rgba(152, 215, 70, 0.16), transparent 70%), #0E1A15; }
 .story { position: relative; overflow: hidden; display: grid; place-items: center; padding: 110px 20px 140px; min-height: 80svh; }
-.story-in { position: relative; z-index: 2; max-width: 1080px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 26px; }
-.statement { font-family: var(--font-display); font-weight: 400; font-size: clamp(40px, 7vw, 96px); line-height: 1.12; color: #FFFFFF; margin: 0; }
+.story-in { position: relative; z-index: 2; max-width: 1080px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto; width: 100%; }
+.statement { font-family: var(--font-display); font-weight: 400; font-size: clamp(40px, 7vw, 96px); line-height: 1.12; color: #FFFFFF; margin: 0; text-align: center; }
 .statement .w { display: inline-block; margin: 0 .1em; color: #FFFFFF; }
 .statement .w:nth-last-child(-n+2) { color: #98D746; }
 .why .sub { font-size: clamp(18px, 2vw, 24px); color: var(--muted); max-width: 34ch; }
@@ -382,7 +382,7 @@ footer .lock { font-style: italic; color: var(--foot-muted); font-size: 15px; ma
 .ground { position: absolute; left: 6%; right: 6%; bottom: 7%; z-index: 1; border-top: 3px dotted rgba(152, 215, 70, 0.45); }
 .why-hopper { position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(7% + 2px); width: 64px; z-index: 3; box-shadow: 0 12px 22px rgba(36,92,67,.3); }
 html.js .why { height: 300vh; }
-html.js .story { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 0; padding-block: 0; }
+html.js .story { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 0; padding-block: 0; display: grid; place-items: center; }
 html.js .why-hopper { left: 50%; transform: translateX(-50%); margin-left: 0; }
 html.js .why .sub,
 html.js .why .payoff { opacity: 0; pointer-events: none; transform: translateY(30px); }
