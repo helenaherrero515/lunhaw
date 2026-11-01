@@ -1,0 +1,25 @@
+<section class="scene-sec" id="green">
+  <div class="wrap">
+    <div class="art" data-reveal>
+      <canvas id="green-canvas" role="img" aria-label="Interactive 3D street. Plant more trees with the slider and see shade patches grow. Drag sideways to rotate."></canvas>
+      <div class="fb"><span class="mascot" role="img" aria-label="Lunhaw grasshopper mascot"></span></div>
+      <span class="hint">Drag to rotate</span>
+    </div>
+    <div class="copy" data-reveal>
+      <span class="eyebrow">Green Index</span>
+      <h2 class="h2">See what shade does to a street.</h2>
+      <p class="lead">Shade changes how a walk feels.</p>
+      <div class="ctl">
+        <label for="trees">Street trees</label>
+        <input id="trees" type="range" min="0" max="12" step="1" value="4" aria-describedby="trees-out">
+        <output id="trees-out" for="trees" aria-live="polite">4 of 12 trees planted. Illustration only.</output>
+        <div class="seg">
+          <button type="button" data-trees="2">Bare street</button>
+          <button type="button" data-trees="7">Some shade</button>
+          <button type="button" data-trees="12">Tree-lined</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
