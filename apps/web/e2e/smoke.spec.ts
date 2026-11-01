@@ -24,11 +24,9 @@ test.describe("Lunhaw Landing Page Smoke Test", () => {
     // 4. Verify Features Section
     await expect(page.getByText("Find a place. Reach it.")).toBeVisible();
 
-    // 5. Verify Transparency & Data Integrity Section
-    await expect(page.getByText("Honest about what we know.")).toBeVisible();
-    await expect(
-      page.getByText(/Please verify operating hours directly with the facility/i)
-    ).toBeVisible();
+    // 5. Verify FAQ Section (Good to know.)
+    await expect(page.getByText("Good to know.")).toBeVisible();
+    await expect(page.getByText("What is Lunhaw?")).toBeVisible();
 
     // 6. Verify Auth Dialog interaction
     const createAccountBtn = page.getByRole("button", { name: "Create Account" }).first();

@@ -12,7 +12,7 @@ import { WhyLunhaw } from "@/components/WhyLunhaw";
 import { Journey } from "@/components/Journey";
 import { Features } from "@/components/Features";
 import { GreenIndex } from "@/components/GreenIndex";
-import { Transparency } from "@/components/Transparency";
+import { FaqSection } from "@/components/FaqSection";
 import { Libraries } from "@/components/Libraries";
 import { CtaSection } from "@/components/CtaSection";
 import { Footer } from "@/components/Footer";
@@ -20,7 +20,6 @@ import { AuthDialog } from "@/components/AuthDialog";
 
 export default function HomePage() {
   useEffect(() => {
-    // Smooth scroll setup: Lenis synced to GSAP ScrollTrigger
     gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis({
@@ -30,57 +29,114 @@ export default function HomePage() {
     });
 
     lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((time) => {
+    const tick = (time: number) => {
       lenis.raf(time * 1000);
-    });
-
+    };
+    gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
+    // Reading progress bar
+    const barAnim = gsap.to("#bar", {
+      width: "100%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: document.body,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.3,
+      },
+    });
+
+    // Reveal animations for cards and headers
+    ScrollTrigger.batch("[data-reveal]", {
+      start: "top 92%",
+      once: true,
+      onEnter: (els) => {
+        gsap.from(els, {
+          y: 46,
+          scale: 0.96,
+          duration: 0.9,
+          ease: "back.out(1.5)",
+          stagger: 0.09,
+          overwrite: true,
+        });
+      },
+    });
+
+    // Smooth anchor scrolling
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest<HTMLAnchorElement>("a[data-scroll]");
+      if (anchor) {
+        const href = anchor.getAttribute("href");
+        if (href && href.startsWith("#")) {
+          e.preventDefault();
+          const targetEl = document.querySelector(href);
+          if (targetEl) {
+            lenis.scrollTo(targetEl as HTMLElement, { offset: -20 });
+          } else if (href === "#top") {
+            lenis.scrollTo(0);
+          }
+        }
+      }
+    };
+    document.addEventListener("click", handleAnchorClick);
+
     return () => {
+      document.removeEventListener("click", handleAnchorClick);
+      barAnim.kill();
+      gsap.ticker.remove(tick);
       lenis.destroy();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-bg selection:bg-lime selection:text-fg" id="top">
-      {/* 1. Sticky Header with Pill Brand & Nav */}
-      <Header />
+    <>
+      {/* Reading Progress Indicator */}
+      <div className="progress" aria-hidden="true">
+        <div className="bar" id="bar"></div>
+      </div>
 
-      <main>
-        {/* 2. Hero with 3D Metro Manila Map & Hopping Grasshopper */}
-        <Hero />
+      <div id="top">
+        {/* 1. Header (Pill with brand, about, create account) */}
+        <Header />
 
-        {/* 3. Ticker Marquee with 3 phrases */}
-        <Ticker />
+        <main>
+          {/* 2. Hero with illustrated background scene, diorama stage, and grasshopper */}
+          <Hero />
 
-        {/* 4. About ("Why Lunhaw") & Stat Counters */}
-        <WhyLunhaw />
+          {/* 3. Ticker Marquee with 3 phrases and velocity acceleration */}
+          <Ticker />
 
-        {/* 5. Pinned 3-Step Journey (Discover, Understand, Get there) */}
-        <Journey />
+          {/* 4. Why Lunhaw Pinned Scroll Story */}
+          <WhyLunhaw />
 
-        {/* 6. Features Grid (Explore, Commute, Green Index, Libraries, Saved) */}
-        <Features />
+          {/* 5. One Journey Pinned Stage */}
+          <Journey />
 
-        {/* 7. Interactive Green Index 3D Street & Tree Slider */}
-        <GreenIndex />
+          {/* 6. Features Grid with 3D Card Tilt */}
+          <Features />
 
-        {/* 8. Transparency & Data Integrity (Verified / Estimate / Not available yet) */}
-        <Transparency />
+          {/* 7. Interactive Green Index 3D Street & Tree Slider */}
+          <GreenIndex />
 
-        {/* 9. Interactive 3D Libraries with Book Drop */}
-        <Libraries />
+          {/* 8. FAQs Accordion */}
+          <FaqSection />
 
-        {/* 10. Final Call to Action Band */}
-        <CtaSection />
-      </main>
+          {/* 9. Interactive 3D Libraries with Book Drop */}
+          <Libraries />
 
-      {/* 11. Footer */}
-      <Footer />
+          {/* 10. Call to Action Band */}
+          <CtaSection />
+        </main>
 
-      {/* 12. Supabase Auth Dialog (Sign Up / Log In) */}
-      <AuthDialog />
-    </div>
+        {/* 11. Footer */}
+        <Footer />
+
+        {/* 12. Authentication Modal (Mobile Bottom Sheet) */}
+        <AuthDialog />
+      </div>
+    </>
   );
 }

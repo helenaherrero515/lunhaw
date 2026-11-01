@@ -2,154 +2,149 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { lunhawContent } from "@/content/lunhaw-content";
-import { ArrowRight, Instagram, Facebook, Linkedin, Mail } from "lucide-react";
 
 export function Footer() {
-  const { footer, brand } = lunhawContent;
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmed = email.trim();
-    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
-
-    if (isValid) {
-      setIsSuccess(true);
-      setMsg(footer.newsletterSuccess);
-      setEmail("");
-    } else {
-      setIsSuccess(false);
-      setMsg(footer.newsletterError);
+    const v = email.trim();
+    if (!v || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+      setMsg("Please enter a valid email.");
+      return;
     }
+    setMsg("Thanks! We will let you know when we launch.");
+    setEmail("");
   };
 
   return (
-    <footer className="bg-footer text-footer-fg py-16 md:py-20 border-t border-line/20">
-      <div className="wrap flex flex-col gap-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-10 items-start">
-          {/* Brand & Socials */}
-          <div className="md:col-span-2 flex flex-col gap-5">
-            <Link href="#top" className="flex items-center gap-2.5 text-white group" aria-label="Lunhaw home">
-              <span className="mascot-img w-9 h-9" role="img" aria-label={brand.mascotAlt} />
-              <span className="font-display text-2xl tracking-wide text-white leading-none">
-                {brand.name}
-              </span>
+    <footer>
+      <div className="wrap">
+        <div className="ft-grid">
+          <div className="ft-brand">
+            <div className="brand">
+              <span
+                className="mascot"
+                role="img"
+                aria-label="Lunhaw grasshopper mascot"
+              />
+              <span className="wordmark">LUNHAW</span>
+            </div>
+            <p className="tagline">Public spaces &amp; green mobility.</p>
+            <div className="social">
+              <a href="#" aria-label="Instagram">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.2" cy="6.8" r=".6" fill="currentColor" />
+                </svg>
+              </a>
+              <a href="#" aria-label="Facebook">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.600-1.500h1.500V4.400c-.3 0-1.200-.1-2.200-.1-2.300 0-3.900 1.400-3.900 4v2.200H8v3h2.500V21z" />
+                </svg>
+              </a>
+              <a href="#" aria-label="LinkedIn">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M5 9h3.400v10H5zM6.700 4.300a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM10.500 9h3.200v1.400c.5-.9 1.600-1.700 3.200-1.700 3.200 0 3.800 2.100 3.800 4.800V19h-3.400v-4.900c0-1.200 0-2.600-1.600-2.600s-1.800 1.200-1.800 2.500V19h-3.400z" />
+                </svg>
+              </a>
+              <a href="#" aria-label="Email">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="3" />
+                  <path d="M4 7.500l8 6 8-6" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <div className="ft-col">
+            <h4>Pages</h4>
+            <Link href="#top" data-scroll>
+              Lunhaw
             </Link>
-            <p className="text-footer-muted text-sm max-w-sm leading-relaxed">
-              {footer.brandTagline}
-            </p>
-            {/* Social Icons */}
-            <div className="flex items-center gap-3 pt-2">
-              <a
-                href="#"
-                aria-label="Instagram"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-lime hover:text-footer transition-colors flex items-center justify-center text-white"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                aria-label="Facebook"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-lime hover:text-footer transition-colors flex items-center justify-center text-white"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                aria-label="LinkedIn"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-lime hover:text-footer transition-colors flex items-center justify-center text-white"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a
-                href="mailto:contact@lunhaw.ph"
-                aria-label="Email"
-                className="w-9 h-9 rounded-full bg-white/10 hover:bg-lime hover:text-footer transition-colors flex items-center justify-center text-white"
-              >
-                <Mail className="w-4 h-4" />
-              </a>
-            </div>
+            <Link href="#about" data-scroll>
+              About Us
+            </Link>
+            <a href="#">Blog</a>
+            <a href="#">Contact Us</a>
           </div>
-
-          {/* Pages Column */}
-          <div className="flex flex-col gap-3.5">
-            <h4 className="text-white font-semibold text-sm tracking-wider uppercase">
-              {footer.pagesTitle}
-            </h4>
-            <div className="flex flex-col gap-2.5">
-              {footer.pages.map((link, i) => (
-                <Link
-                  key={i}
-                  href={link.href}
-                  className="text-footer-muted hover:text-lime text-sm transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+          <div className="ft-col">
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
           </div>
-
-          {/* Legal Column */}
-          <div className="flex flex-col gap-3.5">
-            <h4 className="text-white font-semibold text-sm tracking-wider uppercase">
-              {footer.legalTitle}
-            </h4>
-            <div className="flex flex-col gap-2.5">
-              {footer.legal.map((link, i) => (
-                <Link
-                  key={i}
-                  href={link.href}
-                  className="text-footer-muted hover:text-lime text-sm transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
+          <div className="ft-news">
+            <div className="ft-col">
+              <h4>Stay in the loop</h4>
             </div>
-          </div>
-
-          {/* Newsletter Column */}
-          <div className="flex flex-col gap-3.5">
-            <h4 className="text-white font-semibold text-sm tracking-wider uppercase">
-              {footer.newsletterTitle}
-            </h4>
-            <form onSubmit={handleSubmit} className="flex gap-2" noValidate>
+            <form className="signup" id="signup" noValidate onSubmit={handleSubmit}>
               <input
                 type="email"
+                id="signup-email"
+                placeholder="Your email"
+                aria-label="Your email"
+                autoComplete="email"
+                required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder={footer.newsletterPlaceholder}
-                className="w-full px-3.5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-footer-muted text-sm focus:outline-none focus:ring-2 focus:ring-lime"
-                aria-label={footer.newsletterPlaceholder}
-                required
               />
-              <button
-                type="submit"
-                aria-label="Subscribe"
-                className="w-10 h-10 rounded-full bg-lime text-footer flex-none flex items-center justify-center hover:opacity-90 transition-opacity"
-              >
-                <ArrowRight className="w-4 h-4" />
+              <button type="submit" aria-label="Subscribe">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
               </button>
             </form>
-            {msg && (
-              <p
-                className={`text-xs mt-1 transition-opacity ${
-                  isSuccess ? "text-lime" : "text-amber-line"
-                }`}
-                aria-live="polite"
-              >
-                {msg}
-              </p>
-            )}
+            <p className="signup-msg" id="signup-msg" aria-live="polite">
+              {msg}
+            </p>
           </div>
         </div>
-
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-footer-muted">
-          <span>{footer.copyright}</span>
-          <span>{footer.subtext}</span>
+        <div className="ft-bottom">
+          <span>© 2026 Lunhaw. Developed by HLN.</span>
+          <span>Public spaces, made easier to find.</span>
         </div>
       </div>
     </footer>

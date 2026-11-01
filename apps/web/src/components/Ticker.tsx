@@ -1,53 +1,61 @@
 "use client";
 
-import React from "react";
-import { lunhawContent } from "@/content/lunhaw-content";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function Ticker() {
-  const { ticker } = lunhawContent;
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const track = trackRef.current;
+    if (!track) return;
+
+    // marquee speeds up with scroll velocity
+    const mq = gsap.to(track, {
+      xPercent: -50,
+      duration: 38,
+      ease: "none",
+      repeat: -1,
+    });
+
+    let tween: gsap.core.Timeline | null = null;
+    const clamp = (val: number, min: number, max: number) =>
+      Math.min(Math.max(val, min), max);
+
+    const st = ScrollTrigger.create({
+      onUpdate: (self) => {
+        const v = clamp(Math.abs(self.getVelocity()) / 350, 0, 8);
+        if (tween) tween.kill();
+        tween = gsap
+          .timeline()
+          .to(mq, { timeScale: 1 + v, duration: 0.15 })
+          .to(mq, { timeScale: 1, duration: 0.9 });
+      },
+    });
+
+    return () => {
+      mq.kill();
+      if (tween) tween.kill();
+      st.kill();
+    };
+  }, []);
 
   return (
-    <div
-      className="bg-[#245C43] text-white py-4 overflow-hidden border-y border-[#245C43]/80 select-none"
-      aria-label="What Lunhaw helps you do"
-    >
-      <div className="ticker-track flex items-center gap-8 font-medium text-base tracking-wide whitespace-nowrap">
-        {/* Set 1 */}
-        {ticker.map((phrase, i) => (
-          <React.Fragment key={`set1-${i}`}>
-            <span className="flex items-center gap-4">
-              <span>{phrase}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-lime inline-block" />
-            </span>
-          </React.Fragment>
-        ))}
-        {/* Set 2 */}
-        {ticker.map((phrase, i) => (
-          <React.Fragment key={`set2-${i}`}>
-            <span className="flex items-center gap-4">
-              <span>{phrase}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-lime inline-block" />
-            </span>
-          </React.Fragment>
-        ))}
-        {/* Set 3 */}
-        {ticker.map((phrase, i) => (
-          <React.Fragment key={`set3-${i}`}>
-            <span className="flex items-center gap-4">
-              <span>{phrase}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-lime inline-block" />
-            </span>
-          </React.Fragment>
-        ))}
-        {/* Set 4 */}
-        {ticker.map((phrase, i) => (
-          <React.Fragment key={`set4-${i}`}>
-            <span className="flex items-center gap-4">
-              <span>{phrase}</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-lime inline-block" />
-            </span>
-          </React.Fragment>
-        ))}
+    <div className="ticker" aria-label="What Lunhaw helps you do">
+      <div className="track" id="track" ref={trackRef}>
+        <ul>
+          <li>Find your green space</li>
+          <li>Discover a place to pause</li>
+          <li>Find your way there</li>
+        </ul>
+        <ul aria-hidden="true">
+          <li>Find your green space</li>
+          <li>Discover a place to pause</li>
+          <li>Find your way there</li>
+        </ul>
       </div>
     </div>
   );

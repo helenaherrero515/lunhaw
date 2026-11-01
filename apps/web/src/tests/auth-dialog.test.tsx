@@ -14,9 +14,9 @@ describe("AuthDialog Component", () => {
 
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     expect(screen.getByText("Create your account")).toBeInTheDocument();
-    expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
+    expect(screen.getByLabelText("Name")).toBeInTheDocument();
+    expect(screen.getByLabelText("Email")).toBeInTheDocument();
+    expect(screen.getByLabelText("Password")).toBeInTheDocument();
   });
 
   it("switches to Login tab and hides Name field", async () => {
@@ -27,7 +27,7 @@ describe("AuthDialog Component", () => {
 
     await waitFor(() => {
       expect(screen.getByText("Welcome back")).toBeInTheDocument();
-      expect(screen.queryByLabelText(/Name/i)).not.toBeInTheDocument();
+      expect(screen.queryByLabelText("Name")).not.toBeInTheDocument();
     });
   });
 
@@ -40,20 +40,20 @@ describe("AuthDialog Component", () => {
     await waitFor(() => {
       expect(screen.getByText("Please enter your name.")).toBeInTheDocument();
       expect(screen.getByText("Please enter a valid email.")).toBeInTheDocument();
-      expect(screen.getByText("Use at least 8 characters.")).toBeInTheDocument();
+      expect(screen.getByText("Please enter a password.")).toBeInTheDocument();
     });
   });
 
   it("submits valid form and transitions to success view", async () => {
     render(<AuthDialog />);
 
-    fireEvent.change(screen.getByLabelText(/Name/i), {
+    fireEvent.change(screen.getByLabelText("Name"), {
       target: { value: "Helena" },
     });
-    fireEvent.change(screen.getByLabelText(/Email/i), {
+    fireEvent.change(screen.getByLabelText("Email"), {
       target: { value: "helena@lunhaw.ph" },
     });
-    fireEvent.change(screen.getByLabelText(/Password/i), {
+    fireEvent.change(screen.getByLabelText("Password"), {
       target: { value: "password123" },
     });
 

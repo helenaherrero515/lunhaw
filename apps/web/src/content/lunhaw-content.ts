@@ -31,26 +31,9 @@ export const lunhawContent = {
   ],
   why: {
     eyebrow: "Why Lunhaw",
-    title: "The city is more than a place to pass through.",
-    paragraph: "Parks, quiet corners and libraries are all around us, but hard to find.",
-    big: "Lunhaw brings them closer.",
-    stats: [
-      {
-        target: 17,
-        suffix: "",
-        label: "Cities & municipalities across Metro Manila",
-      },
-      {
-        target: 3,
-        suffix: "",
-        label: "Tiers of data integrity: Verified, Estimate, or Not available yet",
-      },
-      {
-        target: 100,
-        suffix: "%",
-        label: "Transparent calculation for every Green Index score",
-      },
-    ],
+    statement: "The city is more than a place to pass through.",
+    sub: "Parks, quiet corners and libraries are all around us, but hard to find.",
+    payoff: "Lunhaw brings them closer.",
   },
   journey: {
     eyebrow: "How it works",
@@ -59,24 +42,21 @@ export const lunhawContent = {
     steps: [
       {
         id: "step-1",
-        num: "01",
+        num: "1",
         title: "Discover",
         desc: "Find pocket parks, libraries and reading centers near your barangay.",
-        tag: "Nearby",
       },
       {
         id: "step-2",
-        num: "02",
+        num: "2",
         title: "Understand",
         desc: "See shade ratings, verified opening hours and available amenities.",
-        tag: "Green Index",
       },
       {
         id: "step-3",
-        num: "03",
+        num: "3",
         title: "Get there",
         desc: "Follow walking and transit routes with readable boarding points.",
-        tag: "Commute",
       },
     ],
   },
@@ -129,33 +109,34 @@ export const lunhawContent = {
       { count: 12, label: "Tree-lined", desc: "Full canopy, comfortable" },
     ],
   },
-  transparency: {
-    eyebrow: "Data Integrity",
-    title: "Honest about what we know.",
-    lead: "We never invent routes, fares, opening hours or amenities. Every detail is clearly labelled.",
-    disclaimer:
-      "Please verify operating hours directly with the facility before visiting, as local barangay schedules may change without notice.",
-    cards: [
+  faq: {
+    eyebrow: "FAQs",
+    title: "Good to know.",
+    items: [
       {
-        id: "verified",
-        label: "Verified",
-        status: "VERIFIED",
-        badge: "Official source + date",
-        desc: "Confirmed directly with official LGU notices, municipal websites, or transit authorities with a timestamp.",
+        question: "What is Lunhaw?",
+        answer: "A guide to parks, gardens, libraries and reading centers in Metro Manila, and how to get there.",
+        openByDefault: true,
       },
       {
-        id: "estimate",
-        label: "Estimate",
-        status: "ESTIMATE",
-        badge: "Calculation explained",
-        desc: "Clearly labelled with a short note explaining how it was calculated (e.g. standard walking pace or per-km fare).",
+        question: "How do I get to a place?",
+        answer: "Compare walking and public transport options, step by step.",
+        openByDefault: false,
       },
       {
-        id: "not-available",
-        label: "Not available yet",
-        status: "NOT_AVAILABLE",
-        badge: "We say so instead of guessing",
-        desc: "We explicitly say so instead of guessing or hallucinating missing details.",
+        question: "What is the Green Index?",
+        answer: "A score for the green space and shade around a place, with a note on how it was worked out.",
+        openByDefault: false,
+      },
+      {
+        question: "Can I trust the details?",
+        answer: "Every detail is labelled Verified, Estimate or Not available yet. We never invent routes, fares or opening hours.",
+        openByDefault: false,
+      },
+      {
+        question: "How do I save places?",
+        answer: "Create an account and add places to your Saved list.",
+        openByDefault: false,
       },
     ],
   },

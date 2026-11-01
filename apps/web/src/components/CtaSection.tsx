@@ -1,44 +1,48 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
-import { lunhawContent } from "@/content/lunhaw-content";
+import gsap from "gsap";
 
 export function CtaSection() {
-  const { cta, brand } = lunhawContent;
+  const mascotRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!mascotRef.current) return;
+    const anim = gsap.to(mascotRef.current, {
+      y: -14,
+      rotation: 3,
+      duration: 2.4,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+    return () => {
+      anim.kill();
+    };
+  }, []);
 
   return (
-    <section className="cta bg-[#245C43] text-white py-20 md:py-24" id="start">
-      <div className="wrap grid grid-cols-1 md:grid-cols-[1fr_auto] gap-10 items-center">
-        {/* Call to action copy */}
-        <div className="flex flex-col gap-8 max-w-xl">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl leading-tight text-white tracking-wide">
-            {cta.title}
-          </h2>
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href="#top"
-              className="btn-lunhaw onband font-semibold text-[15px]"
-            >
-              {cta.ctaExplore}
+    <section className="cta" id="start">
+      <div className="wrap">
+        <div className="col">
+          <h2>Discover your space. Explore your city. Go greener.</h2>
+          <div className="cta-row">
+            <Link className="btn onband" href="#top" data-scroll>
+              Explore green spaces near you
             </Link>
-            <Link
-              href="#top"
-              className="btn-lunhaw onband ghost font-semibold text-[15px]"
-            >
-              {cta.ctaManual}
+            <Link className="btn onband ghost" href="#top" data-scroll>
+              Enter your area manually
             </Link>
           </div>
         </div>
-
-        {/* Mascot badge */}
-        <div className="flex justify-center md:justify-end">
-          <div
-            className="mascot-img w-36 h-36 md:w-44 md:h-44 shadow-2xl border-4 border-white/20 bob"
-            role="img"
-            aria-label={brand.mascotAlt}
-          />
-        </div>
+        <div
+          className="mascot"
+          id="cta-mascot"
+          ref={mascotRef}
+          role="img"
+          aria-label="Lunhaw grasshopper mascot"
+        />
       </div>
     </section>
   );

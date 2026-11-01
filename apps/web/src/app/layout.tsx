@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${medievalSharp.variable} ${kufam.variable}`}>
+    <html lang="en" className={`js ${medievalSharp.variable} ${kufam.variable}`}>
       <body className="antialiased min-h-screen bg-bg text-fg">
         <Providers>{children}</Providers>
       </body>
