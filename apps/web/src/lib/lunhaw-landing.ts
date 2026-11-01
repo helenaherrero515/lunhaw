@@ -142,16 +142,18 @@ export function initLunhawVisuals() {
     if (T.SRGBColorSpace) {
       renderer.outputColorSpace = T.SRGBColorSpace;
     }
-    renderer.toneMapping = T.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.18;
+    renderer.toneMapping = T.NoToneMapping;
 
     var scene = new T.Scene();
     var camera = new T.OrthographicCamera(-1, 1, 1, -1, -60, 120);
-    scene.add(new T.AmbientLight(0xffffff, 0.95));
-    var sun = new T.DirectionalLight(0xffffff, 1.18);
-    sun.position.set(6, 12, 5);
+    scene.add(new T.AmbientLight(0xffffff, 0.96));
+    var sun = new T.DirectionalLight(0xffffff, 1.15);
+    sun.position.set(6, 15, 9);
     scene.add(sun);
-    var hemi = new T.HemisphereLight(0xffffff, 0x98D746, 0.42);
+    var fill = new T.DirectionalLight(0xfffef0, 0.42);
+    fill.position.set(-8, 12, 6);
+    scene.add(fill);
+    var hemi = new T.HemisphereLight(0xffffff, 0x98D746, 0.38);
     scene.add(hemi);
 
     var st = { canvas: canvas, renderer: renderer, scene: scene, camera: camera, size: o.size, minHalfW: o.minHalfW || 0, cam: new T.Vector3(o.cam[0], o.cam[1], o.cam[2]), look: new T.Vector3((o.look || [0, 0, 0])[0], (o.look || [0, 0, 0])[1], (o.look || [0, 0, 0])[2]), visible: false, update: function () {} };
