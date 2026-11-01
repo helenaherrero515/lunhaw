@@ -1,27 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Link from "next/link";
-import gsap from "gsap";
 
 export function CtaSection() {
-  const mascotRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!mascotRef.current) return;
-    const anim = gsap.to(mascotRef.current, {
-      y: -14,
-      rotation: 3,
-      duration: 2.4,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
-    return () => {
-      anim.kill();
-    };
-  }, []);
-
   return (
     <section className="cta" id="start">
       <div className="wrap">
@@ -39,7 +21,6 @@ export function CtaSection() {
         <div
           className="mascot"
           id="cta-mascot"
-          ref={mascotRef}
           role="img"
           aria-label="Lunhaw grasshopper mascot"
         />

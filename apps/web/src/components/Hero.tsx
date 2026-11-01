@@ -1,28 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
+import React from "react";
 import Link from "next/link";
 
-const DynamicHeroScene = dynamic(
-  () => import("@/scenes/HeroScene").then((m) => m.HeroScene),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="fb">
-        <span
-          className="mascot"
-          role="img"
-          aria-label="Lunhaw grasshopper mascot"
-        />
-      </div>
-    ),
-  }
-);
-
 export function Hero() {
-  const [currentHopStop, setCurrentHopStop] = useState("Metro Manila");
-
   return (
     <section className="hero">
       <div className="scene" aria-hidden="true">
@@ -123,7 +104,11 @@ export function Hero() {
         </div>
 
         <div className="hero-stage">
-          <DynamicHeroScene onStopChange={setCurrentHopStop} />
+          <canvas
+            id="hero-canvas"
+            role="img"
+            aria-label="3D map of Metro Manila with a grasshopper hopping between parks and libraries"
+          ></canvas>
           <div className="fb">
             <span
               className="mascot"
@@ -148,11 +133,7 @@ export function Hero() {
             Find a quiet place to study.
           </div>
           <div className="chip3d c bob d2" aria-live="off">
-            <span id="hop-name">
-              {currentHopStop.includes("Hopping")
-                ? currentHopStop
-                : `Hopping: ${currentHopStop}`}
-            </span>
+            <span id="hop-name">Hopping across Metro Manila</span>
           </div>
         </div>
       </div>

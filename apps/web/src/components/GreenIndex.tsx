@@ -1,33 +1,17 @@
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
-import { useLunhawStore } from "@/lib/store/use-lunhaw-store";
-
-const DynamicGreenIndexScene = dynamic(
-  () => import("@/scenes/GreenIndexScene").then((m) => m.GreenIndexScene),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="fb">
-        <span
-          className="mascot"
-          role="img"
-          aria-label="Lunhaw grasshopper mascot"
-        />
-      </div>
-    ),
-  }
-);
 
 export function GreenIndex() {
-  const { greenTreeCount, setGreenTreeCount } = useLunhawStore();
-
   return (
     <section className="scene-sec" id="green">
       <div className="wrap">
         <div className="art" data-reveal>
-          <DynamicGreenIndexScene treeCount={greenTreeCount} />
+          <canvas
+            id="green-canvas"
+            role="img"
+            aria-label="Interactive 3D street. Plant more trees with the slider and see shade patches grow. Drag sideways to rotate."
+          ></canvas>
           <div className="fb">
             <span
               className="mascot"
@@ -49,33 +33,20 @@ export function GreenIndex() {
               min="0"
               max="12"
               step="1"
-              value={greenTreeCount}
-              onChange={(e) => setGreenTreeCount(parseInt(e.target.value, 10))}
+              defaultValue="4"
               aria-describedby="trees-out"
             />
             <output id="trees-out" htmlFor="trees" aria-live="polite">
-              {greenTreeCount} of 12 trees planted. Illustration only.
+              4 of 12 trees planted. Illustration only.
             </output>
             <div className="seg">
-              <button
-                type="button"
-                data-trees="2"
-                onClick={() => setGreenTreeCount(2)}
-              >
+              <button type="button" data-trees="2">
                 Bare street
               </button>
-              <button
-                type="button"
-                data-trees="7"
-                onClick={() => setGreenTreeCount(7)}
-              >
+              <button type="button" data-trees="7">
                 Some shade
               </button>
-              <button
-                type="button"
-                data-trees="12"
-                onClick={() => setGreenTreeCount(12)}
-              >
+              <button type="button" data-trees="12">
                 Tree-lined
               </button>
             </div>

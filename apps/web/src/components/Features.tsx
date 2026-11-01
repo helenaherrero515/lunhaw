@@ -1,50 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
+import React from "react";
 
 export function Features() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-    if (typeof window === "undefined" || !window.matchMedia("(hover: hover)").matches) return;
-
-    const cards = sectionRef.current.querySelectorAll<HTMLElement>(".tilt");
-    const cleanupFns: Array<() => void> = [];
-
-    cards.forEach((el) => {
-      const rx = gsap.quickTo(el, "rotationX", { duration: 0.4, ease: "power3" });
-      const ry = gsap.quickTo(el, "rotationY", { duration: 0.4, ease: "power3" });
-      gsap.set(el, { transformPerspective: 800 });
-
-      const onPointerMove = (e: PointerEvent) => {
-        const r = el.getBoundingClientRect();
-        ry(((e.clientX - r.left) / r.width - 0.5) * 9);
-        rx(-((e.clientY - r.top) / r.height - 0.5) * 9);
-      };
-
-      const onPointerLeave = () => {
-        rx(0);
-        ry(0);
-      };
-
-      el.addEventListener("pointermove", onPointerMove);
-      el.addEventListener("pointerleave", onPointerLeave);
-
-      cleanupFns.push(() => {
-        el.removeEventListener("pointermove", onPointerMove);
-        el.removeEventListener("pointerleave", onPointerLeave);
-      });
-    });
-
-    return () => {
-      cleanupFns.forEach((fn) => fn());
-    };
-  }, []);
-
   return (
-    <section className="features" id="features" ref={sectionRef}>
+    <section className="features" id="features">
       <div className="wrap">
         <div className="head" data-reveal>
           <h2 className="h2">Find a place. Reach it.</h2>
