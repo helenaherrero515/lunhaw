@@ -32,7 +32,7 @@
   --foot-muted: #C9D3CD;
   --font-ui: var(--font-ui), 'Kufam', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: var(--font-display), 'MedievalSharp', cursive, Georgia, serif;
-  --mascot: url("/mascot.png");
+  --mascot: url("/mascots/1.png");
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -384,10 +384,10 @@ footer .lock { font-style: italic; color: var(--foot-muted); font-size: 15px; ma
 .deco { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .deco svg { position: absolute; will-change: transform; }
 .ground { position: absolute; left: 6%; right: 6%; bottom: 7%; z-index: 1; border-top: 3px dotted rgba(152, 215, 70, 0.45); }
-.why-hopper { position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(7% + 2px); width: 64px; z-index: 3; box-shadow: 0 12px 22px rgba(36,92,67,.3); }
+.why-hopper { position: absolute; left: 6%; transform: none; bottom: calc(7% + 2px); width: 64px; aspect-ratio: 1212 / 1297; background: url("/mascots/1.png") center / contain no-repeat; border-radius: 20%; z-index: 3; box-shadow: 0 12px 22px rgba(36,92,67,.3); }
 html.js .why { height: 300vh; }
 html.js .story { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 0; padding-block: 0; display: grid; place-items: center; }
-html.js .why-hopper { left: 50%; transform: translateX(-50%); margin-left: 0; }
+html.js .why-hopper { left: 6%; transform: none; margin-left: 0; }
 html.js .why .sub,
 html.js .why .payoff { opacity: 0; pointer-events: none; transform: translateY(30px); }
 @media (max-width: 640px) {
