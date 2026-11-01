@@ -501,9 +501,47 @@ export function initLunhawVisuals() {
       h.innerHTML = text.split(/\s+/).map(function (w) { return '<span class="w" aria-hidden="true">' + w + '</span>'; }).join(' ');
       words = h.querySelectorAll('.w');
     }
+
+    // Initial pop-up blur state for statement words
+    gsap.set(words, {
+      opacity: 0.12,
+      filter: "blur(16px)",
+      y: 32,
+      scale: 0.82,
+      transformOrigin: "50% 85%",
+      willChange: "transform, opacity, filter"
+    });
+
     if (hl) gsap.set(hl, { '--sw': 0 });
     gsap.set(hop, { x: 0, y: 0 });
     var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true } });
+
+    // Scroll-driven pop-up blur animation for statement words
+    words.forEach(function (word, i) {
+      var startAt = 0.35 + i * 0.46;
+      tl.to(
+        word,
+        {
+          keyframes: [
+            {
+              y: -6,
+              scale: 1.08,
+              opacity: 1,
+              filter: "blur(0px)",
+              duration: 0.65,
+              ease: "power2.out"
+            },
+            {
+              y: 0,
+              scale: 1,
+              duration: 0.35,
+              ease: "sine.inOut"
+            }
+          ]
+        },
+        startAt
+      );
+    });
     if (eb) tl.from(eb, { y: 20, opacity: 0, duration: .5 }, 0);
     if (sub) tl.to(sub, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 3.0);
     if (big) tl.to(big, { y: 0, scale: 1, opacity: 1, duration: 1.1, ease: 'back.out(1.8)' }, 4.5);
@@ -573,8 +611,11 @@ export function initLunhawVisuals() {
     });
   }
 
-  // closing mascot bob
-  gsap.to('#cta-mascot', { y: -14, rotation: 3, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+  // closing mascot bob (guarded in case mascot is removed)
+  var ctaMascot = document.querySelector('#cta-mascot');
+  if (ctaMascot) {
+    gsap.to(ctaMascot, { y: -14, rotation: 3, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+  }
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 })();

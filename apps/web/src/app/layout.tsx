@@ -18,7 +18,7 @@ const kufam = Kufam({
 });
 
 export const metadata: Metadata = {
-  title: "Lunhaw — Public Spaces & Green Mobility",
+  title: "Lunhaw",
   description:
     "Discover your space. Explore your city. Go greener. Lunhaw helps people in Metro Manila discover parks, libraries, and shaded transit routes with radical data transparency.",
   icons: {

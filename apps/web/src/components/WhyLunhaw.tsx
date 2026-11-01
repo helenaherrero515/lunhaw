@@ -41,7 +41,10 @@ export function WhyLunhaw() {
           </svg>
         </div>
         <div className="story-in">
-          <h2 className="statement">
+          <h2
+            className="statement"
+            aria-label="The city is more than a place to pass through."
+          >
             <span className="w">The</span>{" "}
             <span className="w">city</span>{" "}
             <span className="w">is</span>{" "}

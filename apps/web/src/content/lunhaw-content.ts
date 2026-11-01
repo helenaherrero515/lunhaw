@@ -148,9 +148,8 @@ export const lunhawContent = {
     hint: "Drag to rotate",
   },
   cta: {
-    title: "Discover your space. Explore your city. Go greener.",
-    ctaExplore: "Explore green spaces near you",
-    ctaManual: "Enter your area manually",
+    title: "Every Filipino deserves more green spaces and places to learn.",
+    ctaExplore: "Explore Lunhaw",
   },
   footer: {
     brandTagline: "Public spaces & green mobility.",
