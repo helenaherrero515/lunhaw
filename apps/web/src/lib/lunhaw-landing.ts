@@ -324,10 +324,11 @@ export function initLunhawVisuals() {
       leaves.forEach(function (lf) { var u = lf.userData; lf.position.y -= dt * u.v; lf.position.x += Math.sin(t * 1.3 + u.s) * dt * .25; lf.rotation.x += dt * 1.5; lf.rotation.z += dt; if (lf.position.y < G + .3) lf.position.y = 5 + Math.random(); });
     };
     // headline + copy entrance
+    gsap.killTweensOf('#hero-title .ln > span, #hero-lead, #hero-cta .btn');
     var tl = gsap.timeline({ delay: .1 });
-    tl.from('#hero-title .ln > span', { y: 36, opacity: 0, duration: .9, ease: 'power3.out', stagger: .12 })
-      .from('#hero-lead', { y: 26, opacity: 0, duration: .8, ease: 'power3.out' }, '-=.55')
-      .from('#hero-cta .btn', { y: 22, opacity: 0, duration: .7, ease: 'power3.out', stagger: .1 }, '-=.5');
+    tl.fromTo('#hero-title .ln > span', { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: .9, ease: 'power3.out', stagger: .12 })
+      .fromTo('#hero-lead', { y: 26, opacity: 0 }, { y: 0, opacity: 1, duration: .8, ease: 'power3.out' }, '-=.55')
+      .fromTo('#hero-cta .btn', { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: .7, ease: 'power3.out', stagger: .1 }, '-=.5');
   })();
 
   /* ---------- pinned journey ---------- */
