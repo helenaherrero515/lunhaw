@@ -45,6 +45,13 @@ export function Header() {
         >
           <Link
             className="l"
+            href="/explore"
+            onClick={handleNavClick}
+          >
+            Explore Map
+          </Link>
+          <Link
+            className="l"
             href="#about"
             data-scroll
             onClick={handleNavClick}
