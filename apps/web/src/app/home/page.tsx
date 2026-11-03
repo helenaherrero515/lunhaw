@@ -81,7 +81,7 @@ export default function HomePage() {
     }
   }, [isAuthenticated]);
 
-  if (isAuthenticated === false) {
+  if (!isAuthenticated) {
     return (
       <div
         style={{
@@ -93,7 +93,7 @@ export default function HomePage() {
           background: "#F7F7F0",
         }}
       >
-        <p>Redirecting to Lunhaw...</p>
+        <p>{isAuthenticated === false ? "Redirecting to Lunhaw..." : "Loading Lunhaw..."}</p>
       </div>
     );
   }
