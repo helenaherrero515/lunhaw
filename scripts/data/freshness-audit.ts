@@ -346,8 +346,9 @@ export function main(): void {
   const args = process.argv.slice(2);
   let inputPath = path.resolve('data/normalized-libraries.json');
   let reportPath = path.resolve('docs/freshness-audit-report.md');
+  let jsonPath: string | null = null;
   let threshold = FRESHNESS_THRESHOLD_DAYS;
-
+  let failOnStale = false;
   const inIndex = args.indexOf('--input');
   if (inIndex !== -1 && args[inIndex + 1]) {
     inputPath = path.resolve(args[inIndex + 1]);
@@ -361,6 +362,15 @@ export function main(): void {
   const thIndex = args.indexOf('--threshold');
   if (thIndex !== -1 && args[thIndex + 1]) {
     threshold = parseInt(args[thIndex + 1], 10);
+  }
+
+  const jsonIndex = args.indexOf('--json');
+  if (jsonIndex !== -1 && args[jsonIndex + 1]) {
+    jsonPath = path.resolve(args[jsonIndex + 1]);
+  }
+
+  if (args.includes('--fail-on-stale')) {
+    failOnStale = true;
   }
 
   let dataset: NormalizedCivicDataset;
@@ -380,6 +390,15 @@ export function main(): void {
   }
   fs.writeFileSync(reportPath, markdownReport, 'utf-8');
 
+  if (jsonPath) {
+    const jsonDir = path.dirname(jsonPath);
+    if (!fs.existsSync(jsonDir)) {
+      fs.mkdirSync(jsonDir, { recursive: true });
+    }
+    fs.writeFileSync(jsonPath, JSON.stringify(audit, null, 2), 'utf-8');
+    console.log(`JSON summary saved:         ${jsonPath}`);
+  }
+
   console.log('=== Verification Freshness Audit Summary (B-M1-03) ===');
   console.log(`Audit Reference Date:       ${audit.auditDate}`);
   console.log(`Freshness Window:           ${audit.thresholdDays} Days`);
@@ -388,6 +407,10 @@ export function main(): void {
   console.log(`Stale Facilities (> 180d):  ${audit.staleCount}`);
   console.log(`Pending / Field Survey:     ${audit.pendingCount}`);
   console.log(`Report successfully saved:  ${reportPath}`);
+
+  if (failOnStale && audit.staleCount > 0) {
+    process.exitCode = 1;
+  }
 }
 
 // Auto-run when executed directly

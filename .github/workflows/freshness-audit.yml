@@ -1,0 +1,115 @@
+name: Verification Freshness Audit (BR-002)
+
+# Scheduled daily GitHub Actions cron workflow at 01:00 UTC (D-M3-01).
+# Executes verification freshness audit (BR-002) and opens/updates a GitHub issue
+# if stale facilities exceeding 180 days are detected.
+
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+    inputs:
+      threshold_days:
+        description: "Freshness validity window in days (default: 180 per BR-002)"
+        required: false
+        default: "180"
+      force_issue:
+        description: "Force issue creation even if no stale records are found"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  freshness-audit:
+    name: Execute 180-Day Data Freshness Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Freshness Audit Pipeline
+        id: run_audit
+        env:
+          THRESHOLD_DAYS: ${{ inputs.threshold_days || '180' }}
+        run: |
+          echo "Running verification freshness audit with threshold: ${THRESHOLD_DAYS} days..."
+          node scripts/data/freshness-audit.ts \
+            --threshold "${THRESHOLD_DAYS}" \
+            --report docs/freshness-audit-report.md \
+            --json docs/freshness-audit-summary.json
+
+          STALE_COUNT=$(node -e "const d = require('./docs/freshness-audit-summary.json'); console.log(d.staleCount || 0);")
+          TOTAL_COUNT=$(node -e "const d = require('./docs/freshness-audit-summary.json'); console.log(d.totalAudited || 0);")
+          COMPLIANCE=$(node -e "const d = require('./docs/freshness-audit-summary.json'); console.log(d.overallComplianceRate || 0);")
+
+          echo "stale_count=${STALE_COUNT}" >> "$GITHUB_OUTPUT"
+          echo "total_count=${TOTAL_COUNT}" >> "$GITHUB_OUTPUT"
+          echo "compliance_rate=${COMPLIANCE}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish Job Summary to Step Summary
+        run: |
+          cat << 'EOF' >> "$GITHUB_STEP_SUMMARY"
+          ## 180-Day Verification Freshness Audit Results (BR-002)
+
+          | Metric | Value | Target | Status |
+          |---|---|---|---|
+          | **Total Facilities Audited** | `${{ steps.run_audit.outputs.total_count }}` | — | Complete |
+          | **Stale Facilities (> 180 Days)** | `${{ steps.run_audit.outputs.stale_count }}` | `0` | ${{ steps.run_audit.outputs.stale_count > 0 && 'FLAGGED' || 'COMPLIANT' }} |
+          | **Compliance Rate** | `${{ steps.run_audit.outputs.compliance_rate }}%` | `>= 80%` | ${{ steps.run_audit.outputs.compliance_rate >= 80 && 'OK' || 'NEEDS ATTENTION' }} |
+
+          *Full audit report stored in `docs/freshness-audit-report.md`.*
+          EOF
+
+      - name: Upload Audit Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: freshness-audit-report
+          path: |
+            docs/freshness-audit-report.md
+            docs/freshness-audit-summary.json
+          retention-days: 30
+
+      - name: Create or Update GitHub Issue for Stale Facilities
+        if: steps.run_audit.outputs.stale_count > 0 || inputs.force_issue == true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STALE_COUNT: ${{ steps.run_audit.outputs.stale_count }}
+        run: |
+          echo "Processing alert for ${STALE_COUNT} stale facilities..."
+
+          # Ensure required labels exist
+          gh label create "data-quality" --description "Civic data quality & freshness" --color "E99695" --force 2>/dev/null || true
+          gh label create "automated" --description "Created by automated workflow" --color "0075ca" --force 2>/dev/null || true
+          gh label create "freshness-audit" --description "BR-002 verification freshness alerts" --color "D93F0B" --force 2>/dev/null || true
+
+          # Search for an existing open audit issue to prevent duplicate issue spam
+          EXISTING_ISSUE=$(gh issue list \
+            --search "in:title [BR-002] Stale Facilities Detected" \
+            --state open \
+            --json number \
+            --jq '.[0].number' 2>/dev/null || echo "")
+
+          ISSUE_TITLE="[BR-002] Stale Facilities Detected: 180-Day Verification Freshness Audit ($(date -u +%Y-%m-%d))"
+
+          if [ -n "$EXISTING_ISSUE" ] && [ "$EXISTING_ISSUE" != "null" ]; then
+            echo "Found existing open issue #${EXISTING_ISSUE}. Updating with latest audit report comment..."
+            gh issue comment "$EXISTING_ISSUE" --body-file docs/freshness-audit-report.md
+            echo "Updated issue #${EXISTING_ISSUE} successfully."
+          else
+            echo "No open issue found. Creating new issue..."
+            NEW_ISSUE_URL=$(gh issue create \
+              --title "$ISSUE_TITLE" \
+              --body-file docs/freshness-audit-report.md \
+              --label "data-quality,freshness-audit,automated")
+            echo "Created issue: ${NEW_ISSUE_URL}"
+          fi
