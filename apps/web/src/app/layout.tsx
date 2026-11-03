@@ -1,21 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { MedievalSharp, Kufam } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-
-const medievalSharp = MedievalSharp({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const kufam = Kufam({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-ui",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Lunhaw",
@@ -38,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`js ${medievalSharp.variable} ${kufam.variable}`}>
+    <html lang="en" className="js">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

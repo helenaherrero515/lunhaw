@@ -1,0 +1,31 @@
+name = "lunhaw-api"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "development"
+CORS_ORIGIN = "*"
+RATE_LIMIT_PER_MINUTE = "60"
+
+[env.staging]
+name = "lunhaw-api-staging"
+routes = [
+  { pattern = "staging-api.lunhaw.ph/*", zone_name = "lunhaw.ph" }
+]
+
+[env.staging.vars]
+ENVIRONMENT = "staging"
+CORS_ORIGIN = "https://staging.lunhaw.ph"
+RATE_LIMIT_PER_MINUTE = "60"
+
+[env.production]
+name = "lunhaw-api-production"
+routes = [
+  { pattern = "api.lunhaw.ph/*", zone_name = "lunhaw.ph" }
+]
+
+[env.production.vars]
+ENVIRONMENT = "production"
+CORS_ORIGIN = "https://lunhaw.ph"
+RATE_LIMIT_PER_MINUTE = "60"

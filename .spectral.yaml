@@ -1,0 +1,66 @@
+# Spectral OpenAPI Linter Configuration for Lunhaw
+# Enforces OpenAPI 3.1 validity, platform neutrality (INV-003),
+# standard RFC 7807 problem details, and standard HTTP status codes.
+
+extends:
+  - "spectral:oas"
+
+rules:
+  # Enforce platform neutrality (INV-003): no client-specific prefixes or markup
+  no-client-specific-fields:
+    description: "Schemas and parameters must remain platform-neutral (INV-003) and must not contain client-specific prefixes or HTML formatting properties."
+    message: "Property '{{property}}' violates platform-neutrality (INV-003). Do not couple schema to client platforms or markup."
+    severity: error
+    given: "$..properties"
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        notMatch: "^(html|dom_|ios_|android_|mobile_|web_)"
+
+  # Prohibit HTML tags inside OpenAPI descriptions
+  no-html-in-descriptions:
+    description: "Descriptions must not contain raw HTML tags; use plain Markdown instead."
+    message: "Description contains raw HTML tags: {{value}}"
+    severity: warn
+    given: "$..description"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "<[a-zA-Z][^>]*>"
+
+  # Enforce standard HTTP status codes
+  standard-status-codes:
+    description: "Responses must use standard HTTP status codes (200, 201, 204, 400, 401, 403, 404, 429, 500)."
+    message: "HTTP status code '{{property}}' is non-standard. Use standard RFC status codes."
+    severity: error
+    given: "$.paths.*.*.responses"
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        match: "^(200|201|204|400|401|403|404|429|500|default)$"
+
+  # Error responses must adhere to RFC 7807 Problem Details
+  problem-details-for-errors:
+    description: "4xx and 5xx error responses must provide application/problem+json content."
+    message: "Error response '{{property}}' should define application/problem+json content."
+    severity: warn
+    given: "$.paths.*.*.responses[?(@property >= '400' && @property < '600')].content"
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        match: "^application/(problem\\+)?json$"
+
+  # Mandatory advisory disclaimer schema check (INV-002)
+  mandatory-facility-disclaimer:
+    description: "PlaceDetail schema must declare and require the facility advisory disclaimer (INV-002)."
+    message: "PlaceDetail is missing required advisory disclaimer property."
+    severity: error
+    given: "$.components.schemas.PlaceDetail.allOf[?(@.properties && @.properties.disclaimer)]"
+    then:
+      field: "required"
+      function: defined
+
+  oas3-unused-component: "off"

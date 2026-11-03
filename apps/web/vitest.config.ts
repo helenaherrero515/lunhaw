@@ -13,6 +13,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@lunhaw/ui": path.resolve(__dirname, "../../packages/ui/src"),
     },
   },
 });

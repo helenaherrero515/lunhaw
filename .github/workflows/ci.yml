@@ -6,8 +6,13 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-test:
+    name: CI Pipeline (Lint, Typecheck, Test, Build)
     runs-on: ubuntu-latest
 
     steps:
@@ -28,11 +33,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run Lint
+      - name: Run Workspace Linting
         run: pnpm lint
+
+      - name: Run OpenAPI Contract Linting (Spectral)
+        run: pnpm lint:api
+
+      - name: Run TypeScript Typecheck
+        run: |
+          pnpm --filter @lunhaw/ui exec tsc --noEmit
+          pnpm --filter @lunhaw/api exec tsc --noEmit
+          pnpm --filter web exec tsc --noEmit
 
       - name: Run Vitest Unit & Component Tests
         run: pnpm test
 
-      - name: Build Web Application
+      - name: Build Web Application & Packages
         run: pnpm build
