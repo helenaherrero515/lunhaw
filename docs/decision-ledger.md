@@ -30,6 +30,15 @@
 
 ## 3. Pivots & decisions (newest first, append at top)
 
+### 2026-11-03 — ADR-003: Selection of React Native (Expo) for Phase 2 Mobile Application (C-M4-01)
+- **What changed:** Evaluated React Native (Expo) vs Flutter vs Progressive Web App (PWA) across monorepo code reuse, $0/month maintenance, offline vector map performance, and low-end Android responsiveness. Formally selected React Native with Expo (SDK 52+ with Fabric/TurboModules).
+- **Pivot type:** Architecture / Mobile Framework Selection.
+- **From → To:** Unresolved PRD §12 open question on mobile framework → Canonical selection of React Native (Expo) sharing 85%+ TypeScript math models and schemas.
+- **Why:** Enables 100% direct code reuse of pure-math engines (EQ-001 Green Index, EQ-002 Shade, EQ-003 Walking Duration, EQ-004 LTFRB Fare Matrix) and Zod guardrails, native hardware-accelerated OpenFreeMap vector tile rendering, free EAS/GitHub Actions build pipelines, and prevents code divergence.
+- **Rejected approaches:**
+  1. *Flutter (Google):* Rejected due to zero code reuse, requiring duplicate mathematical reimplementations in Dart and high ongoing synchronization risk.
+  2. *Progressive Web App (PWA) only:* Rejected due to severe iOS Safari background cache evictions, WebGL memory constraints on mobile browsers, and lack of native haptic/touch physics.
+
 ### 2026-11-03 — ADR-002: LGU Civic Data Licensing, FOI Framework & Multi-Tier Cadence (B-M1-04)
 - **What changed:** Established open data licensing terms (ODbL 1.0 / CC-BY 4.0 Collective Database doctrine), standardized eFOI request protocol under EO No. 2, s. 2016, and stratified all 17 NCR LGUs into 3 update cadence tiers (Tier A: 90 days, Tier B: 180 days, Tier C: 360 days) with automated 180-day freshness auditing (`BR-002`).
 - **Pivot type:** Governance / Data Licensing & Intake Architecture.
