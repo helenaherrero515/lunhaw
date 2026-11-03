@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { sanitizedLogger } from './middleware/sanitized-logger.js';
+import { rateLimiter } from './middleware/rate-limiter.js';
 import { healthRoute } from './routes/health.js';
 import { placesRoute } from './routes/places.js';
 import { commuteRoute } from './routes/commute.js';
@@ -26,7 +27,10 @@ app.use('*', async (c, next) => {
 // 2. Privacy-Preserving Sanitized Request Logging (RA 10173 & Invariant T-003)
 app.use('*', sanitizedLogger());
 
-// 3. Mount Routes (Support both root and /v1 versioned prefix)
+// 3. Edge Token-Bucket Rate Limiter (60 req/min per IP per T-004 & A-M1-04)
+app.use('*', rateLimiter());
+
+// 4. Mount Routes (Support both root and /v1 versioned prefix)
 app.route('/health', healthRoute);
 app.route('/places', placesRoute);
 app.route('/commute', commuteRoute);
@@ -40,7 +44,7 @@ app.route('/v1/commute', commuteRoute);
 app.route('/v1/locations', locationsRoute);
 app.route('/v1/saved', savedRoute);
 
-// 4. RFC 7807 404 Not Found Handler
+// 5. RFC 7807 404 Not Found Handler
 app.notFound((c) => {
   const problem: ProblemDetails = {
     type: 'https://api.lunhaw.ph/errors/ERR_ROUTE_NOT_FOUND',

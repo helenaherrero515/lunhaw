@@ -1,0 +1,4127 @@
+{
+  "places": [
+    {
+      "id": "f0010000-0000-0000-0000-000000000001",
+      "name": "National Library of the Philippines (NLP) - Main Complex",
+      "category": "library",
+      "description": "The official national library of the Philippines with premier Filipiniana and public reading facilities.",
+      "lgu_city": "Manila",
+      "barangay": "Barangay 666",
+      "address": "T.M. Kalaw St, Ermita, Manila",
+      "coordinates": {
+        "lat": 14.5828,
+        "lng": 120.9822
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9822,
+          14.5828
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000001",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000002",
+      "name": "Manila City Library - Main Branch",
+      "category": "library",
+      "description": "Central library branch of the City of Manila offering quiet reading areas and municipal references.",
+      "lgu_city": "Manila",
+      "barangay": "Barangay 659",
+      "address": "Mehan Garden, Antonio Villegas St, Ermita, Manila",
+      "coordinates": {
+        "lat": 14.5935,
+        "lng": 120.9818
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9818,
+          14.5935
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000002",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000003",
+      "name": "Barangay 660 Community Reading Nook",
+      "category": "reading_center",
+      "description": "Neighborhood study center for barangay youth and residents.",
+      "lgu_city": "Manila",
+      "barangay": "Barangay 660",
+      "address": "Barangay 660 Hall, San Marcelino St, Ermita, Manila",
+      "coordinates": {
+        "lat": 14.5872,
+        "lng": 120.9875
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9875,
+          14.5872
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000003",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000004",
+      "name": "Quezon City Public Library - Main Branch",
+      "category": "library",
+      "description": "Premier public library facility in Quezon City featuring multi-tiered study areas, high-speed Wi-Fi, and reference collections.",
+      "lgu_city": "Quezon City",
+      "barangay": "Central",
+      "address": "City Hall Complex, Mayaman St, Diliman, Quezon City",
+      "coordinates": {
+        "lat": 14.6468,
+        "lng": 121.0504
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0504,
+          14.6468
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000004",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000005",
+      "name": "Quezon City Public Library - Cubao Branch",
+      "category": "library",
+      "description": "District library serving commuters and students in the Cubao and Murphy commercial hub.",
+      "lgu_city": "Quezon City",
+      "barangay": "Socorro",
+      "address": "15th Ave, Murphy, Cubao, Quezon City",
+      "coordinates": {
+        "lat": 14.6201,
+        "lng": 121.0612
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0612,
+          14.6201
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000005",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000006",
+      "name": "Barangay Pinyahan Community Reading Center",
+      "category": "reading_center",
+      "description": "Neighborhood study center providing study desks, children books, and community homework assistance.",
+      "lgu_city": "Quezon City",
+      "barangay": "Pinyahan",
+      "address": "Malakas St, Brgy Pinyahan, Quezon City",
+      "coordinates": {
+        "lat": 14.6419,
+        "lng": 121.0521
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0521,
+          14.6419
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000006",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000007",
+      "name": "Caloocan City Public Library - South Main",
+      "category": "library",
+      "description": "Primary municipal library of South Caloocan offering academic references and study areas.",
+      "lgu_city": "Caloocan",
+      "barangay": "Barangay 1",
+      "address": "10th Ave, Grace Park East, Caloocan City",
+      "coordinates": {
+        "lat": 14.6543,
+        "lng": 120.9902
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9902,
+          14.6543
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000007",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000008",
+      "name": "Barangay 171 Bagumbong Reading Center",
+      "category": "reading_center",
+      "description": "Community study haven in North Caloocan providing homework nooks for local youth.",
+      "lgu_city": "Caloocan",
+      "barangay": "Bagong Silang",
+      "address": "Bagumbong Road, Brgy 171, North Caloocan",
+      "coordinates": {
+        "lat": 14.7521,
+        "lng": 121.0315
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0315,
+          14.7521
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000008",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000009",
+      "name": "Las Piñas City Public Library",
+      "category": "library",
+      "description": "City public library serving students and book clubs in the southern metro corridor.",
+      "lgu_city": "Las Piñas",
+      "barangay": "Pamplona Uno",
+      "address": "Alabang-Zapote Rd, Pamplona Tres, Las Piñas",
+      "coordinates": {
+        "lat": 14.4485,
+        "lng": 120.9856
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9856,
+          14.4485
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000009",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000010",
+      "name": "Barangay Almanza Uno Study Nook",
+      "category": "reading_center",
+      "description": "Quiet neighborhood study corner with basic reference materials.",
+      "lgu_city": "Las Piñas",
+      "barangay": "Almanza Uno",
+      "address": "Almanza Uno Barangay Hall Compound, Las Piñas",
+      "coordinates": {
+        "lat": 14.4321,
+        "lng": 121.0189
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0189,
+          14.4321
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000010",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000011",
+      "name": "Makati City Public Library - Main Branch",
+      "category": "library",
+      "description": "Comprehensive digital and physical research library in Makati City Hall.",
+      "lgu_city": "Makati",
+      "barangay": "Poblacion",
+      "address": "8th Floor, Makati City Hall New Building, J.P. Rizal St, Poblacion, Makati",
+      "coordinates": {
+        "lat": 14.5701,
+        "lng": 121.0305
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0305,
+          14.5701
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000011",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000012",
+      "name": "Barangay Bel-Air Community Study Hub",
+      "category": "reading_center",
+      "description": "Well-appointed quiet study room with high-speed internet in Bel-Air Village.",
+      "lgu_city": "Makati",
+      "barangay": "Bel-Air",
+      "address": "Bel-Air Community Center, Constellation St, Makati",
+      "coordinates": {
+        "lat": 14.5612,
+        "lng": 121.0289
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0289,
+          14.5612
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000012",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000013",
+      "name": "Malabon City Public Library",
+      "category": "library",
+      "description": "Municipal library of Malabon providing historical archives and public study seats.",
+      "lgu_city": "Malabon",
+      "barangay": "Concepcion",
+      "address": "F. Sevilla Blvd, San Agustin, Malabon City",
+      "coordinates": {
+        "lat": 14.6625,
+        "lng": 120.9567
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9567,
+          14.6625
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000013",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000014",
+      "name": "Barangay Catmon Reading Center",
+      "category": "reading_center",
+      "description": "Community reading and homework center for neighborhood school children.",
+      "lgu_city": "Malabon",
+      "barangay": "Catmon",
+      "address": "Hernandez St, Brgy Catmon, Malabon City",
+      "coordinates": {
+        "lat": 14.6678,
+        "lng": 120.9634
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9634,
+          14.6678
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000014",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000015",
+      "name": "Mandaluyong City Public Library",
+      "category": "library",
+      "description": "Central library branch at Maysilo Circle with quiet research spaces and reference books.",
+      "lgu_city": "Mandaluyong",
+      "barangay": "Plainview",
+      "address": "Executive Building, City Hall Complex, Maysilo Circle, Plainview, Mandaluyong",
+      "coordinates": {
+        "lat": 14.5789,
+        "lng": 121.0345
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0345,
+          14.5789
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000015",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000016",
+      "name": "Barangay Highway Hills Reading Center",
+      "category": "reading_center",
+      "description": "Barangay homework center and reading room near EDSA.",
+      "lgu_city": "Mandaluyong",
+      "barangay": "Highway Hills",
+      "address": "Calbayog St, Brgy Highway Hills, Mandaluyong",
+      "coordinates": {
+        "lat": 14.5762,
+        "lng": 121.0498
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0498,
+          14.5762
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000016",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000017",
+      "name": "Marikina City Library - Main",
+      "category": "library",
+      "description": "Renowned public library known for disciplined study atmosphere and shoe industry archives.",
+      "lgu_city": "Marikina",
+      "barangay": "Santo Niño",
+      "address": "V. Gomez St, Santo Niño, Marikina City",
+      "coordinates": {
+        "lat": 14.6402,
+        "lng": 121.0967
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0967,
+          14.6402
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000017",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000018",
+      "name": "Barangay Concepcion Uno Community Reading Center",
+      "category": "reading_center",
+      "description": "Community study haven supporting high school and college students.",
+      "lgu_city": "Marikina",
+      "barangay": "Concepcion Uno",
+      "address": "Bayan-Bayanan Ave, Concepcion Uno, Marikina",
+      "coordinates": {
+        "lat": 14.6534,
+        "lng": 121.1045
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.1045,
+          14.6534
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000018",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000019",
+      "name": "Muntinlupa City Public Library",
+      "category": "library",
+      "description": "Modern city library facility in the southern gateway of Metro Manila.",
+      "lgu_city": "Muntinlupa",
+      "barangay": "Putatan",
+      "address": "Plaza Central, City Hall Compound, Putatan, Muntinlupa",
+      "coordinates": {
+        "lat": 14.3989,
+        "lng": 121.0456
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0456,
+          14.3989
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000019",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000020",
+      "name": "Barangay Alabang Community Reading Center",
+      "category": "reading_center",
+      "description": "Quiet study corner near Starmall and transport terminals.",
+      "lgu_city": "Muntinlupa",
+      "barangay": "Alabang",
+      "address": "Montillano St, Alabang, Muntinlupa",
+      "coordinates": {
+        "lat": 14.4198,
+        "lng": 121.0489
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0489,
+          14.4198
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000020",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000021",
+      "name": "Navotas City Public Library",
+      "category": "library",
+      "description": "Municipal library providing coastal community students with reference books and internet.",
+      "lgu_city": "Navotas",
+      "barangay": "San Jose",
+      "address": "M. Naval St, San Jose, Navotas City",
+      "coordinates": {
+        "lat": 14.6589,
+        "lng": 120.9487
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9487,
+          14.6589
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000021",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000022",
+      "name": "Barangay Bagumbayan South Reading Nook",
+      "category": "reading_center",
+      "description": "Community reading nook supporting public school pupils.",
+      "lgu_city": "Navotas",
+      "barangay": "Bagumbayan South",
+      "address": "Bagumbayan South Barangay Hall, Navotas",
+      "coordinates": {
+        "lat": 14.6545,
+        "lng": 120.9462
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9462,
+          14.6545
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000022",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000023",
+      "name": "Parañaque City Public Library",
+      "category": "library",
+      "description": "Central library branch of Parañaque City with children section and study desks.",
+      "lgu_city": "Parañaque",
+      "barangay": "Don Bosco",
+      "address": "San Antonio Ave, San Antonio Valley 1, Parañaque",
+      "coordinates": {
+        "lat": 14.4985,
+        "lng": 121.0145
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0145,
+          14.4985
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000023",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000024",
+      "name": "Barangay BF Homes Study Center",
+      "category": "reading_center",
+      "description": "Quiet study center with air-conditioning and Wi-Fi for local students.",
+      "lgu_city": "Parañaque",
+      "barangay": "BF Homes",
+      "address": "President Ave, BF Homes, Parañaque",
+      "coordinates": {
+        "lat": 14.4567,
+        "lng": 121.0212
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0212,
+          14.4567
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000024",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000025",
+      "name": "Pasay City Public Library",
+      "category": "library",
+      "description": "Municipal library located within the Pasay City Hall complex providing study carrels.",
+      "lgu_city": "Pasay",
+      "barangay": "San Rafael",
+      "address": "F.B. Harrison St, Pasay City Hall Compound, Pasay City",
+      "coordinates": {
+        "lat": 14.5421,
+        "lng": 120.9989
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9989,
+          14.5421
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000025",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000026",
+      "name": "Barangay 76 Community Reading Room",
+      "category": "reading_center",
+      "description": "Community study haven for local high school students near EDSA-Taft.",
+      "lgu_city": "Pasay",
+      "barangay": "Barangay 76",
+      "address": "Tramo St, Brgy 76, Pasay City",
+      "coordinates": {
+        "lat": 14.5385,
+        "lng": 121.0025
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0025,
+          14.5385
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000026",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000027",
+      "name": "Pasig City Public Library - Main Branch",
+      "category": "library",
+      "description": "Main public library of Pasig featuring digital terminals and spacious research desks.",
+      "lgu_city": "Pasig",
+      "barangay": "Caniogan",
+      "address": "Caruncho Ave, Malinao, Pasig City",
+      "coordinates": {
+        "lat": 14.5589,
+        "lng": 121.0789
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0789,
+          14.5589
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000027",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000028",
+      "name": "Barangay San Antonio Reading Center",
+      "category": "reading_center",
+      "description": "Award-winning community reading center offering quiet study environment and charging outlets.",
+      "lgu_city": "Pasig",
+      "barangay": "San Antonio",
+      "address": "San Antonio Community Complex, Pasig",
+      "coordinates": {
+        "lat": 14.5823,
+        "lng": 121.0611
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0611,
+          14.5823
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000028",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000029",
+      "name": "Pateros Municipal Library",
+      "category": "library",
+      "description": "The sole municipal library of Metro Manila only municipality, preserving local history and student resources.",
+      "lgu_city": "Pateros",
+      "barangay": "Santa Ana",
+      "address": "G. de Borja St, Poblacion, Pateros",
+      "coordinates": {
+        "lat": 14.5456,
+        "lng": 121.0689
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0689,
+          14.5456
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000029",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000030",
+      "name": "Barangay Aguho Community Reading Center",
+      "category": "reading_center",
+      "description": "Barangay reading room and study space for neighborhood schoolchildren.",
+      "lgu_city": "Pateros",
+      "barangay": "Aguho",
+      "address": "M. Almeda St, Brgy Aguho, Pateros",
+      "coordinates": {
+        "lat": 14.5422,
+        "lng": 121.0654
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0654,
+          14.5422
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000030",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000031",
+      "name": "San Juan City Public Library",
+      "category": "library",
+      "description": "City public library near Pinaglabanan Shrine offering extensive history and reference collections.",
+      "lgu_city": "San Juan",
+      "barangay": "Addition Hills",
+      "address": "Pinaglabanan St, Corazon de Jesus, San Juan City",
+      "coordinates": {
+        "lat": 14.6023,
+        "lng": 121.0334
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0334,
+          14.6023
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000031",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000032",
+      "name": "Barangay Greenhills Community Learning Kiosk",
+      "category": "reading_center",
+      "description": "Quiet study kiosk for students and community tutors.",
+      "lgu_city": "San Juan",
+      "barangay": "Greenhills",
+      "address": "Annapolis St, Greenhills, San Juan City",
+      "coordinates": {
+        "lat": 14.6045,
+        "lng": 121.0512
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0512,
+          14.6045
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000032",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000033",
+      "name": "Taguig City Public Library",
+      "category": "library",
+      "description": "Modern public library facility at Taguig City Hall serving students across Bonifacio and southern districts.",
+      "lgu_city": "Taguig",
+      "barangay": "Ususan",
+      "address": "Gen. Santos Ave, Tuktukan, Taguig City Hall Compound",
+      "coordinates": {
+        "lat": 14.5278,
+        "lng": 121.0589
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0589,
+          14.5278
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000033",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000034",
+      "name": "Barangay Fort Bonifacio Community Reading Center",
+      "category": "reading_center",
+      "description": "Modern community study nook in BGC with charging stations and Wi-Fi access.",
+      "lgu_city": "Taguig",
+      "barangay": "Fort Bonifacio",
+      "address": "32nd St, BGC, Taguig City",
+      "coordinates": {
+        "lat": 14.5512,
+        "lng": 121.0545
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          121.0545,
+          14.5512
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000034",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000035",
+      "name": "Valenzuela Academic Center for Excellence (ValACE) - Main Library",
+      "category": "library",
+      "description": "State-of-the-art public library and academic study center operating extended hours for Valenzuelano students.",
+      "lgu_city": "Valenzuela",
+      "barangay": "Karuhatan",
+      "address": "MacArthur Highway, Malinta, Valenzuela City",
+      "coordinates": {
+        "lat": 14.6989,
+        "lng": 120.9765
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9765,
+          14.6989
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000035",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    },
+    {
+      "id": "f0010000-0000-0000-0000-000000000036",
+      "name": "Barangay Karuhatan Community Reading Nook",
+      "category": "reading_center",
+      "description": "Community study haven for local high school students in Karuhatan.",
+      "lgu_city": "Valenzuela",
+      "barangay": "Karuhatan",
+      "address": "Karuhatan Road, Valenzuela City",
+      "coordinates": {
+        "lat": 14.6923,
+        "lng": 120.9712
+      },
+      "point_geojson": {
+        "type": "Point",
+        "coordinates": [
+          120.9712,
+          14.6923
+        ]
+      },
+      "boundary_geojson": null,
+      "verification_id": "v0010000-0000-0000-0000-000000000036",
+      "created_at": "2026-11-03T05:01:15.625Z",
+      "updated_at": "2026-11-03T05:01:15.625Z"
+    }
+  ],
+  "library_details": [
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000001",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 450,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free public access. Valid government or student ID required for National Library Card issuance.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000001"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000002",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 120,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free admission with valid ID. Open to all students and researchers.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000002"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000003",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 18,
+      "has_power_outlets": true,
+      "has_wifi": false,
+      "has_aircon": false,
+      "access_requirements": "Open to barangay residents and local students.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000003"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000004",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 280,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Open to the general public. Free library registration card issued upon presentation of government/student ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000004"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000005",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 65,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free admission with valid student or QC resident ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000005"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000006",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 24,
+      "has_power_outlets": true,
+      "has_wifi": false,
+      "has_aircon": true,
+      "access_requirements": "Barangay ID or Student ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000006"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000007",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 90,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free entry for students and residents. Library card issued upon registration.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000007"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000008",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 20,
+      "has_power_outlets": true,
+      "has_wifi": false,
+      "has_aircon": false,
+      "access_requirements": "Open to community youth and students.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000008"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000009",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 80,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Valid government ID or school ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000009"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000010",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 15,
+      "has_power_outlets": false,
+      "has_wifi": false,
+      "has_aircon": false,
+      "access_requirements": "Barangay resident verification.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000010"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000011",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 160,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Open to the public. Makatizen card or valid photo ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000011"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000012",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 35,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Bel-Air Village or Makati resident ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000012"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000013",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 70,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free admission with valid student or government ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000013"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000014",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 16,
+      "has_power_outlets": true,
+      "has_wifi": false,
+      "has_aircon": false,
+      "access_requirements": "Open to barangay students.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000014"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000015",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 110,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free entry for all students and researchers. Valid ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000015"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000016",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 22,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Barangay ID or Student ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000016"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000017",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 140,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Open to the public. Free admission with registration.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000017"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000018",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 28,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": false,
+      "access_requirements": "Student ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000018"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000019",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 130,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Open to the public with student or government photo ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000019"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000020",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 18,
+      "has_power_outlets": true,
+      "has_wifi": false,
+      "has_aircon": false,
+      "access_requirements": "Local resident or student ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000020"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000021",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 75,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free admission with valid identification.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000021"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000022",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 12,
+      "has_power_outlets": false,
+      "has_wifi": false,
+      "has_aircon": false,
+      "access_requirements": "Free for neighborhood pupils.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000022"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000023",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 95,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Open to the public. Valid ID required for registration.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000023"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000024",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 30,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Barangay resident or student ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000024"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000025",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 85,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free admission with valid government or school ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000025"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000026",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 15,
+      "has_power_outlets": true,
+      "has_wifi": false,
+      "has_aircon": false,
+      "access_requirements": "Free entry for barangay residents.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000026"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000027",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 180,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free public access. Pasig Pass or student ID required for Wi-Fi access.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000027"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000028",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 25,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Valid student or government-issued ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000028"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000029",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 45,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free admission with valid student or resident ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000029"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000030",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 14,
+      "has_power_outlets": true,
+      "has_wifi": false,
+      "has_aircon": false,
+      "access_requirements": "Barangay resident verification.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000030"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000031",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 80,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Free admission with valid identification.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000031"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000032",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 20,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Valid student ID or Greenhills residency.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000032"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000033",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 150,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Open to the public with government or school ID.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000033"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000034",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 30,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Student ID or Taguig Love Card required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000034"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000035",
+      "is_barangay_reading_center": false,
+      "desk_capacity": 350,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Valenzuela City resident ID, student ID, or registered library pass.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000035"
+    },
+    {
+      "place_id": "f0010000-0000-0000-0000-000000000036",
+      "is_barangay_reading_center": true,
+      "desk_capacity": 22,
+      "has_power_outlets": true,
+      "has_wifi": true,
+      "has_aircon": true,
+      "access_requirements": "Student ID required.",
+      "fee_description": "Free",
+      "verification_id": "v0010000-0000-0000-0000-000000000036"
+    }
+  ],
+  "operating_hours": [
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000001",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000001",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "NLP Public Reading Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000001",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "NLP Public Reading Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000001",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "NLP Public Reading Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000001",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "NLP Public Reading Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000001",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "NLP Public Reading Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000001",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000001"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000002",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000002"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000002",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Manila Public Reading Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000002"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000002",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Manila Public Reading Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000002"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000002",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Manila Public Reading Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000002"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000002",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Manila Public Reading Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000002"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000002",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Manila Public Reading Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000002"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000002",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000002"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000003",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000003"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000003",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Office Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000003"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000003",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Office Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000003"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000003",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Office Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000003"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000003",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Office Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000003"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000003",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Office Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000003"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000003",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000003"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000004",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000004"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000004",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "QCPL Diliman Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000004"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000004",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "QCPL Diliman Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000004"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000004",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "QCPL Diliman Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000004"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000004",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "QCPL Diliman Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000004"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000004",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "QCPL Diliman Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000004"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000004",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "16:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000004"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000005",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000005"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000005",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Branch Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000005"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000005",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Branch Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000005"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000005",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Branch Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000005"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000005",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Branch Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000005"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000005",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Branch Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000005"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000005",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000005"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000006",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000006"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000006",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000006"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000006",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000006"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000006",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000006"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000006",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000006"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000006",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000006"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000006",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000006"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000007",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000007"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000007",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Regular Municipal Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000007"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000007",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Regular Municipal Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000007"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000007",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Regular Municipal Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000007"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000007",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Regular Municipal Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000007"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000007",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Regular Municipal Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000007"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000007",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000007"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000008",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000008"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000008",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000008"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000008",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000008"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000008",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000008"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000008",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000008"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000008",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000008"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000008",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000008"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000009",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000009"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000009",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "City Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000009"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000009",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "City Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000009"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000009",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "City Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000009"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000009",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "City Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000009"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000009",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "City Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000009"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000009",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000009"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000010",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000010"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000010",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000010"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000010",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000010"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000010",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000010"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000010",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000010"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000010",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000010"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000010",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000010"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000011",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000011"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000011",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Makati City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000011"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000011",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Makati City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000011"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000011",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Makati City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000011"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000011",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Makati City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000011"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000011",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Makati City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000011"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000011",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "15:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000011"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000012",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000012"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000012",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Community Hub Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000012"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000012",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Community Hub Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000012"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000012",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Community Hub Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000012"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000012",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Community Hub Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000012"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000012",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Community Hub Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000012"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000012",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000012"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000013",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000013"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000013",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Malabon Regular Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000013"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000013",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Malabon Regular Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000013"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000013",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Malabon Regular Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000013"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000013",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Malabon Regular Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000013"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000013",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Malabon Regular Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000013"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000013",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000013"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000014",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000014"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000014",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000014"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000014",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000014"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000014",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000014"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000014",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000014"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000014",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000014"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000014",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000014"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000015",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000015"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000015",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Maysilo Circle Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000015"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000015",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Maysilo Circle Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000015"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000015",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Maysilo Circle Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000015"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000015",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Maysilo Circle Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000015"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000015",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Maysilo Circle Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000015"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000015",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000015"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000016",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000016"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000016",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Reading Center Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000016"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000016",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Reading Center Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000016"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000016",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Reading Center Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000016"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000016",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Reading Center Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000016"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000016",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Reading Center Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000016"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000016",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000016"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000017",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000017"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000017",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Marikina Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000017"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000017",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Marikina Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000017"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000017",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Marikina Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000017"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000017",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Marikina Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000017"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000017",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Marikina Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000017"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000017",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "16:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000017"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000018",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000018"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000018",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000018"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000018",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000018"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000018",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000018"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000018",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000018"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000018",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000018"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000018",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000018"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000019",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000019"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000019",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Muntinlupa City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000019"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000019",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Muntinlupa City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000019"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000019",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Muntinlupa City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000019"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000019",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Muntinlupa City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000019"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000019",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Muntinlupa City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000019"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000019",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000019"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000020",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000020"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000020",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000020"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000020",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000020"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000020",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000020"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000020",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000020"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000020",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000020"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000020",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000020"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000021",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000021"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000021",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Navotas Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000021"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000021",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Navotas Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000021"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000021",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Navotas Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000021"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000021",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Navotas Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000021"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000021",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Navotas Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000021"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000021",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000021"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000022",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000022"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000022",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000022"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000022",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000022"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000022",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000022"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000022",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000022"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000022",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000022"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000022",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000022"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000023",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000023"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000023",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Parañaque Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000023"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000023",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Parañaque Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000023"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000023",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Parañaque Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000023"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000023",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Parañaque Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000023"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000023",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Parañaque Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000023"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000023",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000023"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000024",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000024"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000024",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BF Homes Study Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000024"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000024",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BF Homes Study Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000024"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000024",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BF Homes Study Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000024"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000024",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BF Homes Study Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000024"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000024",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BF Homes Study Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000024"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000024",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "16:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000024"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000025",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000025"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000025",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasay City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000025"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000025",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasay City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000025"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000025",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasay City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000025"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000025",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasay City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000025"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000025",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasay City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000025"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000025",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000025"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000026",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000026"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000026",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000026"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000026",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000026"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000026",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000026"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000026",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000026"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000026",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000026"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000026",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000026"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000027",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000027"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000027",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasig Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000027"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000027",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasig Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000027"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000027",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasig Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000027"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000027",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasig Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000027"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000027",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Pasig Public Library Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000027"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000027",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000027"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000028",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000028"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000028",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Antonio Study Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000028"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000028",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Antonio Study Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000028"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000028",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Antonio Study Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000028"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000028",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Antonio Study Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000028"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000028",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Antonio Study Room Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000028"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000028",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000028"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000029",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000029"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000029",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Municipal Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000029"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000029",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Municipal Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000029"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000029",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Municipal Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000029"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000029",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Municipal Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000029"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000029",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Municipal Library Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000029"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000029",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000029"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000030",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000030",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000030",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000030",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000030",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000030",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000030",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000030"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000031",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000031",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Juan City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000031",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Juan City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000031",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Juan City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000031",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Juan City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000031",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "San Juan City Hall Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000031",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000031"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000032",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000032"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000032",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Learning Kiosk Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000032"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000032",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Learning Kiosk Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000032"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000032",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Learning Kiosk Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000032"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000032",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Learning Kiosk Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000032"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000032",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Learning Kiosk Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000032"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000032",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "15:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000032"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000033",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000033"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000033",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Taguig City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000033"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000033",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Taguig City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000033"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000033",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Taguig City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000033"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000033",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Taguig City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000033"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000033",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Taguig City Hall Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000033"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000033",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "16:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000033"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000034",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000034"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000034",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BGC Reading Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000034"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000034",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BGC Reading Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000034"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000034",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BGC Reading Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000034"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000034",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BGC Reading Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000034"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000034",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "BGC Reading Center Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000034"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000034",
+      "day_of_week": 6,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Saturday Half-Day Schedule",
+      "verification_id": "v0010000-0000-0000-0000-000000000034"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000035",
+      "day_of_week": 0,
+      "open_time": "08:00:00",
+      "close_time": "20:00:00",
+      "is_closed": false,
+      "schedule_label": "Sunday Extended Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000035"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000035",
+      "day_of_week": 1,
+      "open_time": "06:00:00",
+      "close_time": "23:00:00",
+      "is_closed": false,
+      "schedule_label": "ValACE Extended Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000035"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000035",
+      "day_of_week": 2,
+      "open_time": "06:00:00",
+      "close_time": "23:00:00",
+      "is_closed": false,
+      "schedule_label": "ValACE Extended Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000035"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000035",
+      "day_of_week": 3,
+      "open_time": "06:00:00",
+      "close_time": "23:00:00",
+      "is_closed": false,
+      "schedule_label": "ValACE Extended Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000035"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000035",
+      "day_of_week": 4,
+      "open_time": "06:00:00",
+      "close_time": "23:00:00",
+      "is_closed": false,
+      "schedule_label": "ValACE Extended Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000035"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000035",
+      "day_of_week": 5,
+      "open_time": "06:00:00",
+      "close_time": "23:00:00",
+      "is_closed": false,
+      "schedule_label": "ValACE Extended Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000035"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000035",
+      "day_of_week": 6,
+      "open_time": "06:00:00",
+      "close_time": "23:00:00",
+      "is_closed": false,
+      "schedule_label": "ValACE Extended Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000035"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000000",
+      "place_id": "f0010000-0000-0000-0000-000000000036",
+      "day_of_week": 0,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Sunday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000036"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000001",
+      "place_id": "f0010000-0000-0000-0000-000000000036",
+      "day_of_week": 1,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000036"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000002",
+      "place_id": "f0010000-0000-0000-0000-000000000036",
+      "day_of_week": 2,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000036"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000003",
+      "place_id": "f0010000-0000-0000-0000-000000000036",
+      "day_of_week": 3,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000036"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000004",
+      "place_id": "f0010000-0000-0000-0000-000000000036",
+      "day_of_week": 4,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000036"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000005",
+      "place_id": "f0010000-0000-0000-0000-000000000036",
+      "day_of_week": 5,
+      "open_time": "08:00:00",
+      "close_time": "17:00:00",
+      "is_closed": false,
+      "schedule_label": "Barangay Study Hours",
+      "verification_id": "v0010000-0000-0000-0000-000000000036"
+    },
+    {
+      "id": "h0010000-0000-0000-0000-000000000006",
+      "place_id": "f0010000-0000-0000-0000-000000000036",
+      "day_of_week": 6,
+      "open_time": null,
+      "close_time": null,
+      "is_closed": true,
+      "schedule_label": "Saturday Closed",
+      "verification_id": "v0010000-0000-0000-0000-000000000036"
+    }
+  ],
+  "verification_meta": [
+    {
+      "id": "v0010000-0000-0000-0000-000000000001",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines Official Directory",
+      "official_source_url": "https://web.nlp.gov.ph",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-10T08:30:00Z",
+      "verified_by": "NLP Central Ingestion Agent"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000002",
+      "status": "VERIFIED",
+      "official_source_name": "City of Manila Public Information Office",
+      "official_source_url": "https://manila.gov.ph/city-library",
+      "derivation_note": null,
+      "last_verified_at": "2026-08-22T09:00:00Z",
+      "verified_by": "Manila LGU Data Curator"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000003",
+      "status": "ESTIMATE",
+      "official_source_name": "Manila LGU Barangay Bureau FOI Inventory",
+      "official_source_url": "https://www.foi.gov.ph/requests/manila-reading-centers",
+      "derivation_note": "Operating hours estimated based on standard barangay hall administrative schedule (EQ-001/DS-005).",
+      "last_verified_at": "2026-03-15T11:00:00Z",
+      "verified_by": "LGU Field FOI Officer"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000004",
+      "status": "VERIFIED",
+      "official_source_name": "Quezon City Public Library Management Portal",
+      "official_source_url": "https://qcpubliclibrary.quezoncity.gov.ph",
+      "derivation_note": null,
+      "last_verified_at": "2026-10-05T10:00:00Z",
+      "verified_by": "QCPL Systems Administrator"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000005",
+      "status": "VERIFIED",
+      "official_source_name": "Quezon City Public Library Management Portal",
+      "official_source_url": "https://qcpubliclibrary.quezoncity.gov.ph/branches",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-18T09:15:00Z",
+      "verified_by": "QCPL Branch Auditor"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000006",
+      "status": "VERIFIED",
+      "official_source_name": "QC Barangay Community Relations Office",
+      "official_source_url": "https://quezoncity.gov.ph/barangay-reading-centers",
+      "derivation_note": null,
+      "last_verified_at": "2026-08-14T08:00:00Z",
+      "verified_by": "QC Barangay Field Auditor"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000007",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines - Caloocan Branch Record",
+      "official_source_url": "https://web.nlp.gov.ph/public-libraries/caloocan",
+      "derivation_note": null,
+      "last_verified_at": "2026-07-29T10:30:00Z",
+      "verified_by": "Caloocan LGU Education Office"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000008",
+      "status": "ESTIMATE",
+      "official_source_name": "Caloocan City Hall FOI Reading Center Inventory",
+      "official_source_url": "https://www.foi.gov.ph/requests/caloocan-brgy-libraries",
+      "derivation_note": "Desk capacity estimated from facility floor plan dimensions (DS-005).",
+      "last_verified_at": "2026-02-18T14:00:00Z",
+      "verified_by": "Field Assessment Officer"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000009",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines / Las Piñas LGU",
+      "official_source_url": "https://laspinascity.gov.ph/public-services/library",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-02T11:00:00Z",
+      "verified_by": "Las Piñas City Librarian"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000010",
+      "status": "NOT_AVAILABLE",
+      "official_source_name": null,
+      "official_source_url": null,
+      "derivation_note": null,
+      "last_verified_at": null,
+      "verified_by": "Volunteer Community Scout"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000011",
+      "status": "VERIFIED",
+      "official_source_name": "Makati City Education Department Portal",
+      "official_source_url": "https://makati.gov.ph/education/library",
+      "derivation_note": null,
+      "last_verified_at": "2026-10-12T08:00:00Z",
+      "verified_by": "Makati Education Officer"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000012",
+      "status": "VERIFIED",
+      "official_source_name": "Barangay Bel-Air Secretariat",
+      "official_source_url": "https://belairmakati.ph/facilities",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-24T14:30:00Z",
+      "verified_by": "Barangay Secretary"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000013",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines - Malabon City Affiliate",
+      "official_source_url": "https://web.nlp.gov.ph/public-libraries/malabon",
+      "derivation_note": null,
+      "last_verified_at": "2026-08-08T09:00:00Z",
+      "verified_by": "Malabon City Librarian"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000014",
+      "status": "ESTIMATE",
+      "official_source_name": "Malabon LGU Barangay Development Inventory",
+      "official_source_url": "https://www.foi.gov.ph/requests/malabon-reading-centers",
+      "derivation_note": "Operating hours derived from barangay hall weekday schedule (DS-005).",
+      "last_verified_at": "2026-01-20T10:00:00Z",
+      "verified_by": "LGU Field Inspector"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000015",
+      "status": "VERIFIED",
+      "official_source_name": "Mandaluyong City Public Information Office",
+      "official_source_url": "https://mandaluyong.gov.ph/public-library",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-12T13:00:00Z",
+      "verified_by": "Mandaluyong LGU Librarian"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000016",
+      "status": "VERIFIED",
+      "official_source_name": "Barangay Highway Hills Council",
+      "official_source_url": "https://mandaluyong.gov.ph/barangays/highway-hills",
+      "derivation_note": null,
+      "last_verified_at": "2026-08-19T11:20:00Z",
+      "verified_by": "Barangay Kagawad for Education"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000017",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines - Marikina Public Library Record",
+      "official_source_url": "https://marikina.gov.ph/city-library",
+      "derivation_note": null,
+      "last_verified_at": "2026-10-01T09:45:00Z",
+      "verified_by": "Marikina Chief Librarian"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000018",
+      "status": "VERIFIED",
+      "official_source_name": "Marikina LGU Community Affairs",
+      "official_source_url": "https://marikina.gov.ph/reading-centers",
+      "derivation_note": null,
+      "last_verified_at": "2026-07-15T15:00:00Z",
+      "verified_by": "Marikina Community Liaison"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000019",
+      "status": "VERIFIED",
+      "official_source_name": "Muntinlupa City Government Public Portal",
+      "official_source_url": "https://muntinlupacity.gov.ph/public-library",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-08T10:00:00Z",
+      "verified_by": "Muntinlupa Education Bureau"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000020",
+      "status": "ESTIMATE",
+      "official_source_name": "Muntinlupa City Council FOI Records",
+      "official_source_url": "https://www.foi.gov.ph/requests/muntinlupa-reading-centers",
+      "derivation_note": "Operating hours estimated based on standard barangay hall administrative schedule (DS-005).",
+      "last_verified_at": "2026-03-01T10:00:00Z",
+      "verified_by": "LGU Field Researcher"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000021",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines - Navotas Branch",
+      "official_source_url": "https://web.nlp.gov.ph/public-libraries/navotas",
+      "derivation_note": null,
+      "last_verified_at": "2026-08-16T11:00:00Z",
+      "verified_by": "Navotas City Education Affairs"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000022",
+      "status": "NOT_AVAILABLE",
+      "official_source_name": null,
+      "official_source_url": null,
+      "derivation_note": null,
+      "last_verified_at": null,
+      "verified_by": "Volunteer Field Scout"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000023",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines / Parañaque LGU",
+      "official_source_url": "https://paranaquecity.gov.ph/city-library",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-04T14:00:00Z",
+      "verified_by": "Parañaque Head Librarian"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000024",
+      "status": "VERIFIED",
+      "official_source_name": "Barangay BF Homes Official Portal",
+      "official_source_url": "https://bfhomes.paranaquecity.gov.ph/facilities",
+      "derivation_note": null,
+      "last_verified_at": "2026-08-25T10:15:00Z",
+      "verified_by": "BF Homes Community Administrator"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000025",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines - Pasay City Affiliate",
+      "official_source_url": "https://web.nlp.gov.ph/public-libraries/pasay",
+      "derivation_note": null,
+      "last_verified_at": "2026-07-20T08:30:00Z",
+      "verified_by": "Pasay City Librarian"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000026",
+      "status": "ESTIMATE",
+      "official_source_name": "Pasay City LGU Community Affairs Record",
+      "official_source_url": "https://www.foi.gov.ph/requests/pasay-reading-centers",
+      "derivation_note": "Operating hours estimated based on standard barangay hall administrative schedule (DS-005).",
+      "last_verified_at": "2026-02-10T11:00:00Z",
+      "verified_by": "Field Investigator"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000027",
+      "status": "VERIFIED",
+      "official_source_name": "Pasig City Public Affairs and Information Office",
+      "official_source_url": "https://pasigcity.gov.ph/city-library",
+      "derivation_note": null,
+      "last_verified_at": "2026-10-02T10:00:00Z",
+      "verified_by": "Pasig LGU Systems Administrator"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000028",
+      "status": "VERIFIED",
+      "official_source_name": "Pasig LGU Public Affairs",
+      "official_source_url": "https://pasigcity.gov.ph/reading-centers",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-15T08:00:00Z",
+      "verified_by": "Pasig Community Coordinator"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000029",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines - Pateros Municipal Record",
+      "official_source_url": "https://web.nlp.gov.ph/public-libraries/pateros",
+      "derivation_note": null,
+      "last_verified_at": "2026-08-30T10:00:00Z",
+      "verified_by": "Pateros Municipal Clerk"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000030",
+      "status": "ESTIMATE",
+      "official_source_name": "Pateros Municipal Hall FOI Record",
+      "official_source_url": "https://www.foi.gov.ph/requests/pateros-reading-centers",
+      "derivation_note": "Operating hours estimated based on standard barangay hall administrative schedule (DS-005).",
+      "last_verified_at": "2026-03-12T14:00:00Z",
+      "verified_by": "LGU Field Researcher"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000031",
+      "status": "VERIFIED",
+      "official_source_name": "National Library of the Philippines - San Juan City Affiliate",
+      "official_source_url": "https://sanjuancity.gov.ph/services/library",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-14T09:00:00Z",
+      "verified_by": "San Juan City Librarian"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000032",
+      "status": "VERIFIED",
+      "official_source_name": "Barangay Greenhills Council",
+      "official_source_url": "https://sanjuancity.gov.ph/barangays/greenhills",
+      "derivation_note": null,
+      "last_verified_at": "2026-08-20T11:00:00Z",
+      "verified_by": "Barangay Council Auditor"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000033",
+      "status": "VERIFIED",
+      "official_source_name": "Taguig City Public Information Office",
+      "official_source_url": "https://taguig.gov.ph/city-library",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-28T09:30:00Z",
+      "verified_by": "Taguig City Librarian"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000034",
+      "status": "VERIFIED",
+      "official_source_name": "Barangay Fort Bonifacio Secretariat",
+      "official_source_url": "https://taguig.gov.ph/barangays/fort-bonifacio",
+      "derivation_note": null,
+      "last_verified_at": "2026-10-08T14:00:00Z",
+      "verified_by": "BGC Community Officer"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000035",
+      "status": "VERIFIED",
+      "official_source_name": "Valenzuela City Public Information Office / ValACE Portal",
+      "official_source_url": "https://valenzuela.gov.ph/valace",
+      "derivation_note": null,
+      "last_verified_at": "2026-10-15T11:00:00Z",
+      "verified_by": "ValACE Executive Director"
+    },
+    {
+      "id": "v0010000-0000-0000-0000-000000000036",
+      "status": "VERIFIED",
+      "official_source_name": "Valenzuela LGU Education Division",
+      "official_source_url": "https://valenzuela.gov.ph/barangays/karuhatan",
+      "derivation_note": null,
+      "last_verified_at": "2026-09-10T15:00:00Z",
+      "verified_by": "Barangay Education Officer"
+    }
+  ],
+  "metadata": {
+    "totalFacilities": 36,
+    "totalLibraries": 19,
+    "totalReadingCenters": 17,
+    "lguCount": 17,
+    "ingestedAt": "2026-11-03T05:01:15.625Z",
+    "ncrBounds": {
+      "MIN_LAT": 14.3,
+      "MAX_LAT": 14.8,
+      "MIN_LNG": 120.9,
+      "MAX_LNG": 121.2
+    }
+  }
+}

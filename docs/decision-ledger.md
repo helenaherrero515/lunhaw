@@ -30,6 +30,15 @@
 
 ## 3. Pivots & decisions (newest first, append at top)
 
+### 2026-11-03 — ADR-002: LGU Civic Data Licensing, FOI Framework & Multi-Tier Cadence (B-M1-04)
+- **What changed:** Established open data licensing terms (ODbL 1.0 / CC-BY 4.0 Collective Database doctrine), standardized eFOI request protocol under EO No. 2, s. 2016, and stratified all 17 NCR LGUs into 3 update cadence tiers (Tier A: 90 days, Tier B: 180 days, Tier C: 360 days) with automated 180-day freshness auditing (`BR-002`).
+- **Pivot type:** Governance / Data Licensing & Intake Architecture.
+- **From → To:** Unresolved open questions regarding LGU data licensing (`PRD §12`) → Formal Collective Database legal separation and multi-tier cadence policy.
+- **Why:** Protects civic directory from ODbL viral copyleft contamination, ensures students never encounter stale closed reading centers (`INV-001`), and maintains operations within a sustainable $0/month maintainer workload.
+- **Rejected approaches:**
+  1. *Negotiating bilateral MOAs with all 17 LGUs prior to launch:* Rejected due to 12-24 month bureaucratic paralysis across city councils.
+  2. *Unilateral scraping and AI hour prediction:* Rejected due to severe hallucination risks and violation of Invariant `INV-001`.
+
 ### 2026-11-01 — Initial Architecture & Product Specification
 - **What changed:** Baselined project intake from context brief. Formally declared core modules (Explore, Commute, Green Index, Libraries, Saved), two-phase deployment (Web Phase 1 &rarr; Mobile Phase 2), and non-negotiable data-integrity principles (`INV-001`, `INV-002`, `INV-003`).
 - **Pivot type:** Inception / Foundation.
