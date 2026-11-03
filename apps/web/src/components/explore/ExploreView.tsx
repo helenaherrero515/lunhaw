@@ -22,9 +22,12 @@ import { FacilityProfile } from "@/components/places/FacilityProfile";
 import { LGUSelectorModal } from "@/components/location/LGUSelectorModal";
 import { useUserLocation } from "@/lib/hooks/useUserLocation";
 import type { Place, PlaceCategory } from "@/types/places";
+import { GreenIndexPill } from "@/components/green-index/GreenIndexPill";
+import { RoutePlanner } from "@/components/routing/RoutePlanner";
+import { RouteShadeLayer } from "@/components/map/RouteShadeLayer";
+import type { RouteOption } from "@/types/routing";
 
 export type CategoryFilter = "all" | "parks" | "libraries";
-
 export interface ExploreViewProps {
   initialPlaces?: Place[];
   defaultSelectedPlaceId?: string;
@@ -314,7 +317,10 @@ export function ExploreView({
     defaultSelectedPlaceId || null
   );
   const [isAreaModalOpen, setIsAreaModalOpen] = useState<boolean>(false);
-
+  const [viewMode, setViewMode] = useState<"places" | "commute">("places");
+  const [activeRoute, setActiveRoute] = useState<RouteOption | null>(null);
+  const [commuteDestination, setCommuteDestination] = useState<Place | null>(null);
+  const [mapLoaded, setMapLoaded] = useState<boolean>(false);
   // User location hook with fallback listening
   const {
     coordinates: userCoords,
@@ -439,6 +445,7 @@ export function ExploreView({
 
   const handleMapLoad = (map: MapLibreMapInstance) => {
     mapInstanceRef.current = map;
+    setMapLoaded(true);
     updateMapMarkers();
   };
 
@@ -468,8 +475,39 @@ export function ExploreView({
         aria-label="Explore search and places drawer"
       >
         {/* Search & Location Bar */}
+        {/* Top View Mode Switcher: Places vs Commute */}
         <div className="border-b border-stone-200/80 p-4">
-          {/* Search Input */}
+          <div className="mb-3 flex rounded-xl bg-stone-100 p-1 border border-stone-200" role="tablist" aria-label="Explore or Commute Planner view">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={viewMode === "places"}
+              onClick={() => setViewMode("places")}
+              className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition-all ${
+                viewMode === "places"
+                  ? "bg-white text-emerald-950 shadow-xs"
+                  : "text-stone-600 hover:text-stone-900"
+              }`}
+            >
+              🌿 Discover Places
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={viewMode === "commute"}
+              onClick={() => setViewMode("commute")}
+              className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition-all ${
+                viewMode === "commute"
+                  ? "bg-white text-emerald-950 shadow-xs"
+                  : "text-stone-600 hover:text-stone-900"
+              }`}
+            >
+              🧭 Shaded Commute
+            </button>
+          </div>
+
+          {viewMode === "places" ? (
+            <>
           <div className="relative">
             <Search
               className="absolute left-3.5 top-3 h-4 w-4 text-stone-400"
@@ -581,11 +619,24 @@ export function ExploreView({
               </button>
             </div>
           </div>
+            </>
+          ) : (
+            <div className="text-xs text-stone-500 font-medium">
+              Plan shaded commute routes across Metro Manila
+            </div>
+          )}
         </div>
 
-        {/* Drawer Content: Place List or Selected Facility Profile */}
+        {/* Drawer Content */}
         <div className="flex-1 overflow-y-auto p-4">
-          {selectedPlace ? (
+          {viewMode === "commute" ? (
+            <RoutePlanner
+              initialOrigin={userCoords}
+              initialDestination={commuteDestination?.coordinates}
+              onSelectRoute={(rt) => setActiveRoute(rt)}
+              onRoutesCalculated={(rts) => setActiveRoute(rts[0] || null)}
+            />
+          ) : selectedPlace ? (
             <div>
               {/* Back to list button */}
               <button
@@ -601,6 +652,10 @@ export function ExploreView({
               <FacilityProfile
                 facility={selectedPlace}
                 onClose={() => setSelectedPlaceId(null)}
+                onGetDirections={(fac) => {
+                  setCommuteDestination(fac);
+                  setViewMode("commute");
+                }}
               />
             </div>
           ) : (
@@ -684,10 +739,12 @@ export function ExploreView({
                               </span>
 
                               {place.green_index_score != null && (
-                                <span className="inline-flex items-center gap-0.5 rounded bg-teal-50 px-1.5 py-0.5 text-[10px] font-medium text-teal-800">
-                                  <Sparkles className="h-2.5 w-2.5 text-teal-600" />
-                                  <span>GI {place.green_index_score.toFixed(0)}</span>
-                                </span>
+                                <GreenIndexPill
+                                  score={place.green_index_score}
+                                  size="sm"
+                                  placeName={place.name}
+                                  verification={place.verification}
+                                />
                               )}
                             </div>
 
@@ -768,7 +825,9 @@ export function ExploreView({
           zoom={userCoords ? 13 : 12}
           onMapLoad={handleMapLoad}
           className="h-full w-full"
-        />
+        >
+          {mapLoaded && <RouteShadeLayer map={mapInstanceRef.current} route={activeRoute} />}
+        </MapLibreMap>
       </main>
 
       {/* Manual Area Selector Modal (F-006 / BR-004) */}
