@@ -1,7 +1,7 @@
 {
   "type": "FeatureCollection",
   "properties": {
-    "filtered_at": "2026-11-03T04:22:51.229Z",
+    "filtered_at": "2026-11-03T04:53:51.132Z",
     "dataset_id": "DS-001",
     "bounding_box": {
       "minLat": 14.3,
