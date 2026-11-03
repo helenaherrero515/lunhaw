@@ -42,13 +42,19 @@ export default function HomePage() {
             setIsAuthenticated(true);
           } else {
             setIsAuthenticated(false);
-            router.replace("/");
+            try { router.replace("/"); } catch {}
+            if (typeof window !== "undefined") {
+              window.location.replace("/");
+            }
           }
         }
       } catch {
         if (!isMounted) return;
         setIsAuthenticated(false);
-        router.replace("/");
+        try { router.replace("/"); } catch {}
+        if (typeof window !== "undefined") {
+          window.location.replace("/");
+        }
       }
     }
 
@@ -85,15 +91,50 @@ export default function HomePage() {
     return (
       <div
         style={{
-          display: "grid",
-          placeItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
           minHeight: "100vh",
+          gap: "16px",
           fontFamily: "Kufam, system-ui, sans-serif",
           color: "#26332D",
           background: "#F7F7F0",
+          padding: "24px",
+          textAlign: "center",
         }}
       >
-        <p>{isAuthenticated === false ? "Redirecting to Lunhaw..." : "Loading Lunhaw..."}</p>
+        <div
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+            border: "3px solid #E1E8DF",
+            borderTopColor: "#245C43",
+            animation: "spin 1s linear infinite",
+          }}
+        />
+        <p style={{ fontSize: "16px", fontWeight: "600", margin: 0 }}>
+          {isAuthenticated === false
+            ? "Redirecting to landing page..."
+            : "Loading your green space..."}
+        </p>
+        {isAuthenticated === false && (
+          <a
+            href="/"
+            style={{
+              padding: "10px 22px",
+              borderRadius: "999px",
+              background: "#245C43",
+              color: "#FFFFFF",
+              textDecoration: "none",
+              fontWeight: "600",
+              fontSize: "14px",
+            }}
+          >
+            Back to Home
+          </a>
+        )}
       </div>
     );
   }
