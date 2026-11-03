@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { AuthUser } from "@/lib/auth/auth-service";
 
 interface LunhawState {
   // Auth Dialog state
@@ -7,6 +8,8 @@ interface LunhawState {
   openAuth: (mode?: "signup" | "login") => void;
   closeAuth: () => void;
   setAuthMode: (mode: "signup" | "login") => void;
+  currentUser: AuthUser | null;
+  setCurrentUser: (user: AuthUser | null) => void;
 
   // Mobile navigation state
   isMobileMenuOpen: boolean;
@@ -34,6 +37,8 @@ export const useLunhawStore = create<LunhawState>((set) => ({
   openAuth: (mode = "signup") => set({ isAuthOpen: true, authMode: mode }),
   closeAuth: () => set({ isAuthOpen: false }),
   setAuthMode: (mode) => set({ authMode: mode }),
+  currentUser: null,
+  setCurrentUser: (user) => set({ currentUser: user }),
 
   isMobileMenuOpen: false,
   setMobileMenuOpen: (open) => set({ isMobileMenuOpen: open }),
