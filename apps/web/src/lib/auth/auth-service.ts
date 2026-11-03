@@ -16,6 +16,7 @@ export interface AuthService {
   logIn(email: string, pass: string): Promise<AuthResponse>;
   logOut(): Promise<void>;
   getCurrentUser(): Promise<AuthUser | null>;
+  signInWithMagicLink(email: string): Promise<{ success: boolean; error?: string }>;
 }
 
 // Browser Supabase client instantiation with fallback for local demo
@@ -112,6 +113,25 @@ export class SupabaseAuthService implements AuthService {
       name: data.user.user_metadata?.full_name,
     };
   }
+
+  async signInWithMagicLink(email: string): Promise<{ success: boolean; error?: string }> {
+    if (!this.client) {
+      return new MockAuthService().signInWithMagicLink(email);
+    }
+
+    const { error } = await this.client.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
+      },
+    });
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  }
 }
 
 // In-memory Mock Auth implementation for testing / demo
@@ -141,6 +161,14 @@ export class MockAuthService implements AuthService {
     };
     MockAuthService.currentUser = user;
     return { user };
+  }
+
+  async signInWithMagicLink(email: string): Promise<{ success: boolean; error?: string }> {
+    await new Promise((r) => setTimeout(r, 200));
+    if (!email || !email.includes("@")) {
+      return { success: false, error: "Please enter a valid email address." };
+    }
+    return { success: true };
   }
 
   async logOut(): Promise<void> {

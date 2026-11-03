@@ -128,8 +128,10 @@ export function FacilityProfile({
           ids = ids.filter((id) => id !== facility.id);
         }
         localStorage.setItem(STORAGE_SAVED_KEY, JSON.stringify(ids));
+        window.dispatchEvent(new Event("lunhaw_saved_changed"));
+        window.dispatchEvent(new Event("storage"));
       } catch {
-        // LocalStorage access error
+        // Ignore localStorage quota errors
       }
     }
 
