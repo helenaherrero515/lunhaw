@@ -482,97 +482,6 @@ export function initLunhawVisuals() {
   })();
 
   /* ---------- scroll effects ---------- */
-  /* why: pinned scroll story */
-  (function () {
-    var sec = document.querySelector('.why'); if (!sec) return;
-    var eb = sec.querySelector('.eyebrow'),
-        h = sec.querySelector('.statement'),
-        sub = sec.querySelector('.sub'),
-        big = sec.querySelector('.payoff'),
-        hl = sec.querySelector('.hl2'),
-        hop = sec.querySelector('.why-hopper') as HTMLElement | null,
-        ground = sec.querySelector('.ground') as HTMLElement | null,
-        decos = sec.querySelectorAll('.deco svg');
-    if (!h || !hop) return;
-    var words = h.querySelectorAll('.w');
-    if (!words.length) {
-      var text = (h.textContent || '').trim();
-      h.setAttribute('aria-label', text);
-      h.innerHTML = text.split(/\s+/).map(function (w) { return '<span class="w" aria-hidden="true">' + w + '</span>'; }).join(' ');
-      words = h.querySelectorAll('.w');
-    }
-
-    // Initial pop-up blur state for statement words
-    gsap.set(words, {
-      opacity: 0.12,
-      filter: "blur(16px)",
-      y: 32,
-      scale: 0.82,
-      transformOrigin: "50% 85%",
-      willChange: "transform, opacity, filter"
-    });
-
-    if (hl) gsap.set(hl, { '--sw': 0 });
-    gsap.set(hop, { x: 0, y: 0 });
-    var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true } });
-
-    // Scroll-driven pop-up blur animation for statement words
-    words.forEach(function (word, i) {
-      var startAt = 0.35 + i * 0.46;
-      tl.to(
-        word,
-        {
-          keyframes: [
-            {
-              y: -6,
-              scale: 1.08,
-              opacity: 1,
-              filter: "blur(0px)",
-              duration: 0.65,
-              ease: "power2.out"
-            },
-            {
-              y: 0,
-              scale: 1,
-              duration: 0.35,
-              ease: "sine.inOut"
-            }
-          ]
-        },
-        startAt
-      );
-    });
-    if (eb) tl.from(eb, { y: 20, opacity: 0, duration: .5 }, 0);
-    if (sub) tl.to(sub, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 3.0);
-    if (big) tl.to(big, { y: 0, scale: 1, opacity: 1, duration: 1.1, ease: 'back.out(1.8)' }, 4.5);
-    if (hl) tl.to(hl, { '--sw': 1, duration: 1 }, 5.5);
-    tl.fromTo(hop,
-      { x: 0 },
-      {
-        x: function () {
-          if (ground) {
-            return Math.max(0, ground.offsetWidth - hop!.offsetWidth);
-          }
-          return Math.max(0, window.innerWidth * 0.88 - hop!.offsetWidth);
-        },
-        duration: 7.2,
-        ease: 'none'
-      },
-      0
-    ).to(hop, {
-      keyframes: {
-        y: [0, -75, 0, -75, 0, -75, 0, -75, 0, -75, 0, -75, 0, -75, 0],
-        easeEach: 'sine.inOut'
-      },
-      duration: 7.2,
-      ease: 'none'
-    }, 0);
-    var speeds = [-.8, .5, -.4, .9, -.6, .3];
-    decos.forEach(function (el, i) {
-      var s = speeds[i % speeds.length];
-      tl.fromTo(el, { y: 120 * s, rotate: -12 * s }, { y: -160 * s, rotate: 14 * s, duration: 7.2 }, 0);
-    });
-  })();
 
   ScrollTrigger.batch('[data-reveal]', {
     start: 'top 92%', once: true,
@@ -616,6 +525,323 @@ export function initLunhawVisuals() {
   if (ctaMascot) {
     gsap.to(ctaMascot, { y: -14, rotation: 3, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
   }
+
+  /* ===== Reference Lunhaw_4.html Script 8: FAQ 3D question blocks & hopping mascot ===== */
+  (function initFaq3D() {
+    function stage3d(id, island) {
+      var cv = document.getElementById(id);
+      if (!cv) return null;
+      var r = new T.WebGLRenderer({ canvas: cv, alpha: true, antialias: true });
+      r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      var sc = new T.Scene(),
+        cam = new T.OrthographicCamera(-1, 1, 1, -1, -80, 120),
+        vis = true,
+        asp = 1;
+      sc.add(new T.AmbientLight(0xffffff, 0.74));
+      var sun = new T.DirectionalLight(0xffffff, 0.78);
+      sun.position.set(6, 12, 5);
+      sc.add(sun);
+      var isl = new T.Group();
+      isl.add(box(island, 1.2, island, P.bark, 0, -1.2, 0));
+      isl.add(box(island, 0.4, island, P.lime, 0, 0, 0));
+      isl.add(box(island - 0.5, 0.2, island - 0.5, P.leaf, 0, -1.4, 0));
+      sc.add(isl);
+      if (window.IntersectionObserver) {
+        new IntersectionObserver(function (e) {
+          vis = e[0].isIntersecting;
+        }).observe(cv);
+      }
+      function rs() {
+        var w = cv.clientWidth,
+          h = cv.clientHeight;
+        if (!w || !h) return;
+        r.setSize(w, h, false);
+        asp = w / h;
+      }
+      window.addEventListener("resize", rs);
+      rs();
+      return {
+        r: r,
+        sc: sc,
+        isl: isl,
+        vis: function () {
+          return vis;
+        },
+        view: function (tx, tz, az, zoom, base) {
+          var h = base / zoom;
+          cam.left = -h * asp;
+          cam.right = h * asp;
+          cam.top = h;
+          cam.bottom = -h;
+          cam.updateProjectionMatrix();
+          cam.position.set(tx + Math.sin(az) * 20, 13, tz + Math.cos(az) * 20);
+          cam.lookAt(tx, 0.6, tz);
+          r.render(sc, cam);
+        },
+      };
+    }
+
+    var Q = stage3d("faq-canvas", 9);
+    if (Q) {
+      var cv = document.createElement("canvas");
+      cv.width = cv.height = 128;
+      var x2 = cv.getContext("2d");
+      if (x2) {
+        x2.fillStyle = "#98D746";
+        x2.fillRect(0, 0, 128, 128);
+        x2.strokeStyle = "#245C43";
+        x2.lineWidth = 8;
+        x2.strokeRect(6, 6, 116, 116);
+        x2.fillStyle = "#245C43";
+        x2.font = "bold 92px sans-serif";
+        x2.textAlign = "center";
+        x2.textBaseline = "middle";
+        x2.fillText("?", 64, 70);
+      }
+      var tx = new T.CanvasTexture(cv),
+        fm = new T.MeshLambertMaterial({ map: tx }),
+        fin = [
+          [-1.8, 0.4, 0],
+          [0, 0.4, 0],
+          [1.8, 0.4, 0],
+          [-0.9, 2.1, 0],
+          [0.9, 2.1, 0],
+        ],
+        bl = [],
+        j;
+      for (j = 0; j < 5; j++) {
+        var bx = new T.Mesh(new T.BoxGeometry(1.6, 1.6, 1.6), [
+          fm,
+          fm,
+          M(P.mint),
+          M(P.forest),
+          fm,
+          fm,
+        ]);
+        bx.position.set(fin[j][0], fin[j][1] + 0.8, 0);
+        Q.sc.add(bx);
+        bl.push(bx);
+      }
+      var hq = hopper();
+      Q.sc.add(hq);
+      [
+        [-4, 2.5, 1],
+        [4, 2, 0.9],
+        [3.8, -2.5, 1.1],
+      ].forEach(function (p, q) {
+        var t = tree(p[2], q % 2 === 0);
+        t.position.set(p[0], 0.4, p[1]);
+        Q.sc.add(t);
+      });
+      var det = [].slice.call(document.querySelectorAll(".faq-list details")),
+        fp = 0,
+        fs = 0,
+        lo = -1;
+      var sm = function (t) {
+        return t * t * (3 - 2 * t);
+      };
+      var lerp = function (a, b, t) {
+        return a + (b - a) * t;
+      };
+      ScrollTrigger.create({
+        trigger: "#faqs",
+        start: "top 60%",
+        end: "bottom bottom",
+        onUpdate: function (s) {
+          fp = s.progress;
+        },
+      });
+      gsap.ticker.add(function (t) {
+        if (!Q.vis()) return;
+        fs += (fp - fs) * 0.1;
+        var landed = -1;
+        bl.forEach(function (b, i) {
+          var k = clamp((fs - 0.05 - i * 0.14) / 0.14, 0, 1),
+            e = easeOutBack(k);
+          b.position.y = fin[i][1] + 0.8 + (1 - e) * 12;
+          b.rotation.y = (1 - e) * 2.4;
+          b.visible = k > 0;
+          if (k >= 1) landed = i;
+        });
+        var up = sm(clamp((fs - 0.82) / 0.14, 0, 1));
+        hq.position.set(
+          lerp(3, 0.9, up),
+          lerp(0.4, 2.9 + 0.8, up) +
+            (up > 0 && up < 1
+              ? Math.sin(up * Math.PI) * 1.4
+              : Math.sin(t * 3) * 0.03),
+          lerp(1.4, 0, up)
+        );
+        hq.rotation.y = lerp(Math.PI * 0.9, Math.PI * 0.5, up);
+        if (hq.userData && hq.userData.wings) {
+          hq.userData.wings.forEach(function (w, q) {
+            w.rotation.x =
+              (q ? -1 : 1) * (up > 0 && up < 1 ? Math.sin(t * 30) * 0.5 : 0.1);
+          });
+        }
+        Q.isl.position.y = Math.sin(t * 0.8) * 0.1;
+        Q.view(0, 1, 0.5 + fs * 1.2, 1 + fs * 0.2, 7);
+        var o = Math.max(0, landed);
+        if (o !== lo) {
+          lo = o;
+          det.forEach(function (d, q) {
+            d.open = q === o;
+          });
+        }
+      });
+    }
+  })();
+
+  /* ===== Reference Lunhaw_4.html Script 9: Footer curtain reveal ===== */
+  (function initCurtainReveal() {
+    var f = document.querySelector(".rv footer"),
+      w = document.querySelector(".rv .cta .wrap");
+    if (!f || !w) return;
+    gsap.to(w, {
+      scale: 0.9,
+      opacity: 0.1,
+      y: -60,
+      ease: "none",
+      scrollTrigger: {
+        trigger: f,
+        start: "top 85%",
+        end: "top 5%",
+        scrub: true,
+      },
+    });
+    gsap.fromTo(
+      ".rv footer .ft-grid > *",
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        ease: "none",
+        stagger: 0.12,
+        scrollTrigger: {
+          trigger: f,
+          start: "top 75%",
+          end: "top 20%",
+          scrub: true,
+        },
+      }
+    );
+    gsap.fromTo(
+      f,
+      { "--x": 0 },
+      {
+        "--x": 1,
+        scrollTrigger: {
+          trigger: f,
+          start: "top bottom",
+          end: "top top",
+          scrub: true,
+        },
+      }
+    );
+  })();
+
+  /* ===== Reference Lunhaw_4.html Script 10: Why Lunhaw text split & animations ===== */
+  (function initWhyLunhawAnimation() {
+    var sec = document.getElementById("about"),
+      h = sec && sec.querySelector(".h2");
+    if (!sec || !h) return;
+    h.innerHTML = h.textContent
+      .trim()
+      .split(/\s+/)
+      .map(function (w) {
+        return '<span class="w">' + w + "</span>";
+      })
+      .join(" ");
+    gsap.fromTo(
+      h.querySelectorAll(".w"),
+      { opacity: 0.12, y: 34, rotation: 2 },
+      {
+        opacity: 1,
+        y: 0,
+        rotation: 0,
+        stagger: 0.14,
+        ease: "none",
+        scrollTrigger: {
+          trigger: h,
+          start: "top 88%",
+          end: "top 35%",
+          scrub: true,
+        },
+      }
+    );
+    var bigEl = sec.querySelector(".big");
+    if (bigEl) {
+      gsap.to(sec, {
+        "--sw": "100%",
+        duration: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: bigEl,
+          start: "top 85%",
+          end: "top 55%",
+          scrub: true,
+        },
+      });
+    }
+    var sweep = sec.querySelector(".sweep");
+    if (sweep) {
+      sweep.style.setProperty("--sw", "0%");
+    }
+    var pills = sec.querySelectorAll(".why-pills span");
+    if (pills.length) {
+      gsap.fromTo(
+        pills,
+        { opacity: 0, y: 24, scale: 0.9 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          stagger: 0.12,
+          ease: "back.out(1.6)",
+          scrollTrigger: {
+            trigger: ".why-pills",
+            start: "top 92%",
+            once: true,
+          },
+        }
+      );
+    }
+    sec.querySelectorAll(".lf").forEach(function (l, i) {
+      gsap.to(l, {
+        y: (i % 2 ? -1 : 1) * (80 + i * 25),
+        rotation: (i % 2 ? -1 : 1) * 40,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sec,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+    });
+    gsap.to(".why .o1", {
+      x: 160,
+      y: 90,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sec,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+    gsap.to(".why .o2", {
+      x: -140,
+      y: -80,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sec,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+  })();
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 })();
