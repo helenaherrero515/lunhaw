@@ -81,7 +81,7 @@ export function Hero() {
             Find parks and libraries near you, and how to get there.
           </p>
           <div className="cta-row" id="hero-cta">
-            <Link className="btn" href="#start" data-scroll>
+            <Link className="btn" href="#explore" data-scroll>
               Explore green spaces near you
               <svg
                 width="20"
@@ -97,7 +97,7 @@ export function Hero() {
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
             </Link>
-            <Link className="btn ghost" href="#journey" data-scroll>
+            <Link className="btn ghost" href="/explore">
               Compare ways to get there
             </Link>
           </div>
