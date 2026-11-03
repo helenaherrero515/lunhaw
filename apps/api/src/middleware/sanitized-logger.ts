@@ -10,8 +10,7 @@ export const REDACTED_COORDINATES = '[REDACTED_COORDINATES]';
 
 // Regex patterns to detect and scrub coordinate parameters in query strings and URLs
 const COORDINATE_PARAM_REGEX =
-  /([?&](?:lat(?:itude)?|lng|long(?:itude)?|coords(?:_geojson)?|coordinates|origin|destination|center|point)=)([^&#\s]*)/gi;
-
+  /([?&][^=]*(?:lat|lng|long|lon|coord|point|origin|dest)[^=]*=)([^&#\s]*)/gi;
 // Pattern detecting standalone coordinate floating point pairs in query values (e.g. 14.5823,121.0611)
 const RAW_COORDINATE_PAIR_REGEX =
   /([?&][^=]+=)(?:-?\d{1,3}(?:\.\d+)?,\s*-?\d{1,3}(?:\.\d+)?)/gi;

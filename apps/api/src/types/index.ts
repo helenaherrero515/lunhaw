@@ -181,4 +181,6 @@ export interface Env {
   ENVIRONMENT?: string;
   CORS_ORIGIN?: string;
   RATE_LIMIT_PER_MINUTE?: string;
+  ADMIN_API_KEY?: string;
+  SUPABASE_JWT_SECRET?: string;
 }
