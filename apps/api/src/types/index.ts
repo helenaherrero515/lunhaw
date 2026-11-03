@@ -33,6 +33,21 @@ export interface GeoJSONPolygon {
   coordinates: GeoJSONPosition[][];
 }
 
+export type GeoJSONGeometry = GeoJSONPoint | GeoJSONLineString | GeoJSONPolygon;
+
+export interface GeoJSONFeature<G = GeoJSONGeometry, P = Record<string, unknown>> {
+  type: 'Feature';
+  geometry: G;
+  properties: P;
+  id?: string | number;
+}
+
+export interface GeoJSONFeatureCollection<G = GeoJSONGeometry, P = Record<string, unknown>> {
+  type: 'FeatureCollection';
+  features: GeoJSONFeature<G, P>[];
+  properties?: Record<string, unknown>;
+}
+
 export interface ProblemDetails {
   type: string;
   title: string;
@@ -86,6 +101,80 @@ export interface Place {
   schedules?: DaySchedule[];
   access_requirements?: string | null;
   distance_km?: number | null;
+}
+
+export type RoutePreference = 'shaded_walk' | 'fastest' | 'least_walking' | 'transit_only';
+
+export type RouteLegMode =
+  | 'walk'
+  | 'jeepney'
+  | 'bus'
+  | 'rail'
+  | 'lrt1'
+  | 'lrt2'
+  | 'mrt3'
+  | 'pnr'
+  | 'transfer';
+
+export interface FareDetail {
+  amount_php: number;
+  currency?: string;
+  verification: VerificationMeta;
+}
+
+export interface RouteLeg {
+  sequence: number;
+  mode: RouteLegMode;
+  instruction: string;
+  distance_m: number;
+  duration_seconds: number;
+  shade_coverage_pct?: number | null;
+  fare?: FareDetail;
+  transit_line?: string | null;
+  from_name?: string | null;
+  to_name?: string | null;
+  path_geometry_geojson?: GeoJSONLineString;
+  verification: VerificationMeta;
+}
+
+export interface CommuteRoute {
+  route_id: string;
+  title: string;
+  total_distance_m: number;
+  est_duration_seconds: number;
+  average_shade_score: number;
+  preference_tag?: RoutePreference;
+  fare: FareDetail;
+  geometry_geojson?: GeoJSONLineString;
+  legs: RouteLeg[];
+  verification?: VerificationMeta;
+}
+
+export interface GreenIndexBreakdown {
+  canopy_component: number;
+  ndvi_component: number;
+  permeable_component: number;
+}
+
+export interface GreenIndexInputs {
+  canopy_cover_pct: number;
+  ndvi_density_scaled: number;
+  permeable_surface_pct: number;
+}
+
+export interface GreenIndexResult {
+  place_id: string;
+  place_name?: string;
+  total_score: number;
+  breakdown: GreenIndexBreakdown;
+  inputs: GreenIndexInputs;
+  equation_id: 'EQ-001';
+  input_dataset_ids: ['DS-001', 'DS-002'];
+  confidence_level: 'HIGH' | 'MEDIUM' | 'LOW';
+  verification_status: VerificationStatus;
+  derivation_note: string;
+  measured_data_source?: string;
+  calculated_at: string;
 }
 
 export interface Env {

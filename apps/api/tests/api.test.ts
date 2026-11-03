@@ -587,6 +587,230 @@ describe('Lunhaw API Gateway — M0 & M1 Core Suite', () => {
       const problem = await res.json<{ code: string }>();
       expect(problem.code).toBe('ERR_INVALID_COORDINATES');
     });
+    it('computes sequential legs with walking duration (EQ-003) and fare matrix (EQ-004)', async () => {
+      const res = await app.request('/commute/routes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          origin: { lat: 14.588, lng: 121.055 },
+          destination: { lat: 14.5823, lng: 121.0611 },
+          preference: 'shaded_walk'
+        })
+      });
+
+      expect(res.status).toBe(200);
+      const json = await res.json<{
+        status: string;
+        data: {
+          routes: Array<{
+            route_id: string;
+            total_distance_m: number;
+            est_duration_seconds: number;
+            average_shade_score: number;
+            fare: { amount_php: number; verification: { status: string } };
+            legs: Array<{
+              sequence: number;
+              mode: string;
+              distance_m: number;
+              duration_seconds: number;
+              fare?: { amount_php: number; verification: { status: string } };
+              verification: { status: string; derivation_note?: string };
+            }>;
+          }>;
+        };
+      }>();
+
+      const route = json.data.routes[0];
+      expect(route).toBeDefined();
+      expect(route?.legs.length).toBeGreaterThan(1);
+      expect(route?.legs[0]?.sequence).toBe(1);
+      expect(route?.legs[1]?.sequence).toBe(2);
+      // Walking leg fare is 0.00 PHP (VERIFIED)
+      expect(route?.legs[0]?.fare?.amount_php).toBe(0);
+      expect(route?.legs[0]?.fare?.verification.status).toBe('VERIFIED');
+      // EQ-003 walking duration: (D / 4.2 km/h) * 3600
+      const leg1 = route?.legs[0]!;
+      const expectedSec = Math.round(((leg1.distance_m / 1000) / 4.2) * 3600);
+      expect(Math.abs(leg1.duration_seconds - expectedSec)).toBeLessThanOrEqual(1);
+    });
+
+    it('computes multi-modal transit route option when transit_only is requested', async () => {
+      const res = await app.request('/v1/commute/routes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          origin: { lat: 14.588, lng: 121.055 },
+          destination: { lat: 14.5823, lng: 121.0611 },
+          preference: 'transit_only'
+        })
+      });
+
+      expect(res.status).toBe(200);
+      const json = await res.json<{
+        data: {
+          routes: Array<{
+            fare: { amount_php: number };
+            legs: Array<{ mode: string; transit_line?: string; fare?: { amount_php: number } }>;
+          }>;
+        };
+      }>();
+
+      const primaryRoute = json.data.routes[0];
+      expect(primaryRoute).toBeDefined();
+      expect(primaryRoute?.legs.some((l) => l.mode === 'rail' || l.mode === 'jeepney' || l.mode === 'bus')).toBe(true);
+      expect(primaryRoute?.fare.amount_php).toBeGreaterThan(0);
+    });
+
+    it('calculates street segment shade score via POST /commute/shade (EQ-002)', async () => {
+      const res = await app.request('/commute/shade', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          segments: [
+            { length_m: 100, canopy_ratio: 0.8 },
+            { length_m: 200, canopy_ratio: 0.5 }
+          ]
+        })
+      });
+
+      expect(res.status).toBe(200);
+      const json = await res.json<{
+        status: string;
+        data: {
+          shade_score: number;
+          total_length_m: number;
+          total_shaded_m: number;
+          equation_id: string;
+        };
+      }>();
+
+      expect(json.status).toBe('success');
+      expect(json.data.total_length_m).toBe(300);
+      // (100*0.8 + 200*0.5) = 80 + 100 = 180m shaded / 300m = 60.00%
+      expect(json.data.shade_score).toBe(60);
+      expect(json.data.equation_id).toBe('EQ-002');
+    });
+  });
+
+
+  describe('Transit Network Endpoint (/transit/network, A-M2-01, F-003, INV-003)', () => {
+    it('serves static GeoJSON transit graph with edge caching headers', async () => {
+      const res = await app.request('/transit/network');
+      expect(res.status).toBe(200);
+
+      // Edge caching headers check
+      const cacheControl = res.headers.get('cache-control');
+      expect(cacheControl).toContain('public');
+      expect(cacheControl).toContain('max-age=86400');
+      const etag = res.headers.get('etag');
+      expect(etag).toBeDefined();
+
+      const geojson = await res.json<{
+        type: string;
+        features: Array<{
+          type: string;
+          geometry: { type: string; coordinates: unknown };
+          properties: { feature_type: string; line_id?: string; name?: string };
+        }>;
+      }>();
+
+      expect(geojson.type).toBe('FeatureCollection');
+      expect(geojson.features.length).toBeGreaterThan(5);
+
+      const lines = geojson.features.filter((f) => f.geometry.type === 'LineString');
+      const stations = geojson.features.filter((f) => f.geometry.type === 'Point');
+      expect(lines.length).toBeGreaterThan(0);
+      expect(stations.length).toBeGreaterThan(0);
+    });
+
+    it('returns HTTP 304 when If-None-Match header matches current ETag', async () => {
+      const res1 = await app.request('/transit/network');
+      const etag = res1.headers.get('etag')!;
+
+      const res2 = await app.request('/transit/network', {
+        headers: { 'If-None-Match': etag }
+      });
+      expect(res2.status).toBe(304);
+    });
+
+    it('supports versioned path /v1/transit/network', async () => {
+      const res = await app.request('/v1/transit/network');
+      expect(res.status).toBe(200);
+      const json = await res.json<{ type: string }>();
+      expect(json.type).toBe('FeatureCollection');
+    });
+  });
+
+  describe('Places Green Score Glass-Box (/places/:id/green-score, A-M2-03, F-004, BR-003, EQ-001)', () => {
+    it('returns 0-100 Green Index with glass-box breakdown per EQ-001', async () => {
+      const placeId = 'f0010000-0000-0000-0000-000000000020'; // National Library
+      const res = await app.request(`/places/${placeId}/green-score`);
+
+      expect(res.status).toBe(200);
+      const json = await res.json<{
+        status: string;
+        data: {
+          place_id: string;
+          total_score: number;
+          breakdown: {
+            canopy_component: number;
+            ndvi_component: number;
+            permeable_component: number;
+          };
+          inputs: {
+            canopy_cover_pct: number;
+            ndvi_density_scaled: number;
+            permeable_surface_pct: number;
+          };
+          equation_id: string;
+          derivation_note: string;
+        };
+      }>();
+
+      expect(json.status).toBe('success');
+      expect(json.data.place_id).toBe(placeId);
+      expect(json.data.equation_id).toBe('EQ-001');
+      expect(json.data.total_score).toBeGreaterThan(0);
+      expect(json.data.total_score).toBeLessThanOrEqual(100);
+      // Breakdown components sum to total score
+      const sum =
+        json.data.breakdown.canopy_component +
+        json.data.breakdown.ndvi_component +
+        json.data.breakdown.permeable_component;
+      expect(Math.abs(sum - json.data.total_score)).toBeLessThanOrEqual(0.02);
+      expect(json.data.derivation_note).toContain('EQ-001');
+    });
+
+    it('calculates score 41.00 strictly adhering to TC-004 when test inputs are provided', async () => {
+      const placeId = 'f0010000-0000-0000-0000-000000000020';
+      // TC-004 inputs: Canopy = 40.0%, NDVI = 50.0%, Permeable = 30.0% -> Score 41.00
+      const res = await app.request(`/places/${placeId}/green-score?canopy=40.0&ndvi=50.0&permeable=30.0`);
+
+      expect(res.status).toBe(200);
+      const json = await res.json<{
+        data: {
+          total_score: number;
+          breakdown: {
+            canopy_component: number;
+            ndvi_component: number;
+            permeable_component: number;
+          };
+        };
+      }>();
+
+      expect(json.data.total_score).toBe(41.0);
+      expect(json.data.breakdown.canopy_component).toBe(20.0); // 0.50 * 40
+      expect(json.data.breakdown.ndvi_component).toBe(15.0);   // 0.30 * 50
+      expect(json.data.breakdown.permeable_component).toBe(6.0); // 0.20 * 30
+    });
+
+    it('returns RFC 7807 404 problem details when place does not exist', async () => {
+      const res = await app.request('/places/non-existent-place-id/green-score');
+      expect(res.status).toBe(404);
+      const problem = await res.json<{ code: string; status: number }>();
+      expect(problem.code).toBe('ERR_PLACE_NOT_FOUND');
+      expect(problem.status).toBe(404);
+    });
   });
 
   describe('Saved Bookmarks (/saved)', () => {
