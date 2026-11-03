@@ -19,7 +19,7 @@ import {
   type OperatingHourRecord,
   type VerificationMetaRecord,
   type VerificationStatus,
-} from './ingest-libraries.ts';
+} from './ingest-libraries';
 
 // Static set of allowed place categories
 export const ALLOWED_CATEGORIES: Record<string, true> = {
@@ -93,6 +93,14 @@ export interface ValidationError {
   field: string;
   rule: string;
   message: string;
+}
+
+export interface ValidationReport {
+  isValid: boolean;
+  totalRecordsChecked: number;
+  passedCount: number;
+  errorCount: number;
+  errors: ValidationError[];
 }
 /**
  * Checks whether a URL is a valid http(s) URL
@@ -440,13 +448,15 @@ export function main(): void {
   let outputPath = path.resolve('data/normalized-libraries.json');
 
   const inIndex = args.indexOf('--input');
-  if (inIndex !== -1 && args[inIndex + 1]) {
-    inputPath = path.resolve(args[inIndex + 1]);
+  const inArg = args[inIndex + 1];
+  if (inIndex !== -1 && inArg) {
+    inputPath = path.resolve(inArg);
   }
 
   const outIndex = args.indexOf('--output');
-  if (outIndex !== -1 && args[outIndex + 1]) {
-    outputPath = path.resolve(args[outIndex + 1]);
+  const outArg = args[outIndex + 1];
+  if (outIndex !== -1 && outArg) {
+    outputPath = path.resolve(outArg);
   }
 
   let rawDataset: IngestedRelationalDataset;

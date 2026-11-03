@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { sanitizedLogger } from './middleware/sanitized-logger.js';
 import { rateLimiter } from './middleware/rate-limiter.js';
+import { edgeCache } from './middleware/edge-cache.js';
 import { healthRoute } from './routes/health.js';
 import { placesRoute } from './routes/places.js';
 import { commuteRoute } from './routes/commute.js';
@@ -9,6 +10,7 @@ import { locationsRoute } from './routes/locations.js';
 import { savedRoute } from './routes/saved.js';
 import { transitRoute } from './routes/transit.js';
 import { tilesRoute } from './routes/tiles.js';
+import { adminRoute } from './routes/admin.js';
 import type { Env, ProblemDetails } from './types/index.js';
 
 export const app = new Hono<{ Bindings: Env }>();
@@ -19,8 +21,15 @@ app.use('*', async (c, next) => {
   const corsMiddleware = cors({
     origin: origin === '*' ? '*' : origin.split(',').map((o) => o.trim()),
     allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowHeaders: ['Content-Type', 'Authorization', 'X-Session-ID', 'X-Client-Platform'],
-    exposeHeaders: ['Content-Length', 'Retry-After'],
+    allowHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Session-ID',
+      'X-Client-Platform',
+      'X-Admin-Key',
+      'If-None-Match'
+    ],
+    exposeHeaders: ['Content-Length', 'Retry-After', 'ETag', 'Cache-Control'],
     maxAge: 86400
   });
   return corsMiddleware(c, next);
@@ -32,7 +41,10 @@ app.use('*', sanitizedLogger());
 // 3. Edge Token-Bucket Rate Limiter (60 req/min per IP per T-004 & A-M1-04)
 app.use('*', rateLimiter());
 
-// 4. Mount Routes (Support both root and /v1 versioned prefix)
+// 4. Cloudflare Edge Caching Middleware (A-M3-03, INV-003, Free Tier Budget)
+app.use('*', edgeCache());
+
+// 5. Mount Routes (Support both root and /v1 versioned prefix)
 app.route('/health', healthRoute);
 app.route('/places', placesRoute);
 app.route('/commute', commuteRoute);
@@ -40,6 +52,7 @@ app.route('/locations', locationsRoute);
 app.route('/saved', savedRoute);
 app.route('/transit', transitRoute);
 app.route('/tiles', tilesRoute);
+app.route('/admin', adminRoute);
 
 // Versioned /v1 routes
 app.route('/v1/health', healthRoute);
@@ -49,7 +62,7 @@ app.route('/v1/locations', locationsRoute);
 app.route('/v1/saved', savedRoute);
 app.route('/v1/transit', transitRoute);
 app.route('/v1/tiles', tilesRoute);
-
+app.route('/v1/admin', adminRoute);
 // 5. RFC 7807 404 Not Found Handler
 app.notFound((c) => {
   const problem: ProblemDetails = {

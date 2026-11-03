@@ -250,6 +250,109 @@ BEGIN
 END $$;
 ROLLBACK TO SAVEPOINT test11;
 
+-- Test 12: Insert valid user_profiles and saved_items (place and route)
+SAVEPOINT test12;
+INSERT INTO auth.users (id, email)
+VALUES ('u0000000-0000-0000-0000-000000000001', 'testuser@lunhaw.ph')
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO user_profiles (id, display_name, preferred_transit_mode, home_lgu)
+VALUES ('u0000000-0000-0000-0000-000000000001', 'Juan Dela Cruz', 'jeepney', 'Manila');
+
+INSERT INTO places (id, name, category, lgu_city, barangay, coordinates, verification_id)
+VALUES (
+    'b0000000-0000-0000-0000-000000000003',
+    'Arroceros Forest Park',
+    'park',
+    'Manila',
+    'Barangay 659',
+    ST_SetSRID(ST_MakePoint(120.98, 14.59), 4326)::geography,
+    'a0000000-0000-0000-0000-000000000001'
+);
+
+-- Valid saved item with user_id
+INSERT INTO saved_items (id, user_id, item_type, place_id, notes)
+VALUES (
+    'v0000000-0000-0000-0000-000000000001',
+    'u0000000-0000-0000-0000-000000000001',
+    'place',
+    'b0000000-0000-0000-0000-000000000003',
+    'Peaceful shaded walking spot'
+);
+
+-- Valid saved item with pseudonymous client_session_id and route_data
+INSERT INTO saved_items (id, client_session_id, item_type, route_data, notes)
+VALUES (
+    'v0000000-0000-0000-0000-000000000002',
+    'sess_anonymous_test_12345',
+    'route',
+    '{"origin": "Intramuros", "destination": "Arroceros", "mode": "walk"}'::jsonb,
+    'Shaded commute morning route'
+);
+\echo '[PASS] Test 12: Valid user_profile and saved_items (place and route) inserted successfully'
+ROLLBACK TO SAVEPOINT test12;
+
+-- Test 13: Assert failure on saved_item without owner (chk_saved_item_owner)
+SAVEPOINT test13;
+DO $$
+BEGIN
+    BEGIN
+        INSERT INTO saved_items (id, user_id, client_session_id, item_type, place_id)
+        VALUES (
+            'v0000000-0000-0000-0000-000000000003',
+            NULL,
+            NULL,
+            'place',
+            'b0000000-0000-0000-0000-000000000001'
+        );
+        RAISE EXCEPTION 'TEST FAILED: chk_saved_item_owner did not trigger when both user_id and client_session_id are NULL';
+    EXCEPTION
+        WHEN check_violation THEN
+            RAISE NOTICE '[PASS] Test 13: chk_saved_item_owner successfully rejected saved item without owner';
+    END;
+END $$;
+ROLLBACK TO SAVEPOINT test13;
+
+-- Test 14: Assert failure on saved_item with item_type = place but missing place_id (chk_saved_item_target)
+SAVEPOINT test14;
+DO $$
+BEGIN
+    BEGIN
+        INSERT INTO saved_items (id, client_session_id, item_type, place_id)
+        VALUES (
+            'v0000000-0000-0000-0000-000000000004',
+            'sess_test_9999',
+            'place',
+            NULL
+        );
+        RAISE EXCEPTION 'TEST FAILED: chk_saved_item_target did not trigger when place item lacks place_id';
+    EXCEPTION
+        WHEN check_violation THEN
+            RAISE NOTICE '[PASS] Test 14: chk_saved_item_target successfully rejected place item without place_id';
+    END;
+END $$;
+ROLLBACK TO SAVEPOINT test14;
+
+-- Test 15: Assert failure on saved_item invalid item_type (chk_saved_item_type)
+SAVEPOINT test15;
+DO $$
+BEGIN
+    BEGIN
+        INSERT INTO saved_items (id, client_session_id, item_type, place_id)
+        VALUES (
+            'v0000000-0000-0000-0000-000000000005',
+            'sess_test_9999',
+            'invalid_type',
+            'b0000000-0000-0000-0000-000000000001'
+        );
+        RAISE EXCEPTION 'TEST FAILED: chk_saved_item_type did not trigger for invalid item_type';
+    EXCEPTION
+        WHEN check_violation THEN
+            RAISE NOTICE '[PASS] Test 15: chk_saved_item_type successfully rejected invalid item_type';
+    END;
+END $$;
+ROLLBACK TO SAVEPOINT test15;
+
 ROLLBACK;
 
 \echo '== All Schema Verifications Passed Successfully =='

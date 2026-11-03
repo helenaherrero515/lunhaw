@@ -13,6 +13,7 @@ import { Libraries } from "@/components/Libraries";
 import { CtaSection } from "@/components/CtaSection";
 import { Footer } from "@/components/Footer";
 import { AuthDialog } from "@/components/AuthDialog";
+import { SavedItemsDrawer } from "@/components/saved/SavedItemsDrawer";
 import { initLunhawVisuals } from "@/lib/lunhaw-landing";
 
 export default function HomePage() {
@@ -66,6 +67,9 @@ export default function HomePage() {
 
         {/* Authentication Modal / Mobile Bottom Sheet */}
         <AuthDialog />
+
+        {/* Saved Places & Trips Slide-over Drawer (C-M3-02 / F-005) */}
+        <SavedItemsDrawer />
       </div>
     </>
   );

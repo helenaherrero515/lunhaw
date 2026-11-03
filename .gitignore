@@ -61,6 +61,7 @@ supabase/.branches/
 *.rdb
 *.sql.gz
 dump.rdb
+backups/
 
 # ------------------------------------------------------------------------------
 # 3. Dependencies & Package Managers
