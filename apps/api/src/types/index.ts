@@ -8,9 +8,12 @@ export type VerificationStatus = 'VERIFIED' | 'ESTIMATE' | 'NOT_AVAILABLE';
 export interface VerificationMeta {
   status: VerificationStatus;
   official_source?: string | null;
+  official_source_name?: string | null;
   source_url?: string | null;
+  official_source_url?: string | null;
   last_verified_at?: string | null;
   derivation_note?: string | null;
+  verified_by?: string | null;
 }
 
 export type GeoJSONPosition = [longitude: number, latitude: number, elevation?: number];
@@ -69,6 +72,7 @@ export interface Place {
   id: string;
   name: string;
   category: PlaceCategory;
+  description?: string | null;
   city: string;
   barangay: string;
   address: string;
@@ -81,6 +85,7 @@ export interface Place {
   disclaimer?: string;
   schedules?: DaySchedule[];
   access_requirements?: string | null;
+  distance_km?: number | null;
 }
 
 export interface Env {
