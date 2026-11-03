@@ -87,39 +87,40 @@ export default function HomePage() {
     }
   }, [isAuthenticated]);
 
-  if (!isAuthenticated) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "100vh",
-          gap: "16px",
-          fontFamily: "Kufam, system-ui, sans-serif",
-          color: "#26332D",
-          background: "#F7F7F0",
-          padding: "24px",
-          textAlign: "center",
-        }}
-      >
+  return (
+    <>
+      {isAuthenticated === false && (
         <div
           style={{
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            border: "3px solid #E1E8DF",
-            borderTopColor: "#245C43",
-            animation: "spin 1s linear infinite",
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "100vh",
+            gap: "16px",
+            fontFamily: "'Kufam', system-ui, sans-serif",
+            color: "#26332D",
+            background: "#F7F7F0",
+            padding: "24px",
+            textAlign: "center",
           }}
-        />
-        <p style={{ fontSize: "16px", fontWeight: "600", margin: 0 }}>
-          {isAuthenticated === false
-            ? "Redirecting to landing page..."
-            : "Loading your green space..."}
-        </p>
-        {isAuthenticated === false && (
+        >
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "50%",
+              border: "3px solid #E1E8DF",
+              borderTopColor: "#245C43",
+              animation: "spin 1s linear infinite",
+            }}
+          />
+          <p style={{ fontSize: "16px", fontWeight: "600", margin: 0 }}>
+            Redirecting to landing page...
+          </p>
           <a
             href="/"
             style={{
@@ -134,15 +135,12 @@ export default function HomePage() {
           >
             Back to Home
           </a>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <div
-      id="lunhaw-home-root"
-      dangerouslySetInnerHTML={{ __html: HOME_BODY_HTML }}
-    />
+        </div>
+      )}
+      <div
+        id="lunhaw-home-root"
+        dangerouslySetInnerHTML={{ __html: HOME_BODY_HTML }}
+      />
+    </>
   );
 }

@@ -39,8 +39,10 @@ const config: Omit<Config, "content"> = {
         },
       },
       fontFamily: {
-        ui: ["var(--font-ui)", "system-ui", "-apple-system", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        ui: ["var(--font-ui)", "'Kufam'", "system-ui", "-apple-system", "sans-serif"],
+        display: ["var(--font-display)", "'MedievalSharp'", "cursive", "Georgia", "serif"],
+        kufam: ["'Kufam'", "system-ui", "-apple-system", "sans-serif"],
+        medievalsharp: ["'MedievalSharp'", "cursive", "Georgia", "serif"],
       },
       borderRadius: {
         card: "28px",
