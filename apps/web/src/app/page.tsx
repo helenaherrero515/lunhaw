@@ -106,14 +106,15 @@ export default function HomePage() {
           {/* Interactive 3D Library & Physics Book Drop */}
           <Libraries />
 
-          {/* Final Call to Action */}
-          <CtaSection />
+          {/* Curtain Reveal Container for CTA & Footer */}
+          <div className="rv">
+            {/* Final Call to Action */}
+            <CtaSection />
+
+            {/* Footer */}
+            <Footer />
+          </div>
         </main>
-
-        {/* Footer */}
-        <Footer />
-
-        {/* Authentication Modal / Mobile Bottom Sheet */}
         <AuthDialog />
 
         {/* Saved Places & Trips Slide-over Drawer (C-M3-02 / F-005) */}
