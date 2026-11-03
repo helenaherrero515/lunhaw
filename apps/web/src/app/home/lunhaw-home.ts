@@ -95,7 +95,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')close();if((e.key===
 go('home');
 document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 (()=>{const s=$('#sheet');let y0=null;s.addEventListener('touchstart',e=>{y0=s.scrollTop<=0?e.touches[0].clientY:null},{passive:true});s.addEventListener('touchend',e=>{if(y0!==null&&e.changedTouches[0].clientY-y0>90)close();y0=null},{passive:true})})();
-(()=>{const s=$('#splash');if(!s)return;const im=s.querySelector('img');im.src=M;const hide=()=>{s.classList.add('out');setTimeout(()=>s.remove(),600)};setTimeout(hide,2000);s.addEventListener('click',hide)})();
+(()=>{const s=$('#splash');if(!s)return;const im=s.querySelector('img');if(im)im.src=M;const hide=()=>{s.classList.add('out');setTimeout(()=>{try{s.remove()}catch(e){}},400)};setTimeout(hide,500);s.addEventListener('click',hide)})();
 
   
 document.addEventListener('click', e => {

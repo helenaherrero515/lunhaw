@@ -69,9 +69,6 @@ export function AuthDialog() {
     try {
       router.push("/home");
     } catch {}
-    if (typeof window !== "undefined") {
-      window.location.href = "/home";
-    }
   };
 
   const handleModeSwitch = (newMode: "signup" | "login") => {
@@ -121,8 +118,20 @@ export function AuthDialog() {
 
       if (authRes.user) {
         setCurrentUser(authRes.user);
+        if (typeof window !== "undefined") {
+          try {
+            localStorage.setItem("lunhaw.auth_user", JSON.stringify(authRes.user));
+          } catch {}
+        }
       }
-      setIsDone(true);
+      if (authMode === "login") {
+        handleClose();
+        try {
+          router.push("/home");
+        } catch {}
+      } else {
+        setIsDone(true);
+      }
     } catch {
       setServerError("An unexpected error occurred. Please try again.");
     }
