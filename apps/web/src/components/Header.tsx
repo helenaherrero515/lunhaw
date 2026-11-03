@@ -1,15 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { Bookmark } from "lucide-react";
 import { useLunhawStore } from "@/lib/store/use-lunhaw-store";
 import { useSavedBookmarks } from "@/lib/hooks/useSavedBookmarks";
-
+import { authService } from "@/lib/auth/auth-service";
 export function Header() {
-  const { isMobileMenuOpen, toggleMobileMenu, setMobileMenuOpen, openAuth, openSavedDrawer } =
+  const { isMobileMenuOpen, toggleMobileMenu, setMobileMenuOpen, openAuth, openSavedDrawer, currentUser, setCurrentUser } =
     useLunhawStore();
   const { savedCount } = useSavedBookmarks();
+
+  useEffect(() => {
+    let isMounted = true;
+    async function sync() {
+      try {
+        const u = await authService.getCurrentUser();
+        if (isMounted && u) setCurrentUser(u);
+      } catch {}
+    }
+    sync();
+    return () => { isMounted = false; };
+  }, [setCurrentUser]);
 
   const handleNavClick = () => {
     setMobileMenuOpen(false);
@@ -88,14 +100,24 @@ export function Header() {
               </span>
             )}
           </button>
-          <button
-            className="btn sm"
-            type="button"
-            data-auth="signup"
-            onClick={handleCreateAccount}
-          >
-            Create Account
-          </button>
+          {currentUser ? (
+            <Link
+              className="btn sm"
+              href="/home"
+              onClick={handleNavClick}
+            >
+              Open App
+            </Link>
+          ) : (
+            <button
+              className="btn sm"
+              type="button"
+              data-auth="signup"
+              onClick={handleCreateAccount}
+            >
+              Create Account
+            </button>
+          )}
         </nav>
         <button
           className="menu-btn"

@@ -94,9 +94,16 @@ export class SupabaseAuthService implements AuthService {
   }
 
   async logOut(): Promise<void> {
-    if (this.client) {
-      await this.client.auth.signOut();
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.removeItem("lunhaw.auth_user");
+      } catch {}
     }
+    if (!this.client) {
+      await new MockAuthService().logOut();
+      return;
+    }
+    await this.client.auth.signOut();
   }
 
   async getCurrentUser(): Promise<AuthUser | null> {
@@ -104,14 +111,32 @@ export class SupabaseAuthService implements AuthService {
       return new MockAuthService().getCurrentUser();
     }
 
-    const { data } = await this.client.auth.getUser();
-    if (!data.user) return null;
+    try {
+      const { data } = await this.client.auth.getUser();
+      if (!data.user) {
+        if (typeof window !== "undefined") {
+          try {
+            const raw = localStorage.getItem("lunhaw.auth_user");
+            if (raw) return JSON.parse(raw);
+          } catch {}
+        }
+        return null;
+      }
 
-    return {
-      id: data.user.id,
-      email: data.user.email ?? "",
-      name: data.user.user_metadata?.full_name,
-    };
+      return {
+        id: data.user.id,
+        email: data.user.email ?? "",
+        name: data.user.user_metadata?.full_name,
+      };
+    } catch {
+      if (typeof window !== "undefined") {
+        try {
+          const raw = localStorage.getItem("lunhaw.auth_user");
+          if (raw) return JSON.parse(raw);
+        } catch {}
+      }
+      return null;
+    }
   }
 
   async signInWithMagicLink(email: string): Promise<{ success: boolean; error?: string }> {
@@ -134,13 +159,43 @@ export class SupabaseAuthService implements AuthService {
   }
 }
 
+interface PromiseWithResolvers<T> {
+  promise: Promise<T>;
+  resolve: (value: T | PromiseLike<T>) => void;
+  reject: (reason?: unknown) => void;
+}
+
+declare global {
+  interface PromiseConstructor {
+    withResolvers<T>(): PromiseWithResolvers<T>;
+  }
+}
+
+if (typeof Promise.withResolvers !== "function") {
+  Promise.withResolvers = function <T>() {
+    let resolve!: (value: T | PromiseLike<T>) => void;
+    let reject!: (reason?: unknown) => void;
+    const promise = new Promise<T>((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+    return { promise, resolve, reject };
+  };
+}
+
+function delay(ms: number): Promise<void> {
+  const { promise, resolve } = Promise.withResolvers<void>();
+  setTimeout(resolve, ms);
+  return promise;
+}
+
 // In-memory Mock Auth implementation for testing / demo
 export class MockAuthService implements AuthService {
   private static currentUser: AuthUser | null = null;
 
   async signUp(name: string, email: string, password?: string): Promise<AuthResponse> {
     // Artificial latency simulation
-    await new Promise((r) => setTimeout(r, 200));
+    await delay(200);
 
     const user: AuthUser = {
       id: `usr_${Date.now()}`,
@@ -148,11 +203,16 @@ export class MockAuthService implements AuthService {
       name,
     };
     MockAuthService.currentUser = user;
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("lunhaw.auth_user", JSON.stringify(user));
+      } catch {}
+    }
     return { user };
   }
 
   async logIn(email: string, password?: string): Promise<AuthResponse> {
-    await new Promise((r) => setTimeout(r, 200));
+    await delay(200);
 
     const user: AuthUser = {
       id: `usr_${Date.now()}`,
@@ -160,11 +220,16 @@ export class MockAuthService implements AuthService {
       name: email.split("@")[0],
     };
     MockAuthService.currentUser = user;
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("lunhaw.auth_user", JSON.stringify(user));
+      } catch {}
+    }
     return { user };
   }
 
   async signInWithMagicLink(email: string): Promise<{ success: boolean; error?: string }> {
-    await new Promise((r) => setTimeout(r, 200));
+    await delay(200);
     if (!email || !email.includes("@")) {
       return { success: false, error: "Please enter a valid email address." };
     }
@@ -173,9 +238,22 @@ export class MockAuthService implements AuthService {
 
   async logOut(): Promise<void> {
     MockAuthService.currentUser = null;
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.removeItem("lunhaw.auth_user");
+      } catch {}
+    }
   }
 
   async getCurrentUser(): Promise<AuthUser | null> {
+    if (!MockAuthService.currentUser && typeof window !== "undefined") {
+      try {
+        const raw = localStorage.getItem("lunhaw.auth_user");
+        if (raw) {
+          MockAuthService.currentUser = JSON.parse(raw);
+        }
+      } catch {}
+    }
     return MockAuthService.currentUser;
   }
 }

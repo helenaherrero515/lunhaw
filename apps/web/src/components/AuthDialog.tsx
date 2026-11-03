@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useLunhawStore } from "@/lib/store/use-lunhaw-store";
 import { authService } from "@/lib/auth/auth-service";
 
 export function AuthDialog() {
-  const { isAuthOpen, closeAuth, authMode, setAuthMode } = useLunhawStore();
+  const router = useRouter();
+  const { isAuthOpen, closeAuth, authMode, setAuthMode, setCurrentUser } = useLunhawStore();
   const [showPassword, setShowPassword] = useState(false);
   const [isDone, setIsDone] = useState(false);
 
@@ -62,6 +64,16 @@ export function AuthDialog() {
     }, 200);
   };
 
+  const handleDone = () => {
+    handleClose();
+    try {
+      router.push("/home");
+    } catch {}
+    if (typeof window !== "undefined") {
+      window.location.href = "/home";
+    }
+  };
+
   const handleModeSwitch = (newMode: "signup" | "login") => {
     setAuthMode(newMode);
     clearErrors();
@@ -95,18 +107,20 @@ export function AuthDialog() {
     if (hasError) return;
 
     try {
+      let authRes;
       if (isSignup) {
-        const res = await authService.signUp(name.trim(), emailTrim, password);
-        if (res.error) {
-          setServerError(res.error);
-          return;
-        }
+        authRes = await authService.signUp(name.trim(), emailTrim, password);
       } else {
-        const res = await authService.logIn(emailTrim, password);
-        if (res.error) {
-          setServerError(res.error);
-          return;
-        }
+        authRes = await authService.logIn(emailTrim, password);
+      }
+
+      if (authRes.error) {
+        setServerError(authRes.error);
+        return;
+      }
+
+      if (authRes.user) {
+        setCurrentUser(authRes.user);
       }
       setIsDone(true);
     } catch {
@@ -281,9 +295,10 @@ export function AuthDialog() {
               className="btn"
               type="button"
               data-auth-close
-              onClick={handleClose}
+              id="go-app"
+              onClick={handleDone}
             >
-              Done
+              Start exploring
             </button>
           </div>
         )}
