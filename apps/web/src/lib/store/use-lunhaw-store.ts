@@ -20,6 +20,12 @@ interface LunhawState {
   // Reduced motion preference
   prefersReducedMotion: boolean;
   setPrefersReducedMotion: (reduced: boolean) => void;
+
+  // Saved Items Drawer state (C-M3-02 / F-005)
+  isSavedDrawerOpen: boolean;
+  openSavedDrawer: () => void;
+  closeSavedDrawer: () => void;
+  toggleSavedDrawer: () => void;
 }
 
 export const useLunhawStore = create<LunhawState>((set) => ({
@@ -38,4 +44,9 @@ export const useLunhawStore = create<LunhawState>((set) => ({
 
   prefersReducedMotion: false,
   setPrefersReducedMotion: (reduced) => set({ prefersReducedMotion: reduced }),
+
+  isSavedDrawerOpen: false,
+  openSavedDrawer: () => set({ isSavedDrawerOpen: true }),
+  closeSavedDrawer: () => set({ isSavedDrawerOpen: false }),
+  toggleSavedDrawer: () => set((state) => ({ isSavedDrawerOpen: !state.isSavedDrawerOpen })),
 }));
