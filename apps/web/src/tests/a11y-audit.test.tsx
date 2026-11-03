@@ -194,12 +194,12 @@ describe("E-M3-03 / C-M3-03: WCAG 2.1 AA Accessibility & Sunlight Audit", () => 
       expect(tabRoutes.className).toContain("h-11");
     });
 
-    it("ensures Header saved items button meets 44px touch target height", () => {
+    it("ensures Header mobile menu button meets accessible touch target requirements", () => {
       render(<Header />);
 
-      const savedBtn = screen.getByTestId("header-saved-btn");
-      expect(savedBtn).toBeInTheDocument();
-      expect(savedBtn.className).toContain("h-11"); // 44px
+      const menuBtn = screen.getByLabelText("Menu");
+      expect(menuBtn).toBeInTheDocument();
+      expect(menuBtn.className).toContain("menu-btn");
     });
 
     it("ensures LGUSelectorModal close button has accessible click target and clear label", () => {

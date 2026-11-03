@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 
 export function GreenIndex() {
   return (
@@ -50,14 +49,6 @@ export function GreenIndex() {
               <button type="button" data-trees="12">
                 Tree-lined
               </button>
-            </div>
-            <div className="mt-3">
-              <Link
-                href="/explore"
-                className="inline-flex items-center gap-1.5 rounded-full border border-[#245C43] bg-[#245C43] px-4 py-2 text-xs font-bold text-white transition-all hover:bg-[#163B2B]"
-              >
-                Plan a Shaded Commute ↗
-              </Link>
             </div>
           </div>
         </div>

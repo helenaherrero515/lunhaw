@@ -2,14 +2,11 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { Bookmark } from "lucide-react";
 import { useLunhawStore } from "@/lib/store/use-lunhaw-store";
-import { useSavedBookmarks } from "@/lib/hooks/useSavedBookmarks";
 import { authService } from "@/lib/auth/auth-service";
 export function Header() {
-  const { isMobileMenuOpen, toggleMobileMenu, setMobileMenuOpen, openAuth, openSavedDrawer, currentUser, setCurrentUser } =
+  const { isMobileMenuOpen, toggleMobileMenu, setMobileMenuOpen, openAuth, currentUser, setCurrentUser } =
     useLunhawStore();
-  const { savedCount } = useSavedBookmarks();
 
   useEffect(() => {
     let isMounted = true;
@@ -65,41 +62,12 @@ export function Header() {
           </Link>
           <Link
             className="l"
-            href="#explore"
-            data-scroll
-            onClick={handleNavClick}
-          >
-            Explore Map
-          </Link>
-          <Link
-            className="l"
             href="#faqs"
             data-scroll
             onClick={handleNavClick}
           >
             FAQs
           </Link>
-          <button
-            type="button"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              openSavedDrawer();
-            }}
-            aria-label={`View saved items (${savedCount})`}
-            data-testid="header-saved-btn"
-            className="relative inline-flex h-11 items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3 text-xs font-semibold text-[#245C43] transition-colors hover:border-[#245C43] hover:bg-[#E8F5EE] focus-visible:outline-2 focus-visible:outline-[#245C43] focus-visible:outline-offset-2"
-          >
-            <Bookmark className="h-4 w-4" />
-            <span>Saved</span>
-            {savedCount > 0 && (
-              <span
-                data-testid="header-saved-count-badge"
-                className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#245C43] px-1.5 text-[10px] font-bold text-white"
-              >
-                {savedCount}
-              </span>
-            )}
-          </button>
           {currentUser ? (
             <Link
               className="btn sm"
