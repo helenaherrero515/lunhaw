@@ -1,0 +1,1077 @@
+openapi: 3.1.0
+info:
+  title: Lunhaw API
+  version: 1.0.0
+  description: >-
+    Platform-neutral REST API contract for Lunhaw, a green urban space and
+    public study haven discovery platform for Metro Manila, Philippines.
+    Built on a $0/month free-tier architecture (Cloudflare Workers, Supabase PostgreSQL with PostGIS,
+    OpenFreeMap, and local client storage). Adheres strictly to Philippine Data Privacy Act of 2012
+    (RA 10173), location privacy standards (T-003 zero-retention invariant), and platform neutrality (INV-003).
+  contact:
+    name: Lunhaw Platform Team
+    url: https://lunhaw.ph
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.lunhaw.ph/v1
+    description: Production API Gateway (Cloudflare Workers)
+  - url: https://staging-api.lunhaw.ph/v1
+    description: Staging API Gateway (Cloudflare Workers)
+  - url: http://localhost:8787/v1
+    description: Local development emulator (Wrangler)
+
+tags:
+  - name: System
+    description: Service health and runtime telemetry
+  - name: Places
+    description: Parks, gardens, libraries, and reading centers directory
+  - name: Commute
+    description: Green and shaded multi-modal route planning
+  - name: Locations
+    description: NCR LGUs and barangays directory for manual area selection
+  - name: Saved
+    description: Pseudonymous bookmark and saved journey synchronization
+
+paths:
+  /health:
+    get:
+      tags:
+        - System
+      summary: Service health check
+      operationId: getHealth
+      description: Returns service availability, current timestamp, and runtime environment.
+      responses:
+        '200':
+          description: Service is healthy and operational
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '500':
+          description: Internal service degradation
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /places:
+    get:
+      tags:
+        - Places
+      summary: Search & filter green spaces and study havens
+      operationId: getPlaces
+      description: >-
+        Searches parks, gardens, public libraries, and barangay reading centers across Metro Manila.
+        Supports free-text search, category filtering, LGU/barangay scope, and proximity radius filtering.
+      parameters:
+        - name: query
+          in: query
+          description: Free-text search matching name, address, or amenity tags
+          required: false
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: Facility category filter
+          required: false
+          schema:
+            $ref: '#/components/schemas/PlaceCategory'
+        - name: city
+          in: query
+          description: Metro Manila LGU name (e.g., Manila, Pasig, Quezon City)
+          required: false
+          schema:
+            type: string
+        - name: barangay
+          in: query
+          description: Barangay name within the specified city
+          required: false
+          schema:
+            type: string
+        - name: lat
+          in: query
+          description: 'Latitude coordinate for radius search (must be within NCR bounds: 14.3 to 14.8)'
+          required: false
+          schema:
+            type: number
+            minimum: 14.3
+            maximum: 14.8
+        - name: lng
+          in: query
+          description: 'Longitude coordinate for radius search (must be within NCR bounds: 120.9 to 121.2)'
+          required: false
+          schema:
+            type: number
+            minimum: 120.9
+            maximum: 121.2
+        - name: radius_km
+          in: query
+          description: Search radius in kilometers (max 25.0 km per T-004)
+          required: false
+          schema:
+            type: number
+            minimum: 0.1
+            maximum: 25.0
+            default: 5.0
+        - name: amenities
+          in: query
+          description: Comma-separated list of required study amenities (e.g., power,wifi,aircon,desks)
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of records per page (max 100)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        '200':
+          description: Paginated collection of places matching criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaceListResponse'
+        '400':
+          description: Invalid request parameters or coordinates outside NCR bounding box
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: Rate limit exceeded (60 requests/minute per IP)
+          headers:
+            Retry-After:
+              description: Number of seconds before retrying
+              schema:
+                type: integer
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /places/{id}:
+    get:
+      tags:
+        - Places
+      summary: Retrieve detailed place profile and operating hours
+      operationId: getPlaceById
+      description: >-
+        Retrieves complete facility profile including verified operating schedules, full amenity checklist,
+        boundary geometry, and mandatory facility disclaimer (INV-002).
+      parameters:
+        - name: id
+          in: path
+          description: Unique facility UUID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Detailed facility profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaceDetailResponse'
+        '400':
+          description: Invalid UUID format
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Facility record not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /commute/routes:
+    post:
+      tags:
+        - Commute
+      summary: Plan green and shaded multi-modal commute routes
+      operationId: planCommuteRoute
+      description: >-
+        Calculates walking and public transit paths between coordinates within NCR.
+        Enriches routes with tree canopy shade index (Sentinel-2 NDVI overlay), step directions,
+        and transparent transit fare estimates. Coordinates are processed ephemerally in-memory (RA 10173/T-003).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutePlanRequest'
+      responses:
+        '200':
+          description: Calculated commute routes with canopy and shade breakdown
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutePlanResponse'
+        '400':
+          description: Invalid origin/destination coordinates or route distance exceeds limit
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Routing calculation failure
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /locations/areas:
+    get:
+      tags:
+        - Locations
+      summary: Metro Manila LGUs and barangays directory
+      operationId: getLocationsAreas
+      description: >-
+        Provides complete administrative hierarchy of all 17 Metro Manila LGUs and their constituent
+        barangays for manual area selection fallback when device geolocation is unavailable or denied (F-006).
+      responses:
+        '200':
+          description: List of LGUs and constituent barangays
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationsAreasResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /saved:
+    get:
+      tags:
+        - Saved
+      summary: Retrieve saved bookmarks for a pseudonymous session
+      operationId: getSavedItems
+      description: >-
+        Fetches bookmarked places and saved commute routes associated with the client session.
+        Session records automatically expire after 90 days of inactivity.
+      parameters:
+        - name: X-Session-ID
+          in: header
+          description: Pseudonymous client session identifier
+          required: false
+          schema:
+            type: string
+        - name: session_id
+          in: query
+          description: Fallback query parameter for pseudonymous client session identifier
+          required: false
+          schema:
+            type: string
+        - name: item_type
+          in: query
+          description: Filter by saved item category
+          required: false
+          schema:
+            type: string
+            enum: [place, route]
+      responses:
+        '200':
+          description: List of saved items for the session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SavedItemsResponse'
+        '400':
+          description: Missing or invalid session identifier
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+        - Saved
+      summary: Save a place or commute route bookmark
+      operationId: createSavedItem
+      description: Persists a bookmark for a facility or calculated journey under the client session.
+      parameters:
+        - name: X-Session-ID
+          in: header
+          description: Pseudonymous client session identifier
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSavedItemRequest'
+      responses:
+        '201':
+          description: Saved bookmark created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SavedItemDetail'
+        '400':
+          description: Invalid request payload or missing references
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+  /saved/{id}:
+    delete:
+      tags:
+        - Saved
+      summary: Remove a saved bookmark
+      operationId: deleteSavedItem
+      description: Deletes a saved place or route bookmark by its unique identifier.
+      parameters:
+        - name: id
+          in: path
+          description: Unique saved item UUID
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: X-Session-ID
+          in: header
+          description: Pseudonymous client session identifier for ownership validation
+          required: false
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Bookmark successfully removed
+        '400':
+          description: Invalid UUID format
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Saved item not found or session mismatch
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Administrative JWT token for moderation and audit operations.
+    ClientPlatformHeader:
+      type: apiKey
+      name: X-Client-Platform
+      in: header
+      description: Client application identifier ('web', 'ios', or 'android').
+
+  schemas:
+    # RFC 7807 Problem Details Schema
+    ProblemDetails:
+      type: object
+      required:
+        - type
+        - title
+        - status
+        - detail
+      properties:
+        type:
+          type: string
+          format: uri
+          description: Absolute or relative URI reference identifying the problem type
+          example: 'https://api.lunhaw.ph/errors/ERR_INVALID_COORDINATES'
+        title:
+          type: string
+          description: Short human-readable summary of the problem type
+          example: 'Coordinates Out of Bounds'
+        status:
+          type: integer
+          description: HTTP status code generated by the origin server
+          example: 400
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence of the problem
+          example: 'Coordinates must lie within the NCR bounding box: 14.3N-14.8N, 120.9E-121.2E.'
+        instance:
+          type: string
+          format: uri-reference
+          description: URI reference identifying the specific occurrence of the problem
+          example: '/places?lat=13.2&lng=121.0'
+        code:
+          type: string
+          description: Application error code for client programmatic handling
+          example: 'ERR_INVALID_COORDINATES'
+        invalid_params:
+          type: array
+          description: Validation errors for specific fields
+          items:
+            type: object
+            required:
+              - name
+              - reason
+            properties:
+              name:
+                type: string
+              reason:
+                type: string
+
+    # Data Honesty / Verification Standard (INV-001)
+    VerificationStatus:
+      type: string
+      enum:
+        - VERIFIED
+        - ESTIMATE
+        - NOT_AVAILABLE
+      description: Strict 3-state data honesty flag. No unverified information is presented as factual.
+
+    VerificationMeta:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/VerificationStatus'
+        official_source:
+          type: string
+          nullable: true
+          description: Name of official civic source or government agency
+          example: 'Pasig LGU Public Affairs'
+        source_url:
+          type: string
+          format: uri
+          nullable: true
+          description: Publicly inspectable URL proving the data point
+          example: 'https://pasigcity.gov.ph/reading-centers'
+        last_verified_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: ISO timestamp of last verified audit
+          example: '2026-09-15T08:00:00Z'
+        derivation_note:
+          type: string
+          nullable: true
+          description: Mathematical or algorithmic derivation methodology note (for ESTIMATE)
+          example: 'Canopy calculated from Sentinel-2 NDVI overlay via EQ-002'
+
+    # RFC 7946 GeoJSON Schemas
+    GeoJSONPosition:
+      type: array
+      description: GeoJSON coordinate tuple [longitude, latitude, elevation?] per RFC 7946
+      minItems: 2
+      maxItems: 3
+      items:
+        type: number
+      example: [121.0611, 14.5823]
+
+    GeoJSONPoint:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum: [Point]
+        coordinates:
+          $ref: '#/components/schemas/GeoJSONPosition'
+
+    GeoJSONLineString:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum: [LineString]
+        coordinates:
+          type: array
+          minItems: 2
+          items:
+            $ref: '#/components/schemas/GeoJSONPosition'
+
+    GeoJSONPolygon:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum: [Polygon]
+        coordinates:
+          type: array
+          items:
+            type: array
+            minItems: 4
+            items:
+              $ref: '#/components/schemas/GeoJSONPosition'
+
+    GeoJSONGeometry:
+      oneOf:
+        - $ref: '#/components/schemas/GeoJSONPoint'
+        - $ref: '#/components/schemas/GeoJSONLineString'
+        - $ref: '#/components/schemas/GeoJSONPolygon'
+
+    GeoJSONFeature:
+      type: object
+      required:
+        - type
+        - geometry
+        - properties
+      properties:
+        type:
+          type: string
+          enum: [Feature]
+        geometry:
+          $ref: '#/components/schemas/GeoJSONGeometry'
+        properties:
+          type: object
+          description: Arbitrary properties dictionary
+
+    GeoJSONFeatureCollection:
+      type: object
+      required:
+        - type
+        - features
+      properties:
+        type:
+          type: string
+          enum: [FeatureCollection]
+        features:
+          type: array
+          items:
+            $ref: '#/components/schemas/GeoJSONFeature'
+
+    # Domain Schemas
+    PlaceCategory:
+      type: string
+      enum:
+        - park
+        - garden
+        - library
+        - reading_center
+
+    CoordinatesObject:
+      type: object
+      required:
+        - lat
+        - lng
+      properties:
+        lat:
+          type: number
+          example: 14.5823
+        lng:
+          type: number
+          example: 121.0611
+
+    DaySchedule:
+      type: object
+      required:
+        - day_of_week
+        - day_name
+        - is_closed
+        - verification
+      properties:
+        day_of_week:
+          type: integer
+          minimum: 0
+          maximum: 6
+          description: 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+          example: 1
+        day_name:
+          type: string
+          example: 'Monday'
+        open_time:
+          type: string
+          nullable: true
+          pattern: '^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$'
+          example: '08:00:00'
+        close_time:
+          type: string
+          nullable: true
+          pattern: '^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$'
+          example: '17:00:00'
+        is_closed:
+          type: boolean
+          example: false
+        verification:
+          $ref: '#/components/schemas/VerificationMeta'
+
+    StudyAmenities:
+      type: object
+      properties:
+        desk_capacity:
+          type: integer
+          nullable: true
+          example: 25
+        has_power_outlets:
+          type: boolean
+          example: true
+        has_wifi:
+          type: boolean
+          example: true
+        has_aircon:
+          type: boolean
+          example: true
+        has_quiet_zone:
+          type: boolean
+          example: true
+        is_free_to_use:
+          type: boolean
+          example: true
+
+    PlaceSummary:
+      type: object
+      required:
+        - id
+        - name
+        - category
+        - city
+        - barangay
+        - address
+        - coordinates
+        - verification
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 'c1f7a0b3-6c7e-4d8a-9f5e-123456789abc'
+        name:
+          type: string
+          example: 'Barangay San Antonio Reading Center'
+        category:
+          $ref: '#/components/schemas/PlaceCategory'
+        city:
+          type: string
+          example: 'Pasig'
+        barangay:
+          type: string
+          example: 'San Antonio'
+        address:
+          type: string
+          example: 'San Antonio Community Complex, Pasig'
+        coordinates:
+          $ref: '#/components/schemas/CoordinatesObject'
+        point_geojson:
+          $ref: '#/components/schemas/GeoJSONPoint'
+        green_index_score:
+          type: number
+          nullable: true
+          minimum: 0.0
+          maximum: 100.0
+          example: 68.5
+        verification:
+          $ref: '#/components/schemas/VerificationMeta'
+        study_amenities:
+          $ref: '#/components/schemas/StudyAmenities'
+
+    PlaceDetail:
+      allOf:
+        - $ref: '#/components/schemas/PlaceSummary'
+        - type: object
+          required:
+            - disclaimer
+            - schedules
+          properties:
+            disclaimer:
+              type: string
+              description: Mandatory advisory disclaimer per INV-002
+              example: >-
+                Please verify operating hours directly with the facility before traveling,
+                as barangay schedules may change without notice.
+            schedules:
+              type: array
+              items:
+                $ref: '#/components/schemas/DaySchedule'
+            access_requirements:
+              type: string
+              nullable: true
+              example: 'Valid student or government-issued ID required.'
+            boundary_geojson:
+              $ref: '#/components/schemas/GeoJSONPolygon'
+              nullable: true
+
+    PaginationMeta:
+      type: object
+      required:
+        - page
+        - per_page
+        - total
+      properties:
+        page:
+          type: integer
+          example: 1
+        per_page:
+          type: integer
+          example: 20
+        total:
+          type: integer
+          example: 45
+
+    PlaceListResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          example: 'success'
+        data:
+          type: object
+          required:
+            - places
+            - pagination
+          properties:
+            places:
+              type: array
+              items:
+                $ref: '#/components/schemas/PlaceSummary'
+            pagination:
+              $ref: '#/components/schemas/PaginationMeta'
+
+    PlaceDetailResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          example: 'success'
+        data:
+          $ref: '#/components/schemas/PlaceDetail'
+
+    # Route Planning Schemas
+    RoutePlanRequest:
+      type: object
+      required:
+        - origin
+        - destination
+      properties:
+        origin:
+          $ref: '#/components/schemas/CoordinatesObject'
+        destination:
+          $ref: '#/components/schemas/CoordinatesObject'
+        preference:
+          type: string
+          enum:
+            - shaded_walk
+            - fastest
+            - least_walking
+            - transit_only
+          default: shaded_walk
+
+    FareDetail:
+      type: object
+      required:
+        - amount_php
+        - verification
+      properties:
+        amount_php:
+          type: number
+          example: 13.00
+        verification:
+          $ref: '#/components/schemas/VerificationMeta'
+
+    RouteLeg:
+      type: object
+      required:
+        - sequence
+        - mode
+        - instruction
+        - distance_m
+        - verification
+      properties:
+        sequence:
+          type: integer
+          example: 1
+        mode:
+          type: string
+          enum: [walk, jeepney, bus, lrt1, lrt2, mrt3, pnr]
+          example: 'walk'
+        instruction:
+          type: string
+          example: 'Walk south along San Miguel Ave sidewalk under tree canopy'
+        distance_m:
+          type: number
+          example: 450
+        duration_seconds:
+          type: integer
+          example: 360
+        shade_coverage_pct:
+          type: number
+          nullable: true
+          example: 85.0
+        fare:
+          $ref: '#/components/schemas/FareDetail'
+        path_geometry_geojson:
+          $ref: '#/components/schemas/GeoJSONLineString'
+        verification:
+          $ref: '#/components/schemas/VerificationMeta'
+
+    CommuteRoute:
+      type: object
+      required:
+        - route_id
+        - title
+        - total_distance_m
+        - est_duration_seconds
+        - average_shade_score
+        - fare
+        - legs
+      properties:
+        route_id:
+          type: string
+          example: 'r-001'
+        title:
+          type: string
+          example: 'Shaded Walk via San Miguel Ave'
+        total_distance_m:
+          type: number
+          example: 850
+        est_duration_seconds:
+          type: integer
+          example: 720
+        average_shade_score:
+          type: number
+          example: 78.4
+        fare:
+          $ref: '#/components/schemas/FareDetail'
+        geometry_geojson:
+          $ref: '#/components/schemas/GeoJSONLineString'
+        legs:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteLeg'
+
+    RoutePlanResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          example: 'success'
+        data:
+          type: object
+          required:
+            - routes
+          properties:
+            routes:
+              type: array
+              items:
+                $ref: '#/components/schemas/CommuteRoute'
+
+    # Location Area Directory Schemas
+    LguArea:
+      type: object
+      required:
+        - city_name
+        - total_barangays
+        - barangays
+      properties:
+        city_name:
+          type: string
+          example: 'Pasig'
+        total_barangays:
+          type: integer
+          example: 30
+        barangays:
+          type: array
+          items:
+            type: string
+          example: ['San Antonio', 'Kapitolyo', 'Ugong']
+
+    LocationsAreasResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          example: 'success'
+        data:
+          type: object
+          required:
+            - lgus
+          properties:
+            lgus:
+              type: array
+              items:
+                $ref: '#/components/schemas/LguArea'
+
+    # Saved Items Schemas
+    SavedItemDetail:
+      type: object
+      required:
+        - id
+        - client_session_id
+        - item_type
+        - created_at
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: '550e8400-e29b-41d4-a716-446655440000'
+        client_session_id:
+          type: string
+          example: 'sess_9f8e7d6c5b4a'
+        item_type:
+          type: string
+          enum: [place, route]
+          example: 'place'
+        place_id:
+          type: string
+          format: uuid
+          nullable: true
+          example: 'c1f7a0b3-6c7e-4d8a-9f5e-123456789abc'
+        route_id:
+          type: string
+          nullable: true
+          example: 'r-001'
+        notes:
+          type: string
+          nullable: true
+          example: 'Great quiet desk on 2nd floor'
+        created_at:
+          type: string
+          format: date-time
+          example: '2026-11-01T12:00:00Z'
+        place:
+          $ref: '#/components/schemas/PlaceSummary'
+          nullable: true
+        route:
+          $ref: '#/components/schemas/CommuteRoute'
+          nullable: true
+
+    CreateSavedItemRequest:
+      type: object
+      required:
+        - item_type
+      properties:
+        client_session_id:
+          type: string
+          description: Pseudonymous session token if not supplied via X-Session-ID header
+        item_type:
+          type: string
+          enum: [place, route]
+        place_id:
+          type: string
+          format: uuid
+          description: Required when item_type is 'place'
+        route_id:
+          type: string
+          description: Required when item_type is 'route'
+        notes:
+          type: string
+
+    SavedItemsResponse:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          example: 'success'
+        data:
+          type: object
+          required:
+            - items
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/SavedItemDetail'
+
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - environment
+        - version
+      properties:
+        status:
+          type: string
+          example: 'ok'
+        timestamp:
+          type: string
+          format: date-time
+          example: '2026-11-03T00:00:00Z'
+        uptime_seconds:
+          type: number
+          example: 3600.5
+        environment:
+          type: string
+          example: 'production'
+        version:
+          type: string
+          example: '1.0.0'

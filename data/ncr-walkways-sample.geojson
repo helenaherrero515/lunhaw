@@ -1,0 +1,442 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "filtered_at": "2026-11-03T04:22:51.229Z",
+    "dataset_id": "DS-001",
+    "bounding_box": {
+      "minLat": 14.3,
+      "maxLat": 14.8,
+      "minLng": 120.9,
+      "maxLng": 121.2
+    },
+    "total_features": 14
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "osm-way-1001",
+      "properties": {
+        "osm_id": 1001,
+        "name": "UP Diliman Academic Oval Footway",
+        "highway": "pedestrian",
+        "foot": "yes",
+        "surface": "asphalt",
+        "lit": "yes",
+        "shade_score": 85,
+        "lgu_city": "Quezon City"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0652,
+            14.6538
+          ],
+          [
+            121.0689,
+            14.6542
+          ],
+          [
+            121.0715,
+            14.6515
+          ],
+          [
+            121.0692,
+            14.6489
+          ],
+          [
+            121.0652,
+            14.6538
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1002",
+      "properties": {
+        "osm_id": 1002,
+        "name": "Ayala Triangle Gardens Perimeter Promenade",
+        "highway": "footway",
+        "foot": "yes",
+        "surface": "paved",
+        "lit": "yes",
+        "shade_score": 92,
+        "lgu_city": "Makati"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0221,
+            14.5574
+          ],
+          [
+            121.0245,
+            14.5582
+          ],
+          [
+            121.0251,
+            14.5558
+          ],
+          [
+            121.0227,
+            14.5551
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1003",
+      "properties": {
+        "osm_id": 1003,
+        "name": "Intramuros General Luna Pedestrian Promenade",
+        "highway": "pedestrian",
+        "foot": "yes",
+        "surface": "cobblestone",
+        "lit": "yes",
+        "shade_score": 65,
+        "lgu_city": "Manila"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            120.9741,
+            14.5896
+          ],
+          [
+            120.9768,
+            14.5872
+          ],
+          [
+            120.9795,
+            14.5851
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1004",
+      "properties": {
+        "osm_id": 1004,
+        "name": "Rizal Park Luneta Central Promenade",
+        "highway": "footway",
+        "foot": "yes",
+        "surface": "paved",
+        "lit": "yes",
+        "shade_score": 78,
+        "lgu_city": "Manila"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            120.9765,
+            14.5828
+          ],
+          [
+            120.9812,
+            14.5835
+          ],
+          [
+            120.9845,
+            14.5841
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1005",
+      "properties": {
+        "osm_id": 1005,
+        "name": "Marikina River Park Promenade",
+        "highway": "path",
+        "foot": "yes",
+        "surface": "concrete",
+        "lit": "yes",
+        "shade_score": 74,
+        "lgu_city": "Marikina"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0965,
+            14.6341
+          ],
+          [
+            121.0978,
+            14.6382
+          ],
+          [
+            121.0984,
+            14.6415
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1006",
+      "properties": {
+        "osm_id": 1006,
+        "name": "Bonifacio High Street Walkway",
+        "highway": "pedestrian",
+        "foot": "yes",
+        "surface": "tiles",
+        "lit": "yes",
+        "shade_score": 82,
+        "lgu_city": "Taguig"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0501,
+            14.5512
+          ],
+          [
+            121.0528,
+            14.5519
+          ],
+          [
+            121.0556,
+            14.5526
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1007",
+      "properties": {
+        "osm_id": 1007,
+        "name": "Quezon Memorial Circle Jogging & Walking Path",
+        "highway": "footway",
+        "foot": "yes",
+        "surface": "asphalt",
+        "lit": "yes",
+        "shade_score": 88,
+        "lgu_city": "Quezon City"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0485,
+            14.6512
+          ],
+          [
+            121.0515,
+            14.6532
+          ],
+          [
+            121.0525,
+            14.6515
+          ],
+          [
+            121.0498,
+            14.6495
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1008",
+      "properties": {
+        "osm_id": 1008,
+        "name": "Katipunan Avenue West Sidewalk",
+        "highway": "sidewalk",
+        "foot": "yes",
+        "surface": "paved",
+        "lit": "yes",
+        "shade_score": 60,
+        "lgu_city": "Quezon City"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0742,
+            14.6412
+          ],
+          [
+            121.0748,
+            14.6445
+          ],
+          [
+            121.0753,
+            14.6478
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1009",
+      "properties": {
+        "osm_id": 1009,
+        "name": "Pinaglabanan Shrine Memorial Steps",
+        "highway": "steps",
+        "foot": "yes",
+        "surface": "concrete",
+        "lit": "yes",
+        "shade_score": 70,
+        "lgu_city": "San Juan"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0315,
+            14.6042
+          ],
+          [
+            121.0318,
+            14.6046
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1010",
+      "properties": {
+        "osm_id": 1010,
+        "name": "Greenfield District Central Park Pedestrian Mall",
+        "highway": "pedestrian",
+        "foot": "yes",
+        "surface": "paved",
+        "lit": "yes",
+        "shade_score": 80,
+        "lgu_city": "Mandaluyong"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0542,
+            14.5801
+          ],
+          [
+            121.0558,
+            14.5812
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1011",
+      "properties": {
+        "osm_id": 1011,
+        "name": "Legaspi Village Salcedo St Sidewalk Link",
+        "highway": "residential",
+        "foot": "yes",
+        "surface": "asphalt",
+        "lit": "yes",
+        "shade_score": 68,
+        "lgu_city": "Makati"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0185,
+            14.5541
+          ],
+          [
+            121.0202,
+            14.5552
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1012",
+      "properties": {
+        "osm_id": 1012,
+        "name": "E. Rodriguez Jr. Secondary Pedestrian Feeder",
+        "highway": "secondary",
+        "foot": "yes",
+        "surface": "asphalt",
+        "lit": "yes",
+        "shade_score": 55,
+        "lgu_city": "Pasig"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0772,
+            14.5915
+          ],
+          [
+            121.0785,
+            14.5942
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1013",
+      "properties": {
+        "osm_id": 1013,
+        "name": "Alabang Filinvest Spectrum Linear Park Footway",
+        "highway": "footway",
+        "foot": "yes",
+        "surface": "paved",
+        "lit": "yes",
+        "shade_score": 84,
+        "lgu_city": "Muntinlupa"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.0421,
+            14.4185
+          ],
+          [
+            121.0442,
+            14.4201
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1014",
+      "properties": {
+        "osm_id": 1014,
+        "name": "Las Piñas Bamboo Organ Church Plaza Path",
+        "highway": "path",
+        "foot": "yes",
+        "surface": "stone",
+        "lit": "yes",
+        "shade_score": 75,
+        "lgu_city": "Las Piñas"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            120.9818,
+            14.4829
+          ],
+          [
+            120.9825,
+            14.4835
+          ]
+        ]
+      }
+    }
+  ]
+}
