@@ -153,7 +153,7 @@ describe("E-M1-02 / TC-002: Public Library Details & Amenity Display", () => {
       ).toBeInTheDocument();
 
       // Green Index Score
-      expect(screen.getByText(/GI 74\.2/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Green Index: 74\.2/i)).toBeInTheDocument();
 
       // Description
       expect(

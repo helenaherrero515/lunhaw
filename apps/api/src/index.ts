@@ -7,6 +7,8 @@ import { placesRoute } from './routes/places.js';
 import { commuteRoute } from './routes/commute.js';
 import { locationsRoute } from './routes/locations.js';
 import { savedRoute } from './routes/saved.js';
+import { transitRoute } from './routes/transit.js';
+import { tilesRoute } from './routes/tiles.js';
 import type { Env, ProblemDetails } from './types/index.js';
 
 export const app = new Hono<{ Bindings: Env }>();
@@ -36,6 +38,8 @@ app.route('/places', placesRoute);
 app.route('/commute', commuteRoute);
 app.route('/locations', locationsRoute);
 app.route('/saved', savedRoute);
+app.route('/transit', transitRoute);
+app.route('/tiles', tilesRoute);
 
 // Versioned /v1 routes
 app.route('/v1/health', healthRoute);
@@ -43,6 +47,8 @@ app.route('/v1/places', placesRoute);
 app.route('/v1/commute', commuteRoute);
 app.route('/v1/locations', locationsRoute);
 app.route('/v1/saved', savedRoute);
+app.route('/v1/transit', transitRoute);
+app.route('/v1/tiles', tilesRoute);
 
 // 5. RFC 7807 404 Not Found Handler
 app.notFound((c) => {

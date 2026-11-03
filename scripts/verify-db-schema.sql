@@ -141,6 +141,115 @@ BEGIN
 END $$;
 ROLLBACK TO SAVEPOINT test8;
 
+-- Test 9: Insert valid transit route, stop, and route leg
+SAVEPOINT test9;
+INSERT INTO transit_stops (id, name, code, transit_mode, line_name, lgu_city, coordinates, wheelchair_accessible, verification_id)
+VALUES (
+    's9990000-0000-0000-0000-000000000001',
+    'Test Transit Hub',
+    'HUB-01',
+    'bus',
+    'Test Line',
+    'Quezon City',
+    ST_SetSRID(ST_MakePoint(121.05, 14.65), 4326)::geography,
+    TRUE,
+    'a0000000-0000-0000-0000-000000000001'
+);
+
+INSERT INTO transit_routes (id, route_code, name, origin_name, destination_name, transit_mode, total_distance_meters, est_duration_seconds, base_fare_php, fare_verification_id)
+VALUES (
+    'r9990000-0000-0000-0000-000000000001',
+    'ROUTE-TEST-01',
+    'Test Line Route',
+    'Origin A',
+    'Destination B',
+    'bus',
+    5000.00,
+    900,
+    15.00,
+    'a0000000-0000-0000-0000-000000000001'
+);
+
+INSERT INTO route_legs (id, route_id, sequence_order, leg_mode, instruction, leg_distance_meters, leg_duration_seconds, shade_coverage_pct, leg_verification_id)
+VALUES (
+    'l9990000-0000-0000-0000-000000000001',
+    'r9990000-0000-0000-0000-000000000001',
+    1,
+    'transit_board',
+    'Board test bus at Hub',
+    50.00,
+    120,
+    85.00,
+    'a0000000-0000-0000-0000-000000000001'
+);
+\echo '[PASS] Test 9: Valid transit route, stop, and leg inserted successfully'
+ROLLBACK TO SAVEPOINT test9;
+
+-- Test 10: Assert failure on route_legs shade_coverage_pct > 100.0 (chk_route_leg_shade)
+SAVEPOINT test10;
+DO $$
+BEGIN
+    BEGIN
+        INSERT INTO transit_routes (id, route_code, name, origin_name, destination_name, transit_mode, total_distance_meters, est_duration_seconds, base_fare_php, fare_verification_id)
+        VALUES (
+            'r9990000-0000-0000-0000-000000000002',
+            'ROUTE-TEST-02',
+            'Invalid Shade Route',
+            'Origin A',
+            'Destination B',
+            'walk',
+            1000.00,
+            600,
+            0.00,
+            'a0000000-0000-0000-0000-000000000001'
+        );
+
+        INSERT INTO route_legs (id, route_id, sequence_order, leg_mode, instruction, leg_distance_meters, leg_duration_seconds, shade_coverage_pct, leg_verification_id)
+        VALUES (
+            'l9990000-0000-0000-0000-000000000002',
+            'r9990000-0000-0000-0000-000000000002',
+            1,
+            'walk',
+            'Walk along unshaded path',
+            1000.00,
+            600,
+            125.00, -- Invalid > 100.0%
+            'a0000000-0000-0000-0000-000000000001'
+        );
+        RAISE EXCEPTION 'TEST FAILED: chk_route_leg_shade did not trigger for shade_coverage_pct > 100.0';
+    EXCEPTION
+        WHEN check_violation THEN
+            RAISE NOTICE '[PASS] Test 10: chk_route_leg_shade successfully rejected shade_coverage_pct > 100.0';
+    END;
+END $$;
+ROLLBACK TO SAVEPOINT test10;
+
+-- Test 11: Assert failure on negative base_fare_php (chk_transit_route_base_fare)
+SAVEPOINT test11;
+DO $$
+BEGIN
+    BEGIN
+        INSERT INTO transit_routes (id, route_code, name, origin_name, destination_name, transit_mode, total_distance_meters, est_duration_seconds, base_fare_php, fare_verification_id)
+        VALUES (
+            'r9990000-0000-0000-0000-000000000003',
+            'ROUTE-TEST-03',
+            'Negative Fare Route',
+            'Origin A',
+            'Destination B',
+            'bus',
+            1000.00,
+            600,
+            -10.00,
+            'a0000000-0000-0000-0000-000000000001'
+        );
+        RAISE EXCEPTION 'TEST FAILED: chk_transit_route_base_fare did not trigger for negative base_fare_php';
+    EXCEPTION
+        WHEN check_violation THEN
+            RAISE NOTICE '[PASS] Test 11: chk_transit_route_base_fare successfully rejected negative base fare';
+    END;
+END $$;
+ROLLBACK TO SAVEPOINT test11;
+
 ROLLBACK;
 
 \echo '== All Schema Verifications Passed Successfully =='

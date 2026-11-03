@@ -1,0 +1,15 @@
+{
+  "name": "lunhaw_routing_engine",
+  "version": "1.0.0",
+  "description": "WebAssembly A* pathfinding and route shade calculator for Lunhaw",
+  "max_budget_bytes": 256000,
+  "equations": [
+    "EQ-002",
+    "EQ-003",
+    "EQ-004"
+  ],
+  "built_at": "2026-11-03T06:25:19.385Z",
+  "exports": [
+    "find_route"
+  ]
+}
