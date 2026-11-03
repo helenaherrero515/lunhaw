@@ -24,11 +24,13 @@ import {
   type VerificationStatus,
 } from "@lunhaw/ui";
 import type { Place, FacilityDetail, OperatingHours, VerificationMeta } from "@/types/places";
+import { GreenIndexPill } from "@/components/green-index/GreenIndexPill";
 
 export interface FacilityProfileProps {
   facility: Place | FacilityDetail;
   isSaved?: boolean;
   onToggleSave?: (facilityId: string, isSaved: boolean) => void;
+  onGetDirections?: (facility: Place | FacilityDetail) => void;
   onClose?: () => void;
   className?: string;
   showCloseButton?: boolean;
@@ -85,6 +87,7 @@ export function FacilityProfile({
   facility,
   isSaved: controlledIsSaved,
   onToggleSave,
+  onGetDirections,
   onClose,
   className = "",
   showCloseButton = true,
@@ -179,13 +182,12 @@ export function FacilityProfile({
           </span>
 
           {facility.green_index_score != null && (
-            <span
-              className="inline-flex items-center gap-1 rounded-full bg-teal-50 px-2.5 py-1 text-xs font-medium text-teal-800 ring-1 ring-teal-600/20"
-              title={`Green Index Score: ${facility.green_index_score.toFixed(1)}/100`}
-            >
-              <Sparkles className="h-3 w-3 text-teal-600" aria-hidden="true" />
-              <span>GI {facility.green_index_score.toFixed(1)}</span>
-            </span>
+            <GreenIndexPill
+              score={facility.green_index_score}
+              size="sm"
+              placeName={facility.name}
+              verification={facility.verification}
+            />
           )}
         </div>
 
@@ -210,6 +212,18 @@ export function FacilityProfile({
             )}
             <span>{isSaved ? "Saved" : "Save"}</span>
           </button>
+
+          {onGetDirections && (
+            <button
+              type="button"
+              onClick={() => onGetDirections(facility)}
+              aria-label={`Get commute directions to ${facility.name}`}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-700 bg-emerald-50 px-3.5 py-1.5 text-xs font-semibold text-emerald-900 transition-all hover:bg-emerald-100"
+            >
+              <Sparkles className="h-4 w-4 text-emerald-700" aria-hidden="true" />
+              <span>Directions</span>
+            </button>
+          )}
 
           {showCloseButton && onClose && (
             <button
