@@ -33,6 +33,8 @@ export interface RealMapOptions {
   onSelect: (id: string) => void;
   /** SVG inner markup for the pin icons (24×24 stroke icons), keyed by place type. */
   icons: { park: string; lib: string };
+  /** How much of each map edge is covered by floating UI (header, side panel, place card), in pixels. */
+  covered?: () => { top: number; right: number; bottom: number; left: number };
 }
 
 export interface RealMap {
@@ -304,8 +306,12 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
     map.on("mouseleave", layer, () => (map.getCanvas().style.cursor = ""));
   }
 
-  // Leave room for the place card that sits over the bottom of the map.
+  // Frame places in the part of the map that isn't covered by floating UI.
   const padding = () => {
+    if (options.covered) {
+      const c = options.covered();
+      return { top: c.top + 30, right: c.right + 30, bottom: c.bottom + 30, left: c.left + 30 };
+    }
     const narrow = container.clientWidth < 720;
     return { top: narrow ? 90 : 50, right: 50, left: 50, bottom: narrow ? 240 : 190 };
   };
