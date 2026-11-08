@@ -183,4 +183,12 @@ export interface Env {
   RATE_LIMIT_PER_MINUTE?: string;
   ADMIN_API_KEY?: string;
   SUPABASE_JWT_SECRET?: string;
+  /** Supabase project URL, e.g. https://xyz.supabase.co (public reads + newsletter writes) */
+  SUPABASE_URL?: string;
+  /** Supabase anon key: read-only access to public views, enforced by RLS */
+  SUPABASE_ANON_KEY?: string;
+  /** Supabase service-role key (secret): used only to store newsletter sign-ups */
+  SUPABASE_SERVICE_ROLE_KEY?: string;
+  /** Cloudflare Workers rate-limiting binding (shared across isolates) */
+  RATE_LIMITER?: { limit(options: { key: string }): Promise<{ success: boolean }> };
 }
