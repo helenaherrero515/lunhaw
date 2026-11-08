@@ -8,8 +8,10 @@
 | Data Category | Examples | Storage Location | Protection & Controls |
 |---|---|---|---|
 | **Public Data** | Parks, reading centers, operating hours, Green Index scores, transit lines. | PostgreSQL public read replicas, Redis cache. | Public read-only; writes restricted to verified admin/audit pipeline. |
-| **User Geolocation (Sensitive)** | Lat/Lng coordinates submitted for radius search. | Transient in-memory only. | **Never logged to disk or persisted in database.** Ephemeral processing. |
-| **Saved Items (Pseudonymous)** | Bookmarked places and saved commute routes. | Browser localStorage; backend tagged by ephemeral session token. | Isolated per session; auto-purged after 90 days idle. |
+| **User Geolocation (Sensitive)** | Device location, only when the user taps "Use my current location". | Stays in the browser (1.0 computes walking estimates client-side). | **Never sent to our servers, logged or persisted.** The API also strips `lat`/`lng` from its logs. |
+| **Saved Items (Pseudonymous)** | Bookmarked places and saved commute routes. | Browser localStorage only in 1.0. | Never leaves the device; cleared with browser data. |
+| **Accounts (Personal)** | Name, email, password hash. | Supabase Auth. | Email confirmation; deleted on request ([RELEASE.md](RELEASE.md) section 6). |
+| **Newsletter (Personal)** | Email, consent text and time. | Supabase `newsletter_signups` (RLS on, no client access). | Written only by the API with the service role; removed on request. |
 | **Secrets & Keys** | Database credentials, API Gateway secrets, JWT signing keys. | Secret Manager / Environment variables. | Injected at runtime; never committed to Git. |
 
 ## Authn / authz model
@@ -50,8 +52,15 @@
 - **FORBIDDEN from Logs:** User IP-paired GPS coordinates, exact street addresses searched, or private user bookmarks.
 
 ## Pre-milestone hard-gate checklist
-- [ ] Every network-exposed write endpoint requires cryptographic authentication. — 2026-11-01
-- [ ] No secrets or API credentials committed in the repository. — 2026-11-01
-- [ ] Invariant `INV-001` verified: 0 unverified records rendered without explicit status tag. — 2026-11-01
-- [ ] Invariant `INV-002` verified: Facility advisory disclaimer rendered across all place profiles. — 2026-11-01
-- [ ] Invariant `INV-003` verified: API contracts remain platform-neutral. — 2026-11-01
+Reviewed 2026-11-08 for the 1.0 release. Evidence in brackets.
+
+- [x] Every network-exposed write surface is protected. Public tables are writable only by `service_role` (RLS, `00008`); `saved_items` is owner-scoped (`00013`); `newsletter_signups` has RLS on and no client grants (`00014`); the only anonymous write is `POST /newsletter`, which validates input, requires consent and is rate-limited. [`scripts/test-migrations.sh`, `apps/api/tests/public-release.test.ts`]
+- [x] No secrets or API credentials committed. Worker secrets are set with `wrangler secret put`, CI secrets live in GitHub; the Supabase anon key is public by design and protected by RLS. [`apps/api/wrangler.toml`, `.github/workflows/deploy.yml`]
+- [x] `INV-001`: no record is `VERIFIED` without a named person, date and source; hours, amenities and Green Index show *Not available yet*; the production API refuses to serve fixtures (503). [CI *migrations* job, `apps/api/tests/public-release.test.ts`]
+- [x] `INV-002`: the facility notice is rendered on every place profile, with the exact PRD text. [`apps/web/src/tests/public-release.test.tsx`, `disclaimer-presence.test.tsx`]
+- [x] `INV-003`: API contracts remain platform-neutral REST/JSON. [`pnpm lint:api`]
+- [x] Accounts can't be faked: the mock login only runs in development; only the Supabase session counts as signed in. [`apps/web/src/tests/public-release.test.tsx`]
+- [x] Data from the API is HTML-escaped before rendering in `/home`. [`public-release.test.tsx`, "escapes text from the API"]
+- [x] T-004: a shared Cloudflare rate-limit binding (60 req/min per IP) is configured for production. [`apps/api/wrangler.toml`]
+- [x] Security headers (CSP without `unsafe-eval`, frame denial, HSTS, nosniff) are served from `apps/web/public/_headers`; checked with zero CSP violations on `/`, `/home`, `/privacy`, `/terms`.
+- [ ] Privacy Notice and Terms reviewed by someone qualified in Philippine law (owner action, [RELEASE.md](RELEASE.md) section 4).
