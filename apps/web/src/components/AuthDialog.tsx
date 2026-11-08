@@ -194,8 +194,11 @@ export function AuthDialog() {
             <h2 id="done-title">{COPY[doneMode].doneTitle}</h2>
             <p id="done-text">{COPY[doneMode].doneText}</p>
             <Link ref={doneRef} className="btn" href="/home" onClick={closeAuth}>
-              Done
+              Open my account
             </Link>
+            <button className="btn ghost" type="button" data-auth-close onClick={closeAuth}>
+              Stay on this page
+            </button>
           </div>
         ) : (
           <div id="auth-main">
