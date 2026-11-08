@@ -7,14 +7,14 @@ BEGIN;
 -- 1. Insert Verification Metadata
 INSERT INTO verification_meta (id, status, official_source_name, official_source_url, derivation_note, last_verified_at, verified_by)
 VALUES
-    ('v0010000-0000-0000-0000-000000000001', 'VERIFIED', 'National Parks Development Committee (NPDC)', 'https://npdc.gov.ph', NULL, '2026-10-15T08:00:00Z', 'npdc_civic_auditor'),
-    ('v0010000-0000-0000-0000-000000000002', 'VERIFIED', 'City Government of Manila - Parks & Recreation', 'https://manila.gov.ph', NULL, '2026-10-20T08:00:00Z', 'manila_city_parks'),
-    ('v0010000-0000-0000-0000-000000000003', 'VERIFIED', 'Quezon City Parks Development and Administration Department', 'https://quezoncity.gov.ph', NULL, '2026-10-25T08:00:00Z', 'qc_parks_admin'),
-    ('v0010000-0000-0000-0000-000000000004', 'VERIFIED', 'National Library of the Philippines (NLP) Directory', 'https://web.nlp.gov.ph', NULL, '2026-11-01T08:00:00Z', 'nlp_registered_librarian'),
-    ('v0010000-0000-0000-0000-000000000005', 'VERIFIED', 'Pasig City Public Affairs / Education Office', 'https://pasigcity.gov.ph', NULL, '2026-10-18T08:00:00Z', 'pasig_lgu_auditor'),
-    ('v0010000-0000-0000-0000-000000000006', 'VERIFIED', 'Marikina City Library Administration', 'https://marikina.gov.ph', NULL, '2026-10-22T08:00:00Z', 'marikina_city_librarian'),
-    ('v0010000-0000-0000-0000-000000000007', 'ESTIMATE', 'OpenStreetMap Civic Facilities & Sentinel-2 Canopy Index', NULL, 'Operating hours estimated based on standard municipal barangay hall hours (08:00-17:00 PHT Mon-Fri) via EQ-003.', '2026-10-01T08:00:00Z', 'osm_import_pipeline'),
-    ('v0010000-0000-0000-0000-000000000008', 'NOT_AVAILABLE', NULL, NULL, NULL, NULL, 'system_unverified_stub')
+    ('d0010000-0000-0000-0000-000000000001', 'VERIFIED', 'National Parks Development Committee (NPDC)', 'https://npdc.gov.ph', NULL, '2026-10-15T08:00:00Z', 'npdc_civic_auditor'),
+    ('d0010000-0000-0000-0000-000000000002', 'VERIFIED', 'City Government of Manila - Parks & Recreation', 'https://manila.gov.ph', NULL, '2026-10-20T08:00:00Z', 'manila_city_parks'),
+    ('d0010000-0000-0000-0000-000000000003', 'VERIFIED', 'Quezon City Parks Development and Administration Department', 'https://quezoncity.gov.ph', NULL, '2026-10-25T08:00:00Z', 'qc_parks_admin'),
+    ('d0010000-0000-0000-0000-000000000004', 'VERIFIED', 'National Library of the Philippines (NLP) Directory', 'https://web.nlp.gov.ph', NULL, '2026-11-01T08:00:00Z', 'nlp_registered_librarian'),
+    ('d0010000-0000-0000-0000-000000000005', 'VERIFIED', 'Pasig City Public Affairs / Education Office', 'https://pasigcity.gov.ph', NULL, '2026-10-18T08:00:00Z', 'pasig_lgu_auditor'),
+    ('d0010000-0000-0000-0000-000000000006', 'VERIFIED', 'Marikina City Library Administration', 'https://marikina.gov.ph', NULL, '2026-10-22T08:00:00Z', 'marikina_city_librarian'),
+    ('d0010000-0000-0000-0000-000000000007', 'ESTIMATE', 'OpenStreetMap Civic Facilities & Sentinel-2 Canopy Index', NULL, 'Operating hours estimated based on standard municipal barangay hall hours (08:00-17:00 PHT Mon-Fri) via EQ-003.', '2026-10-01T08:00:00Z', 'osm_import_pipeline'),
+    ('d0010000-0000-0000-0000-000000000008', 'NOT_AVAILABLE', NULL, NULL, NULL, NULL, 'system_unverified_stub')
 ON CONFLICT (id) DO NOTHING;
 
 -- 2. Insert Places (Parks and Libraries)
@@ -31,7 +31,7 @@ VALUES
         'Roxas Blvd, Ermita, Manila, 1000 Metro Manila',
         ST_SetSRID(ST_MakePoint(120.9794, 14.5831), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000001'
+        'd0010000-0000-0000-0000-000000000001'
     ),
     (
         'f0010000-0000-0000-0000-000000000011',
@@ -43,7 +43,7 @@ VALUES
         'Antonio Villegas St, Ermita, Manila (near LRT Central Terminal)',
         ST_SetSRID(ST_MakePoint(120.9836, 14.5947), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000002'
+        'd0010000-0000-0000-0000-000000000002'
     ),
     (
         'f0010000-0000-0000-0000-000000000012',
@@ -55,7 +55,7 @@ VALUES
         'General Luna St, Paco, Manila',
         ST_SetSRID(ST_MakePoint(120.9886, 14.5817), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000001'
+        'd0010000-0000-0000-0000-000000000001'
     ),
     (
         'f0010000-0000-0000-0000-000000000013',
@@ -67,7 +67,7 @@ VALUES
         'Elliptical Rd, Diliman, Quezon City',
         ST_SetSRID(ST_MakePoint(121.0494, 14.6514), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000003'
+        'd0010000-0000-0000-0000-000000000003'
     ),
     (
         'f0010000-0000-0000-0000-000000000014',
@@ -79,7 +79,7 @@ VALUES
         'Riverbanks Ave, Marikina, 1800 Metro Manila',
         ST_SetSRID(ST_MakePoint(121.0967, 14.6331), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000006'
+        'd0010000-0000-0000-0000-000000000006'
     ),
     (
         'f0010000-0000-0000-0000-000000000015',
@@ -91,7 +91,7 @@ VALUES
         'Paseo de Roxas cor Makati Ave, Makati',
         ST_SetSRID(ST_MakePoint(121.0242, 14.5574), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000007'
+        'd0010000-0000-0000-0000-000000000007'
     ),
     (
         'f0010000-0000-0000-0000-000000000016',
@@ -103,7 +103,7 @@ VALUES
         'Legazpi St, Legaspi Village, Makati',
         ST_SetSRID(ST_MakePoint(121.0183, 14.5539), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000007'
+        'd0010000-0000-0000-0000-000000000007'
     ),
     -- Major Libraries & Reading Centers
     (
@@ -116,7 +116,7 @@ VALUES
         'T.M. Kalaw St, Ermita, Manila',
         ST_SetSRID(ST_MakePoint(120.9822, 14.5828), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000004'
+        'd0010000-0000-0000-0000-000000000004'
     ),
     (
         'f0010000-0000-0000-0000-000000000021',
@@ -128,7 +128,7 @@ VALUES
         'Mehan Garden, Antonio Villegas St, Ermita, Manila',
         ST_SetSRID(ST_MakePoint(120.9818, 14.5935), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000002'
+        'd0010000-0000-0000-0000-000000000002'
     ),
     (
         'f0010000-0000-0000-0000-000000000022',
@@ -140,7 +140,7 @@ VALUES
         'City Hall Compound, Mayaman St, Diliman, Quezon City',
         ST_SetSRID(ST_MakePoint(121.0492, 14.6469), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000003'
+        'd0010000-0000-0000-0000-000000000003'
     ),
     (
         'f0010000-0000-0000-0000-000000000023',
@@ -152,7 +152,7 @@ VALUES
         'Caruncho Ave, Barangay San Nicolas, Pasig',
         ST_SetSRID(ST_MakePoint(121.0772, 14.5583), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000005'
+        'd0010000-0000-0000-0000-000000000005'
     ),
     (
         'f0010000-0000-0000-0000-000000000024',
@@ -164,7 +164,7 @@ VALUES
         'V. Gomez St, Marikina, 1800 Metro Manila',
         ST_SetSRID(ST_MakePoint(121.0997, 14.6339), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000006'
+        'd0010000-0000-0000-0000-000000000006'
     ),
     (
         'f0010000-0000-0000-0000-000000000025',
@@ -176,41 +176,41 @@ VALUES
         'San Antonio Community Complex, Pasig',
         ST_SetSRID(ST_MakePoint(121.0611, 14.5823), 4326)::geography,
         NULL,
-        'v0010000-0000-0000-0000-000000000005'
+        'd0010000-0000-0000-0000-000000000005'
     )
 ON CONFLICT (id) DO NOTHING;
 
 -- 3. Insert Library Details
 INSERT INTO library_details (place_id, is_barangay_reading_center, desk_capacity, has_power_outlets, has_wifi, has_aircon, access_requirements, fee_description, verification_id)
 VALUES
-    ('f0010000-0000-0000-0000-000000000020', FALSE, 450, TRUE, TRUE, TRUE, 'Valid government ID or student ID for library card issuance', 'Free', 'v0010000-0000-0000-0000-000000000004'),
-    ('f0010000-0000-0000-0000-000000000021', FALSE, 120, TRUE, FALSE, TRUE, 'Open to all Manila residents and visitors with valid photo ID', 'Free', 'v0010000-0000-0000-0000-000000000002'),
-    ('f0010000-0000-0000-0000-000000000022', FALSE, 300, TRUE, TRUE, TRUE, 'Free registration with QC ID or valid school/gov ID', 'Free', 'v0010000-0000-0000-0000-000000000003'),
-    ('f0010000-0000-0000-0000-000000000023', FALSE, 150, TRUE, TRUE, TRUE, 'Pasig resident or student ID preferred; open to public', 'Free', 'v0010000-0000-0000-0000-000000000005'),
-    ('f0010000-0000-0000-0000-000000000024', FALSE, 80, TRUE, TRUE, TRUE, 'Valid ID required at entry desk', 'Free', 'v0010000-0000-0000-0000-000000000006'),
-    ('f0010000-0000-0000-0000-000000000025', TRUE, 25, TRUE, TRUE, TRUE, 'Barangay clearance or student ID', 'Free', 'v0010000-0000-0000-0000-000000000005')
+    ('f0010000-0000-0000-0000-000000000020', FALSE, 450, TRUE, TRUE, TRUE, 'Valid government ID or student ID for library card issuance', 'Free', 'd0010000-0000-0000-0000-000000000004'),
+    ('f0010000-0000-0000-0000-000000000021', FALSE, 120, TRUE, FALSE, TRUE, 'Open to all Manila residents and visitors with valid photo ID', 'Free', 'd0010000-0000-0000-0000-000000000002'),
+    ('f0010000-0000-0000-0000-000000000022', FALSE, 300, TRUE, TRUE, TRUE, 'Free registration with QC ID or valid school/gov ID', 'Free', 'd0010000-0000-0000-0000-000000000003'),
+    ('f0010000-0000-0000-0000-000000000023', FALSE, 150, TRUE, TRUE, TRUE, 'Pasig resident or student ID preferred; open to public', 'Free', 'd0010000-0000-0000-0000-000000000005'),
+    ('f0010000-0000-0000-0000-000000000024', FALSE, 80, TRUE, TRUE, TRUE, 'Valid ID required at entry desk', 'Free', 'd0010000-0000-0000-0000-000000000006'),
+    ('f0010000-0000-0000-0000-000000000025', TRUE, 25, TRUE, TRUE, TRUE, 'Barangay clearance or student ID', 'Free', 'd0010000-0000-0000-0000-000000000005')
 ON CONFLICT (place_id) DO NOTHING;
 
 -- 4. Insert Operating Hours (Mon-Sat standard schedules)
 INSERT INTO operating_hours (place_id, day_of_week, open_time, close_time, is_closed, schedule_label, verification_id)
 VALUES
     -- NLP (Mon-Fri 08:00 - 17:00, Sat 08:00 - 17:00, Sun Closed)
-    ('f0010000-0000-0000-0000-000000000020', 0, NULL, NULL, TRUE, 'Closed on Sundays and National Holidays', 'v0010000-0000-0000-0000-000000000004'),
-    ('f0010000-0000-0000-0000-000000000020', 1, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'v0010000-0000-0000-0000-000000000004'),
-    ('f0010000-0000-0000-0000-000000000020', 2, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'v0010000-0000-0000-0000-000000000004'),
-    ('f0010000-0000-0000-0000-000000000020', 3, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'v0010000-0000-0000-0000-000000000004'),
-    ('f0010000-0000-0000-0000-000000000020', 4, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'v0010000-0000-0000-0000-000000000004'),
-    ('f0010000-0000-0000-0000-000000000020', 5, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'v0010000-0000-0000-0000-000000000004'),
-    ('f0010000-0000-0000-0000-000000000020', 6, '08:00:00', '17:00:00', FALSE, 'Saturday Reading Hall', 'v0010000-0000-0000-0000-000000000004'),
+    ('f0010000-0000-0000-0000-000000000020', 0, NULL, NULL, TRUE, 'Closed on Sundays and National Holidays', 'd0010000-0000-0000-0000-000000000004'),
+    ('f0010000-0000-0000-0000-000000000020', 1, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'd0010000-0000-0000-0000-000000000004'),
+    ('f0010000-0000-0000-0000-000000000020', 2, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'd0010000-0000-0000-0000-000000000004'),
+    ('f0010000-0000-0000-0000-000000000020', 3, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'd0010000-0000-0000-0000-000000000004'),
+    ('f0010000-0000-0000-0000-000000000020', 4, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'd0010000-0000-0000-0000-000000000004'),
+    ('f0010000-0000-0000-0000-000000000020', 5, '08:00:00', '17:00:00', FALSE, 'Regular Schedule', 'd0010000-0000-0000-0000-000000000004'),
+    ('f0010000-0000-0000-0000-000000000020', 6, '08:00:00', '17:00:00', FALSE, 'Saturday Reading Hall', 'd0010000-0000-0000-0000-000000000004'),
 
     -- Quezon City Public Library (Mon-Fri 08:00 - 17:00, Sat 08:00 - 16:00, Sun Closed)
-    ('f0010000-0000-0000-0000-000000000022', 0, NULL, NULL, TRUE, 'Closed Sundays', 'v0010000-0000-0000-0000-000000000003'),
-    ('f0010000-0000-0000-0000-000000000022', 1, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'v0010000-0000-0000-0000-000000000003'),
-    ('f0010000-0000-0000-0000-000000000022', 2, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'v0010000-0000-0000-0000-000000000003'),
-    ('f0010000-0000-0000-0000-000000000022', 3, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'v0010000-0000-0000-0000-000000000003'),
-    ('f0010000-0000-0000-0000-000000000022', 4, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'v0010000-0000-0000-0000-000000000003'),
-    ('f0010000-0000-0000-0000-000000000022', 5, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'v0010000-0000-0000-0000-000000000003'),
-    ('f0010000-0000-0000-0000-000000000022', 6, '08:00:00', '16:00:00', FALSE, 'Weekend Study Sessions', 'v0010000-0000-0000-0000-000000000003')
+    ('f0010000-0000-0000-0000-000000000022', 0, NULL, NULL, TRUE, 'Closed Sundays', 'd0010000-0000-0000-0000-000000000003'),
+    ('f0010000-0000-0000-0000-000000000022', 1, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'd0010000-0000-0000-0000-000000000003'),
+    ('f0010000-0000-0000-0000-000000000022', 2, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'd0010000-0000-0000-0000-000000000003'),
+    ('f0010000-0000-0000-0000-000000000022', 3, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'd0010000-0000-0000-0000-000000000003'),
+    ('f0010000-0000-0000-0000-000000000022', 4, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'd0010000-0000-0000-0000-000000000003'),
+    ('f0010000-0000-0000-0000-000000000022', 5, '08:00:00', '17:00:00', FALSE, 'Standard Hours', 'd0010000-0000-0000-0000-000000000003'),
+    ('f0010000-0000-0000-0000-000000000022', 6, '08:00:00', '16:00:00', FALSE, 'Weekend Study Sessions', 'd0010000-0000-0000-0000-000000000003')
 ON CONFLICT DO NOTHING;
 
 -- 5. Insert Green Index Metrics
