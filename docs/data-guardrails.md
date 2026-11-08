@@ -81,7 +81,7 @@ The following hard constraints are asserted in CI pipelines and database check c
   A record having `status: 'VERIFIED'` without a valid `official_source_url` (must be an `http(s)://` URL from a recognized domain or official documentation repository) is structurally invalid.
 
 - **NV-003: Derived Calculation Without Equation ID**  
-  Any numerical metric representing a Green Index, Route Shade, Walking Duration, or Fare Estimate that lacks a valid `equation_id` in `['EQ-001', 'EQ-002', 'EQ-003', 'EQ-004']` must fail payload validation.
+  Any numerical metric representing a Green Index, Route Shade, Walking Duration, or Fare Estimate that lacks a valid `equation_id` in `['EQ-001', 'EQ-002', 'EQ-003', 'EQ-004', 'EQ-005']` must fail payload validation.
 
 - **NV-004: Missing Derivation Note on Estimates (`chk_verification_derivation`)**  
   Any record with `status: 'ESTIMATE'` where `derivation_note` is empty or null violates database constraint `chk_verification_derivation` and will be rejected at the API gateway layer.
