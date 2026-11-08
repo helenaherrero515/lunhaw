@@ -45,6 +45,9 @@ export function Header() {
           <a className="l" href="#about" data-scroll onClick={closeMenu}>
             About
           </a>
+          <a className="l" href="#faqs" data-scroll onClick={closeMenu}>
+            FAQs
+          </a>
           {currentUser ? (
             <Link className="btn sm" href="/home" onClick={closeMenu}>
               Open App
