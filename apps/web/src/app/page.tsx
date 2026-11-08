@@ -7,7 +7,6 @@ import { Journey } from "@/components/Journey";
 import { Features } from "@/components/Features";
 import { GreenIndex } from "@/components/GreenIndex";
 import { FaqSection } from "@/components/FaqSection";
-import { Libraries } from "@/components/Libraries";
 import { CtaSection } from "@/components/CtaSection";
 import { Footer } from "@/components/Footer";
 import { AuthDialog } from "@/components/AuthDialog";
@@ -26,11 +25,13 @@ export default function HomePage() {
         <Features />
         <GreenIndex />
         <FaqSection />
-        <Libraries />
-        <CtaSection />
+        {/* footer is sticky beneath the CTA, so it is revealed as the CTA scrolls away */}
+        <div className="rv">
+          <CtaSection />
+          <Footer />
+        </div>
       </main>
       <AuthDialog />
-      <Footer />
       <LandingVisuals />
     </>
   );
