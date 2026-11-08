@@ -13,8 +13,8 @@
 
 - **Browser UI present:** Yes (Web Phase 1).
 - **Core smoke journey:** `UJ-001` (Discover reading center & check verified hours).
-- **PR gate command:** `npm test`
-- **Full gate command:** `npm run test:e2e`
+- **PR gate command:** `pnpm test` (plus lint, typecheck, build and the migrations job in CI)
+- **Full gate command:** `pnpm test:e2e`
 - **CI budget/constraints:** Fast automated pipeline (< 3 minutes total run).
 - **Required environments:** Node.js 20+, Chromium (primary).
 
@@ -36,26 +36,27 @@
 
 | F-ID | Feature | Test Case ID(s) | Lowest Proving Level | Automation | Status |
 |---|---|---|---|---|---|
-| **F-001** | Explore Directory & Maps | `TC-001` | Integration / UI | Automated | Planned |
-| **F-002** | Libraries & Reading Centers | `TC-002` | E2E | Automated | Planned |
-| **F-003** | Commute & Route Planner | `TC-003` | Integration / Unit | Automated | Planned |
-| **F-004** | Green Index & Shade Calculator | `TC-004` | Unit (`EQ-001`, `EQ-002`) | Automated | Planned |
-| **F-005** | Saved Places & Trips | `TC-005` | Unit / LocalStorage | Automated | Planned |
-| **F-006** | Manual Area Entry Fallback | `TC-006` | E2E | Automated | Planned |
+| **F-001** | Explore Directory & Maps | `TC-001` | Integration / UI | Automated | Passing |
+| **F-002** | Libraries & Reading Centers | `TC-002` | Component | Automated | Passing |
+| **F-003** | Commute & Route Planner | `TC-003` | Integration / Unit | Automated | Passing (API); 1.0 app shows walking estimates only |
+| **F-004** | Green Index & Shade Calculator | `TC-004` | Unit (`EQ-001`, `EQ-002`) | Automated | Passing; 1.0 shows *Not available yet* without measured inputs |
+| **F-005** | Saved Places & Trips | `TC-005` | Unit / LocalStorage | Automated | Passing |
+| **F-006** | Manual Area Entry Fallback | `TC-006` | Component | Automated | Passing |
 
 ## Automation contract
 
 | Test ID | Level / Tool | Test Path | Command | Trigger | Artifact / Evidence |
 |---|---|---|---|---|---|
-| `TC-001` | Integration / Vitest | `tests/api/places.test.ts` | `npm test -- tests/api/places` | PR / Main | Console JUnit report |
-| `TC-002` | E2E / Playwright | `tests/e2e/study-discovery.spec.ts` | `npx playwright test study-discovery` | Pre-merge | Playwright HTML report |
-| `TC-003` | Integration / Vitest | `tests/routing/commute.test.ts` | `npm test -- tests/routing/commute` | PR / Main | Console log |
-| `TC-004` | Unit / Vitest | `tests/methods/green-index.test.ts` | `npm test -- tests/methods` | Local / PR | Unit test report |
-| `TC-005` | Unit / Vitest | `tests/storage/saved.test.ts` | `npm test -- tests/storage` | Local / PR | Unit test report |
-| `TC-006` | E2E / Playwright | `tests/e2e/manual-location.spec.ts` | `npx playwright test manual-location` | Pre-merge | Trace recording |
-| `TC-N01` | Negative Contract / Vitest | `tests/integrity/zero-hallucination.test.ts` | `npm test -- tests/integrity` | Every commit | Assertions pass |
-| `TC-N02` | Negative E2E / Playwright | `tests/integrity/disclaimer-presence.spec.ts` | `npx playwright test disclaimer-presence` | Every commit | Assertions pass |
-| `TC-N03` | Contract / Spectral | `tests/contract/platform-neutral.test.ts` | `npm run lint:api` | PR / Main | OpenAPI lint report |
+| `TC-001` | Integration / Vitest | `apps/api/tests/places-search.test.ts`, `apps/api/tests/public-release.test.ts` | `pnpm test` | PR / Main | CI log |
+| `TC-002` | Component / Vitest | `apps/web/src/tests/facility-profile.test.tsx` | `pnpm test` | PR / Main | CI log |
+| `TC-003` | Integration / Vitest | `apps/api/tests/commute-routing.test.ts`, `apps/web/src/tests/routing-and-green-index.test.tsx` | `pnpm test` | PR / Main | CI log |
+| `TC-004` | Unit / Vitest | `apps/web/src/tests/green-index.test.ts` | `pnpm test` | PR / Main | CI log |
+| `TC-005` | Unit / Vitest | `apps/web/src/tests/saved-persistence.test.tsx` | `pnpm test` | PR / Main | CI log |
+| `TC-006` | Component / Vitest | `apps/web/src/tests/geolocation-fallback.test.tsx` | `pnpm test` | PR / Main | CI log |
+| `TC-N01` | Negative / Vitest + SQL | `apps/web/src/tests/integrity-negative.test.ts`, `scripts/test-migrations.sh` (no `VERIFIED` without a person) | `pnpm test`; CI *migrations* job | Every PR | CI log |
+| `TC-N02` | Negative / Vitest | `apps/web/src/tests/disclaimer-presence.test.tsx`, `apps/web/src/tests/public-release.test.tsx` | `pnpm test` | Every PR | CI log |
+| `TC-N03` | Contract / Spectral | `docs/openapi.yaml` | `pnpm lint:api` | Every PR | CI log |
+| Smoke | E2E / Playwright | `apps/web/e2e/smoke.spec.ts` | `pnpm test:e2e` | Pre-release | Playwright report |
 
 ## Test cases
 
@@ -119,7 +120,7 @@
 ### TC-N02 — Asserts INV-002 is Never Violated (Mandatory Disclaimer)
 - **Covers:** `INV-002`
 - **Assertion (EARS Unwanted):** The system SHALL NEVER display a facility profile view WHERE the mandatory advisory disclaimer text is missing or hidden.
-- **Probe / Test Method:** Query 50 randomly selected facility profile endpoints and render them via Playwright headless browser; assert that `#facility-disclaimer-banner` is visible with text containing *"Please verify operating hours directly with the facility before traveling"*.
+- **Probe / Test Method:** Query 50 randomly selected facility profile endpoints and render them via Playwright headless browser; assert that `#facility-disclaimer-banner` is visible with the exact `INV-002` text: *"Please verify operating hours directly with the facility before traveling, as local barangay schedules may change without notice."*.
 - **Automation:** `tests/integrity/disclaimer-presence.spec.ts`.
 
 ### TC-N03 — Asserts INV-003 is Never Violated (Platform Neutrality)
