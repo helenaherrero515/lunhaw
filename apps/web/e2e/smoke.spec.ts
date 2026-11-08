@@ -54,9 +54,18 @@ test.describe("Lunhaw Landing Page Smoke Test", () => {
     await expect(
       cta.getByRole("heading", { name: "Discover your space. Explore your city. Go greener." })
     ).toBeVisible();
-    await expect(cta.getByRole("link", { name: "Explore green spaces near you" })).toHaveAttribute("href", "#top");
-    await expect(cta.getByRole("link", { name: "Enter your area manually" })).toBeVisible();
+    // Signed-out visitors: both buttons start sign-up (the app at /home needs an account).
+    await cta.getByRole("button", { name: "Explore green spaces near you" }).click();
+    await expect(page.getByRole("heading", { name: "Create your account" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(cta.getByRole("button", { name: "Enter your area manually" })).toBeVisible();
     await expect(page.locator("#cta-mascot")).toBeVisible();
     await expect(page.locator(".rv footer")).toBeAttached();
+
+    // 8. Legal pages are reachable from the footer and have no dead links.
+    const footer = page.locator("footer");
+    await expect(footer.getByRole("link", { name: "Privacy Notice" })).toHaveAttribute("href", "/privacy");
+    await expect(footer.getByRole("link", { name: "Terms of Use" })).toHaveAttribute("href", "/terms");
+    expect(await footer.locator('a[href="#"]').count()).toBe(0);
   });
 });
