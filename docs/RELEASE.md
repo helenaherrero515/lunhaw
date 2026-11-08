@@ -101,6 +101,7 @@ database → API → website → smoke test).
   - [ ] **UJ-001** sign up → confirm email → `/home` → Libraries → open a library → hours show *Not available yet*, the facility notice is shown → save it → it appears under *Saved*.
   - [ ] **UJ-002** open a park → *How to go there?* → *Enter starting location* → pick *Cubao* → walking estimate shown and labelled *Estimate*; public transport says it isn't available yet.
   - [ ] **UJ-003** deny the location prompt → you're offered manual entry; *My Location* → choose a city → only that city's places are listed.
+- [ ] Map tab shows the real map (OpenFreeMap streets, pins, ⓘ attribution) on a phone and a desktop; the locate button asks for location only when tapped.
 - [ ] Footer newsletter: sign up once; the row appears in Supabase `newsletter_signups`.
 - [ ] Security headers present: `curl -I https://lunhaw.pages.dev` shows `content-security-policy` and `x-frame-options: DENY`.
 - [ ] GitHub repository visibility decided (it's private today; the site works either way).
