@@ -353,4 +353,15 @@ body[data-tab=home] .bar button::before{display:none}
 .signout{width:auto;min-width:260px;margin:26px auto 0;padding:0 32px}
 .pleaf{max-width:720px;margin:10px auto 0}
 }
-.bar button[aria-current=page] .bdg{background:#fff!important;color:#2F7D26}
+.bar button[aria-current=page] .bdg{background:#fff!important;color:#2F7D26}/* ---- Real map (MapLibre + OpenFreeMap). The drawn map stays as the fallback until it loads. ---- */
+#mgl{position:absolute;inset:0}
+.mapbox.real #msvg,.mapbox.real #mnote{display:none!important}
+.mapbox.real{touch-action:none}
+.prev{z-index:3}
+#mgl .maplibregl-ctrl-group{border-radius:14px;overflow:hidden;box-shadow:0 6px 16px rgba(29,59,43,.16)}
+#mgl .maplibregl-ctrl-group button{width:36px;height:36px}
+#mgl .maplibregl-ctrl-attrib{font-family:Kufam,system-ui,sans-serif;font-size:11px}
+@media(max-width:720px){
+ #mgl .maplibregl-ctrl-top-right,#mgl .maplibregl-ctrl-top-left{top:calc(env(safe-area-inset-top,0px) + 128px)}
+ #mgl .maplibregl-ctrl-top-left .maplibregl-ctrl-attrib{max-width:calc(100vw - 84px)}
+}
