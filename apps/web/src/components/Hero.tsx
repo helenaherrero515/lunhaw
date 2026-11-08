@@ -1,7 +1,4 @@
-"use client";
-
 import React from "react";
-import Link from "next/link";
 
 export function Hero() {
   return (
@@ -66,23 +63,6 @@ export function Hero() {
 
       <div className="wrap">
         <div className="hero-copy">
-          <span className="pill bob">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.9"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M12 21v-6" />
-              <path d="M12 3c3.5 2.5 5.5 5 5.5 8a5.5 5.5 0 0 1-11 0c0-3 2-5.5 5.5-8z" />
-            </svg>
-            Public Spaces &amp; Green Mobility
-          </span>
           <h1 className="display" id="hero-title">
             <span className="ln">
               <span>Discover your space.</span>
@@ -98,7 +78,7 @@ export function Hero() {
             Find parks and libraries near you, and how to get there.
           </p>
           <div className="cta-row" id="hero-cta">
-            <Link className="btn" href="#explore" data-scroll>
+            <a className="btn" href="#start" data-scroll>
               Explore green spaces near you
               <svg
                 width="20"
@@ -113,10 +93,10 @@ export function Hero() {
               >
                 <path d="M5 12h14M13 6l6 6-6 6" />
               </svg>
-            </Link>
-            <Link className="btn ghost" href="/explore">
+            </a>
+            <a className="btn ghost" href="#journey" data-scroll>
               Compare ways to get there
-            </Link>
+            </a>
           </div>
         </div>
 

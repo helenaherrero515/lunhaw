@@ -2,110 +2,51 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { Bookmark } from "lucide-react";
 import { useLunhawStore } from "@/lib/store/use-lunhaw-store";
-import { useSavedBookmarks } from "@/lib/hooks/useSavedBookmarks";
 import { authService } from "@/lib/auth/auth-service";
+
 export function Header() {
-  const { isMobileMenuOpen, toggleMobileMenu, setMobileMenuOpen, openAuth, openSavedDrawer, currentUser, setCurrentUser } =
+  const { isMobileMenuOpen, toggleMobileMenu, setMobileMenuOpen, openAuth, currentUser, setCurrentUser } =
     useLunhawStore();
-  const { savedCount } = useSavedBookmarks();
 
   useEffect(() => {
     let isMounted = true;
-    async function sync() {
-      try {
-        const u = await authService.getCurrentUser();
+    authService
+      .getCurrentUser()
+      .then((u) => {
         if (isMounted && u) setCurrentUser(u);
-      } catch {}
-    }
-    sync();
-    return () => { isMounted = false; };
+      })
+      .catch(() => {});
+    return () => {
+      isMounted = false;
+    };
   }, [setCurrentUser]);
 
-  const handleNavClick = () => {
-    setMobileMenuOpen(false);
-  };
+  // Escape closes the mobile menu
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [isMobileMenuOpen, setMobileMenuOpen]);
 
-  const handleCreateAccount = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setMobileMenuOpen(false);
-    openAuth("signup");
-  };
+  const closeMenu = () => setMobileMenuOpen(false);
 
   return (
     <header className="top">
       <div className="wrap">
-        <Link
-          className="brand"
-          href="#top"
-          data-scroll
-          aria-label="Lunhaw home"
-          onClick={handleNavClick}
-        >
-          <span
-            className="mascot"
-            role="img"
-            aria-label="Lunhaw grasshopper mascot"
-          />
+        <a className="brand" href="#top" data-scroll aria-label="Lunhaw home" onClick={closeMenu}>
+          <span className="mascot" role="img" aria-label="Lunhaw grasshopper mascot" />
           <span className="wordmark">LUNHAW</span>
-        </Link>
-        <nav
-          className={`nav ${isMobileMenuOpen ? "open" : ""}`}
-          id="menu"
-          aria-label="Main"
-        >
-          <Link
-            className="l"
-            href="#about"
-            data-scroll
-            onClick={handleNavClick}
-          >
+        </a>
+        <nav className={`nav${isMobileMenuOpen ? " open" : ""}`} id="menu" aria-label="Main">
+          <a className="l" href="#about" data-scroll onClick={closeMenu}>
             About
-          </Link>
-          <Link
-            className="l"
-            href="#explore"
-            data-scroll
-            onClick={handleNavClick}
-          >
-            Explore Map
-          </Link>
-          <Link
-            className="l"
-            href="#faqs"
-            data-scroll
-            onClick={handleNavClick}
-          >
-            FAQs
-          </Link>
-          <button
-            type="button"
-            onClick={() => {
-              setMobileMenuOpen(false);
-              openSavedDrawer();
-            }}
-            aria-label={`View saved items (${savedCount})`}
-            data-testid="header-saved-btn"
-            className="relative inline-flex h-11 items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3 text-xs font-semibold text-[#245C43] transition-colors hover:border-[#245C43] hover:bg-[#E8F5EE] focus-visible:outline-2 focus-visible:outline-[#245C43] focus-visible:outline-offset-2"
-          >
-            <Bookmark className="h-4 w-4" />
-            <span>Saved</span>
-            {savedCount > 0 && (
-              <span
-                data-testid="header-saved-count-badge"
-                className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#245C43] px-1.5 text-[10px] font-bold text-white"
-              >
-                {savedCount}
-              </span>
-            )}
-          </button>
+          </a>
           {currentUser ? (
-            <Link
-              className="btn sm"
-              href="/home"
-              onClick={handleNavClick}
-            >
+            <Link className="btn sm" href="/home" onClick={closeMenu}>
               Open App
             </Link>
           ) : (
@@ -113,7 +54,10 @@ export function Header() {
               className="btn sm"
               type="button"
               data-auth="signup"
-              onClick={handleCreateAccount}
+              onClick={() => {
+                closeMenu();
+                openAuth("signup");
+              }}
             >
               Create Account
             </button>

@@ -40,7 +40,7 @@ describe("AuthDialog Component", () => {
     await waitFor(() => {
       expect(screen.getByText("Please enter your name.")).toBeInTheDocument();
       expect(screen.getByText("Please enter a valid email.")).toBeInTheDocument();
-      expect(screen.getByText("Please enter a password.")).toBeInTheDocument();
+      expect(screen.getByText("Use at least 8 characters.")).toBeInTheDocument();
     });
   });
 
@@ -67,5 +67,32 @@ describe("AuthDialog Component", () => {
       },
       { timeout: 2000 }
     );
+    expect(screen.getByRole("link", { name: "Done" })).toHaveAttribute("href", "/home");
+  });
+
+  it("uses login copy and asks for the password when it is missing", async () => {
+    render(<AuthDialog />);
+    fireEvent.click(screen.getByRole("tab", { name: "Log in" }));
+
+    expect(screen.getByText("Log in to continue.")).toBeInTheDocument();
+    expect(screen.getByText("New to Lunhaw?")).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText("Email"), { target: { value: "helena@lunhaw.ph" } });
+    fireEvent.click(screen.getByRole("button", { name: "Log in" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Please enter your password.")).toBeInTheDocument();
+    });
+    expect(screen.getByLabelText("Password")).toHaveFocus();
+  });
+
+  it("closes on Escape and unlocks page scroll", async () => {
+    render(<AuthDialog />);
+    await waitFor(() => expect(document.documentElement.style.overflow).toBe("hidden"));
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    expect(document.documentElement.style.overflow).toBe("");
   });
 });
