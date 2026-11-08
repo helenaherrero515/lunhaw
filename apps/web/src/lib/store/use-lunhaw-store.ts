@@ -4,10 +4,10 @@ import { AuthUser } from "@/lib/auth/auth-service";
 interface LunhawState {
   // Auth Dialog state
   isAuthOpen: boolean;
-  authMode: "signup" | "login";
-  openAuth: (mode?: "signup" | "login") => void;
+  authMode: "signup" | "login" | "recovery" | "update_password";
+  openAuth: (mode?: "signup" | "login" | "recovery" | "update_password") => void;
   closeAuth: () => void;
-  setAuthMode: (mode: "signup" | "login") => void;
+  setAuthMode: (mode: "signup" | "login" | "recovery" | "update_password") => void;
   currentUser: AuthUser | null;
   setCurrentUser: (user: AuthUser | null) => void;
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useLunhawStore } from "@/lib/store/use-lunhaw-store";
 import { authService } from "@/lib/auth/auth-service";
 
-type Mode = "signup" | "login";
+type Mode = "signup" | "login" | "recovery" | "update_password";
 type Field = "name" | "email" | "pass";
 type Errors = Partial<Record<Field, string>>;
 
@@ -32,6 +32,26 @@ const COPY = {
     doneTitle: "Welcome back!",
     doneText: "You’re logged in.",
   },
+  recovery: {
+    title: "Reset your password",
+    sub: "Enter your email to receive a reset link.",
+    submit: "Send reset link",
+    switchText: "Remembered your password?",
+    switchBtn: "Log in",
+    passHint: "",
+    doneTitle: "Check your email",
+    doneText: "We sent a password reset link to choose a new one.",
+  },
+  update_password: {
+    title: "Choose a new password",
+    sub: "Enter at least 8 characters.",
+    submit: "Update password",
+    switchText: "Never mind?",
+    switchBtn: "Log in",
+    passHint: "At least 8 characters",
+    doneTitle: "Password updated!",
+    doneText: "Your new password is set. You’re ready to explore.",
+  },
 } as const;
 
 export function AuthDialog() {
@@ -55,6 +75,8 @@ export function AuthDialog() {
   const [confirmEmail, setConfirmEmail] = useState<string | null>(null);
 
   const isSignup = authMode === "signup";
+  const isRecovery = authMode === "recovery";
+  const isUpdatePassword = authMode === "update_password";
   const copy = COPY[authMode];
 
   // Opening: reset the form, lock page scroll, focus the first field.
@@ -128,9 +150,11 @@ export function AuthDialog() {
     const emailTrim = email.trim();
     const next: Errors = {};
     if (isSignup && !name.trim()) next.name = "Please enter your name.";
-    if (!EMAIL_RE.test(emailTrim)) next.email = "Please enter a valid email.";
-    if (isSignup ? password.length < 8 : !password) {
-      next.pass = isSignup ? "Use at least 8 characters." : "Please enter your password.";
+    if (!isUpdatePassword && !EMAIL_RE.test(emailTrim)) next.email = "Please enter a valid email.";
+    if (isRecovery) {
+      // Password not needed for recovery request
+    } else if (isSignup || isUpdatePassword ? password.length < 8 : !password) {
+      next.pass = (isSignup || isUpdatePassword) ? "Use at least 8 characters." : "Please enter your password.";
     }
     setErrors(next);
     if (next.name || next.email || next.pass) {
@@ -140,6 +164,25 @@ export function AuthDialog() {
 
     setPending(true);
     try {
+      if (isRecovery) {
+        const res = await authService.resetPasswordForEmail(emailTrim);
+        if (res.error) {
+          setServerError(res.error);
+          return;
+        }
+        setConfirmEmail(emailTrim);
+        setDoneMode(authMode);
+        return;
+      }
+      if (isUpdatePassword) {
+        const res = await authService.updatePassword(password);
+        if (res.error) {
+          setServerError(res.error);
+          return;
+        }
+        setDoneMode(authMode);
+        return;
+      }
       const res = isSignup
         ? await authService.signUp(name.trim(), emailTrim, password)
         : await authService.logIn(emailTrim, password);
@@ -197,7 +240,11 @@ export function AuthDialog() {
             <span className="mascot" role="img" aria-label="Lunhaw grasshopper mascot" />
             <h2 id="done-title">Check your email</h2>
             <p id="done-text">
-              We sent a confirmation link to <b>{confirmEmail}</b>. Open it to finish creating your account.
+              {doneMode === "recovery" ? (
+                <>We sent a password reset link to <b>{confirmEmail}</b>. Open it to choose a new password.</>
+              ) : (
+                <>We sent a confirmation link to <b>{confirmEmail}</b>. Open it to finish creating your account.</>
+              )}
             </p>
             <button ref={doneButtonRef} className="btn" type="button" data-auth-close onClick={closeAuth}>
               Done
@@ -225,26 +272,28 @@ export function AuthDialog() {
               </div>
             </div>
 
-            <div className="auth-tabs" role="tablist" aria-label="Account">
-              <button
-                type="button"
-                role="tab"
-                data-mode="signup"
-                aria-selected={isSignup}
-                onClick={() => switchMode("signup")}
-              >
-                Sign up
-              </button>
-              <button
-                type="button"
-                role="tab"
-                data-mode="login"
-                aria-selected={!isSignup}
-                onClick={() => switchMode("login")}
-              >
-                Log in
-              </button>
-            </div>
+            {!isRecovery && !isUpdatePassword && (
+              <div className="auth-tabs" role="tablist" aria-label="Account">
+                <button
+                  type="button"
+                  role="tab"
+                  data-mode="signup"
+                  aria-selected={isSignup}
+                  onClick={() => switchMode("signup")}
+                >
+                  Sign up
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  data-mode="login"
+                  aria-selected={!isSignup}
+                  onClick={() => switchMode("login")}
+                >
+                  Log in
+                </button>
+              </div>
+            )}
 
             <form id="auth-form" noValidate onSubmit={handleSubmit}>
               {isSignup && (
@@ -264,50 +313,62 @@ export function AuthDialog() {
                   </p>
                 </div>
               )}
-
-              <div className={`fld${errors.email ? " bad" : ""}`} id="f-email">
-                <label htmlFor="a-email">Email</label>
-                <input
-                  ref={emailRef}
-                  id="a-email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder="you@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <p className="err" id="e-email">
-                  {errors.email}
-                </p>
-              </div>
-
-              <div className={`fld${errors.pass ? " bad" : ""}`} id="f-pass">
-                <label htmlFor="a-pass">Password</label>
-                <div className="inp pw">
+              {!isUpdatePassword && (
+                <div className={`fld${errors.email ? " bad" : ""}`} id="f-email">
+                  <label htmlFor="a-email">Email</label>
                   <input
-                    ref={passRef}
-                    id="a-pass"
-                    type={showPassword ? "text" : "password"}
-                    autoComplete={isSignup ? "new-password" : "current-password"}
-                    placeholder={copy.passHint}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    ref={emailRef}
+                    id="a-email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
-                  <button
-                    className="show"
-                    type="button"
-                    id="a-show"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    onClick={() => setShowPassword((v) => !v)}
-                  >
-                    {showPassword ? "Hide" : "Show"}
-                  </button>
+                  <p className="err" id="e-email">
+                    {errors.email}
+                  </p>
                 </div>
-                <p className="err" id="e-pass">
-                  {errors.pass}
-                </p>
-              </div>
-
+              )}
+              {!isRecovery && (
+                <div className={`fld${errors.pass ? " bad" : ""}`} id="f-pass">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <label htmlFor="a-pass">{isUpdatePassword ? "New password" : "Password"}</label>
+                    {authMode === "login" && (
+                      <button
+                        type="button"
+                        style={{ background: "none", border: "none", padding: 0, fontSize: "12px", color: "#55605A", textDecoration: "underline", cursor: "pointer" }}
+                        onClick={() => switchMode("recovery")}
+                      >
+                        Forgot password?
+                      </button>
+                    )}
+                  </div>
+                  <div className="inp pw">
+                    <input
+                      ref={passRef}
+                      id="a-pass"
+                      type={showPassword ? "text" : "password"}
+                      autoComplete={isSignup || isUpdatePassword ? "new-password" : "current-password"}
+                      placeholder={copy.passHint}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                      className="show"
+                      type="button"
+                      id="a-show"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      onClick={() => setShowPassword((v) => !v)}
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                  <p className="err" id="e-pass">
+                    {errors.pass}
+                  </p>
+                </div>
+              )}
               {serverError && (
                 <p role="alert" style={{ color: "#B3261E", fontSize: 14, textAlign: "center" }}>
                   {serverError}
@@ -327,7 +388,11 @@ export function AuthDialog() {
 
             <p className="auth-switch">
               <span id="auth-switch-text">{copy.switchText}</span>{" "}
-              <button type="button" id="auth-switch" onClick={() => switchMode(isSignup ? "login" : "signup")}>
+              <button
+                type="button"
+                id="auth-switch"
+                onClick={() => switchMode(isSignup ? "login" : isRecovery || isUpdatePassword ? "login" : "signup")}
+              >
                 {copy.switchBtn}
               </button>
             </p>

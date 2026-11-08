@@ -98,4 +98,41 @@ describe("AuthDialog Component", () => {
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     expect(document.documentElement.style.overflow).toBe("");
   });
+
+  it("switches to password recovery mode when Forgot password is clicked and submits recovery email", async () => {
+    render(<AuthDialog />);
+    fireEvent.click(screen.getByRole("tab", { name: "Log in" }));
+
+    const forgotBtn = screen.getByRole("button", { name: "Forgot password?" });
+    expect(forgotBtn).toBeInTheDocument();
+    fireEvent.click(forgotBtn);
+
+    expect(screen.getByText("Reset your password")).toBeInTheDocument();
+    expect(screen.getByText("Enter your email to receive a reset link.")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Password")).not.toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText("Email"), { target: { value: "user@lunhaw.ph" } });
+    fireEvent.click(screen.getByRole("button", { name: "Send reset link" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Check your email")).toBeInTheDocument();
+      expect(screen.getByText(/We sent a password reset link to/)).toBeInTheDocument();
+    });
+  });
+
+  it("submits password update when opened in update_password mode", async () => {
+    useLunhawStore.setState({ isAuthOpen: true, authMode: "update_password" });
+    render(<AuthDialog />);
+
+    expect(screen.getByText("Choose a new password")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Email")).not.toBeInTheDocument();
+    expect(screen.getByLabelText("New password")).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText("New password"), { target: { value: "newsecurepassword123" } });
+    fireEvent.click(screen.getByRole("button", { name: "Update password" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Password updated!")).toBeInTheDocument();
+    });
+  });
 });

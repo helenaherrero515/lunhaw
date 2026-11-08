@@ -19,6 +19,8 @@ export interface AuthService {
   logOut(): Promise<void>;
   getCurrentUser(): Promise<AuthUser | null>;
   signInWithMagicLink(email: string): Promise<{ success: boolean; error?: string }>;
+  resetPasswordForEmail(email: string): Promise<{ success: boolean; error?: string }>;
+  updatePassword(newPassword: string): Promise<{ success: boolean; error?: string }>;
 }
 
 export const ACCOUNTS_UNAVAILABLE = "Accounts aren’t available right now. Please try again later.";
@@ -122,6 +124,29 @@ export class SupabaseAuthService implements AuthService {
     if (error) return { success: false, error: error.message };
     return { success: true };
   }
+
+  async resetPasswordForEmail(email: string): Promise<{ success: boolean; error?: string }> {
+    const client = this.client;
+    if (!client) {
+      return this.fallback ? this.fallback.resetPasswordForEmail(email) : { success: false, error: ACCOUNTS_UNAVAILABLE };
+    }
+    const { error } = await client.auth.resetPasswordForEmail(email, {
+      // Plain URL: Supabase appends "#access_token=…&type=recovery" itself, and a second "#" would break it.
+      redirectTo: typeof window !== "undefined" ? `${window.location.origin}/` : undefined,
+    });
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  }
+
+  async updatePassword(newPassword: string): Promise<{ success: boolean; error?: string }> {
+    const client = this.client;
+    if (!client) {
+      return this.fallback ? this.fallback.updatePassword(newPassword) : { success: false, error: ACCOUNTS_UNAVAILABLE };
+    }
+    const { error } = await client.auth.updateUser({ password: newPassword });
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  }
 }
 
 interface PromiseWithResolvers<T> {
@@ -197,6 +222,22 @@ export class MockAuthService implements AuthService {
     await delay(200);
     if (!email || !email.includes("@")) {
       return { success: false, error: "Please enter a valid email address." };
+    }
+    return { success: true };
+  }
+
+  async resetPasswordForEmail(email: string): Promise<{ success: boolean; error?: string }> {
+    await delay(200);
+    if (!email || !email.includes("@")) {
+      return { success: false, error: "Please enter a valid email address." };
+    }
+    return { success: true };
+  }
+
+  async updatePassword(newPassword: string): Promise<{ success: boolean; error?: string }> {
+    await delay(200);
+    if (!newPassword || newPassword.length < 8) {
+      return { success: false, error: "Password must be at least 8 characters." };
     }
     return { success: true };
   }
