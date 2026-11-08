@@ -83,6 +83,14 @@ jobs:
           printf '%s' "${{ vars.SUPABASE_URL }}" | pnpm exec wrangler secret put SUPABASE_URL --env production
           printf '%s' "${{ vars.SUPABASE_ANON_KEY }}" | pnpm exec wrangler secret put SUPABASE_ANON_KEY --env production
           printf '%s' "${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" | pnpm exec wrangler secret put SUPABASE_SERVICE_ROLE_KEY --env production
+      - name: Set commute guide secrets (optional; the guide answers "unavailable" without them)
+        working-directory: apps/api
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ORS_API_KEY: ${{ secrets.ORS_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then printf '%s' "$ANTHROPIC_API_KEY" | pnpm exec wrangler secret put ANTHROPIC_API_KEY --env production; fi
+          if [ -n "$ORS_API_KEY" ]; then printf '%s' "$ORS_API_KEY" | pnpm exec wrangler secret put ORS_API_KEY --env production; fi
       - name: Deploy
         working-directory: apps/api
         run: pnpm exec wrangler deploy --env production

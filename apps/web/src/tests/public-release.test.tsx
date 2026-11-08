@@ -14,6 +14,9 @@ const subscribeToNewsletter = vi.fn();
 vi.mock("@/lib/api/client", () => ({
   fetchPlaces: (...a: unknown[]) => fetchPlaces(...a),
   subscribeToNewsletter: (...a: unknown[]) => subscribeToNewsletter(...a),
+  planTrip: () => Promise.reject(new Error("offline")),
+  askGuide: () => Promise.reject(new Error("offline")),
+  guideStatus: () => Promise.resolve({ routing: false, guide: false }),
   fetchGreenIndex: () => Promise.resolve(null),
 }));
 

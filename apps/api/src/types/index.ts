@@ -191,4 +191,10 @@ export interface Env {
   SUPABASE_SERVICE_ROLE_KEY?: string;
   /** Cloudflare Workers rate-limiting binding (shared across isolates) */
   RATE_LIMITER?: { limit(options: { key: string }): Promise<{ success: boolean }> };
+  /** Per-user limit for the AI commute guide (Cloudflare rate-limiting binding) */
+  GUIDE_LIMITER?: { limit(options: { key: string }): Promise<{ success: boolean }> };
+  /** Anthropic API key (secret) for the commute guide */
+  ANTHROPIC_API_KEY?: string;
+  /** OpenRouteService key (secret): walking routes and place search */
+  ORS_API_KEY?: string;
 }

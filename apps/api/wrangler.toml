@@ -16,6 +16,8 @@ RATE_LIMIT_PER_MINUTE = "60"
 #     wrangler secret put SUPABASE_URL              --env production
 #     wrangler secret put SUPABASE_ANON_KEY         --env production
 #     wrangler secret put SUPABASE_SERVICE_ROLE_KEY --env production
+#     wrangler secret put ANTHROPIC_API_KEY         --env production   (commute guide; optional)
+#     wrangler secret put ORS_API_KEY               --env production   (walking routes; optional)
 #   Without them the API refuses to serve (503) rather than falling back to fixtures.
 #   To use a custom domain later, add `routes` for a zone you own and extend CORS_ORIGIN.
 # ---------------------------------------------------------------------------
@@ -29,6 +31,13 @@ CORS_ORIGIN = "https://lunhaw.pages.dev"
 RATE_LIMIT_PER_MINUTE = "60"
 
 # Shared rate limit across all Worker isolates (T-004: 60 requests/minute per client IP).
+# Commute guide: 10 messages per minute per signed-in user (keys are guide:<user id> / plan:<user id>).
+[[env.production.unsafe.bindings]]
+name = "GUIDE_LIMITER"
+type = "ratelimit"
+namespace_id = "1003"
+simple = { limit = 10, period = 60 }
+
 [[env.production.unsafe.bindings]]
 name = "RATE_LIMITER"
 type = "ratelimit"
@@ -43,6 +52,13 @@ workers_dev = true
 ENVIRONMENT = "staging"
 CORS_ORIGIN = "https://staging.lunhaw.pages.dev"
 RATE_LIMIT_PER_MINUTE = "60"
+
+# Commute guide: 10 messages per minute per signed-in user (keys are guide:<user id> / plan:<user id>).
+[[env.staging.unsafe.bindings]]
+name = "GUIDE_LIMITER"
+type = "ratelimit"
+namespace_id = "1004"
+simple = { limit = 10, period = 60 }
 
 [[env.staging.unsafe.bindings]]
 name = "RATE_LIMITER"

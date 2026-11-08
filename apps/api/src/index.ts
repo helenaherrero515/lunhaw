@@ -11,7 +11,9 @@ import { savedRoute } from './routes/saved.js';
 import { transitRoute } from './routes/transit.js';
 import { tilesRoute } from './routes/tiles.js';
 import { adminRoute } from './routes/admin.js';
+import { guideRoute } from './routes/guide.js';
 import { newsletterRoute } from './routes/newsletter.js';
+import { isPublicEnvironment } from './data/places-source.js';
 import type { Env, ProblemDetails } from './types/index.js';
 
 export const app = new Hono<{ Bindings: Env }>();
@@ -45,6 +47,28 @@ app.use('*', rateLimiter());
 // 4. Cloudflare Edge Caching Middleware (A-M3-03, INV-003, Free Tier Budget)
 app.use('*', edgeCache());
 
+// 4b. Retired prototype endpoints. /commute, /transit and /saved served hand-made sample routes, fares and
+// saved items. Real trips come from /guide (OpenStreetMap routes + LRT/MRT stations; INV-001), so these
+// answer 410 Gone in staging and production. Local development and tests still use them.
+const RETIRED = /^\/(v1\/)?(commute|transit|saved)(\/|$)/;
+app.use('*', async (c, next) => {
+  if (RETIRED.test(c.req.path) && isPublicEnvironment(c.env)) {
+    return c.json(
+      {
+        type: 'https://api.lunhaw.ph/errors/ERR_RETIRED',
+        title: 'Endpoint retired',
+        status: 410,
+        detail: 'This prototype endpoint served sample data and is retired. Use POST /v1/guide/plan for trips.',
+        instance: c.req.path,
+        code: 'ERR_RETIRED',
+      },
+      410,
+      { 'Content-Type': 'application/problem+json' }
+    );
+  }
+  await next();
+});
+
 // 5. Mount Routes (Support both root and /v1 versioned prefix)
 app.route('/health', healthRoute);
 app.route('/places', placesRoute);
@@ -55,6 +79,7 @@ app.route('/transit', transitRoute);
 app.route('/tiles', tilesRoute);
 app.route('/admin', adminRoute);
 app.route('/newsletter', newsletterRoute);
+app.route('/guide', guideRoute);
 
 // Versioned /v1 routes
 app.route('/v1/health', healthRoute);
@@ -66,6 +91,7 @@ app.route('/v1/transit', transitRoute);
 app.route('/v1/tiles', tilesRoute);
 app.route('/v1/admin', adminRoute);
 app.route('/v1/newsletter', newsletterRoute);
+app.route('/v1/guide', guideRoute);
 // 5. RFC 7807 404 Not Found Handler
 app.notFound((c) => {
   const problem: ProblemDetails = {

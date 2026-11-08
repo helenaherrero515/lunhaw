@@ -1,0 +1,372 @@
+{
+  "source": "OpenStreetMap route relations",
+  "licence": "ODbL, © OpenStreetMap contributors",
+  "fetched_on": "2026-11-08",
+  "lines": [
+    {
+      "id": "LRT1",
+      "name": "LRT Line 1",
+      "colour": "#2E9E4F",
+      "relation": "relation/110418",
+      "stations": [
+        {
+          "name": "Fernando Poe Jr.",
+          "lat": 14.657622,
+          "lng": 121.020688,
+          "osm": "node/5397289145"
+        },
+        {
+          "name": "Balintawak",
+          "lat": 14.657422,
+          "lng": 121.003517,
+          "osm": "node/5191404470"
+        },
+        {
+          "name": "Yamaha Monumento",
+          "lat": 14.653834,
+          "lng": 120.983848,
+          "osm": "node/5191404471"
+        },
+        {
+          "name": "5th Avenue",
+          "lat": 14.644425,
+          "lng": 120.983535,
+          "osm": "node/5191404472"
+        },
+        {
+          "name": "R. Papa",
+          "lat": 14.636026,
+          "lng": 120.982264,
+          "osm": "node/5191404473"
+        },
+        {
+          "name": "Abad Santos",
+          "lat": 14.630607,
+          "lng": 120.98142,
+          "osm": "node/5191404474"
+        },
+        {
+          "name": "Blumentritt",
+          "lat": 14.622765,
+          "lng": 120.982882,
+          "osm": "node/5191404476"
+        },
+        {
+          "name": "Tayuman",
+          "lat": 14.616702,
+          "lng": 120.982715,
+          "osm": "node/5191404477"
+        },
+        {
+          "name": "Bambang",
+          "lat": 14.611111,
+          "lng": 120.982455,
+          "osm": "node/5191404478"
+        },
+        {
+          "name": "Doroteo Jose",
+          "lat": 14.605345,
+          "lng": 120.982012,
+          "osm": "node/5191404479"
+        },
+        {
+          "name": "Carriedo",
+          "lat": 14.599028,
+          "lng": 120.981322,
+          "osm": "node/5191404480"
+        },
+        {
+          "name": "Central Terminal",
+          "lat": 14.592447,
+          "lng": 120.981705,
+          "osm": "node/7330612086"
+        },
+        {
+          "name": "United Nations",
+          "lat": 14.582623,
+          "lng": 120.984546,
+          "osm": "node/5191404483"
+        },
+        {
+          "name": "Pedro Gil",
+          "lat": 14.576579,
+          "lng": 120.987999,
+          "osm": "node/5191404484"
+        },
+        {
+          "name": "Quirino",
+          "lat": 14.570215,
+          "lng": 120.991561,
+          "osm": "node/5191404485"
+        },
+        {
+          "name": "Vito Cruz",
+          "lat": 14.56346,
+          "lng": 120.994737,
+          "osm": "node/5191404486"
+        },
+        {
+          "name": "Gil Puyat",
+          "lat": 14.554054,
+          "lng": 120.997144,
+          "osm": "node/4475471874"
+        },
+        {
+          "name": "Libertad",
+          "lat": 14.547684,
+          "lng": 120.998613,
+          "osm": "node/4475471875"
+        },
+        {
+          "name": "EDSA",
+          "lat": 14.538952,
+          "lng": 121.000588,
+          "osm": "node/34012374"
+        },
+        {
+          "name": "Baclaran",
+          "lat": 14.533913,
+          "lng": 120.99805,
+          "osm": "node/4475471873"
+        },
+        {
+          "name": "Redemptorist–Aseana",
+          "lat": 14.529737,
+          "lng": 120.992985,
+          "osm": "node/6357368900"
+        },
+        {
+          "name": "MIA Road",
+          "lat": 14.517992,
+          "lng": 120.992917,
+          "osm": "node/7461224923"
+        },
+        {
+          "name": "PITX",
+          "lat": 14.508304,
+          "lng": 120.99124,
+          "osm": "node/5940196988"
+        },
+        {
+          "name": "Ninoy Aquino Avenue",
+          "lat": 14.498939,
+          "lng": 120.994355,
+          "osm": "node/7465533967"
+        },
+        {
+          "name": "Dr. Santos",
+          "lat": 14.485249,
+          "lng": 120.989397,
+          "osm": "node/12345180247"
+        }
+      ]
+    },
+    {
+      "id": "LRT2",
+      "name": "LRT Line 2",
+      "colour": "#6B3FA0",
+      "relation": "relation/110410",
+      "stations": [
+        {
+          "name": "Antipolo",
+          "lat": 14.624835,
+          "lng": 121.121359,
+          "osm": "node/6269361350"
+        },
+        {
+          "name": "Marikina-Pasig",
+          "lat": 14.620498,
+          "lng": 121.10061,
+          "osm": "node/6269361358"
+        },
+        {
+          "name": "Santolan",
+          "lat": 14.622552,
+          "lng": 121.085604,
+          "osm": "node/5530500543"
+        },
+        {
+          "name": "Katipunan",
+          "lat": 14.63082,
+          "lng": 121.072301,
+          "osm": "node/6245591606"
+        },
+        {
+          "name": "Anonas",
+          "lat": 14.627967,
+          "lng": 121.064283,
+          "osm": "node/6245591605"
+        },
+        {
+          "name": "Araneta Center - Cubao",
+          "lat": 14.622508,
+          "lng": 121.052152,
+          "osm": "node/8347084632"
+        },
+        {
+          "name": "Betty Go-Belmonte",
+          "lat": 14.618605,
+          "lng": 121.042737,
+          "osm": "node/5397325070"
+        },
+        {
+          "name": "Gilmore",
+          "lat": 14.613509,
+          "lng": 121.034067,
+          "osm": "node/5397330366"
+        },
+        {
+          "name": "J. Ruiz",
+          "lat": 14.610565,
+          "lng": 121.026062,
+          "osm": "node/5397330367"
+        },
+        {
+          "name": "V. Mapa",
+          "lat": 14.604028,
+          "lng": 121.017027,
+          "osm": "node/5397330370"
+        },
+        {
+          "name": "Pureza",
+          "lat": 14.601714,
+          "lng": 121.00504,
+          "osm": "node/5397333275"
+        },
+        {
+          "name": "Legarda",
+          "lat": 14.600866,
+          "lng": 120.992473,
+          "osm": "node/4052997946"
+        },
+        {
+          "name": "Recto",
+          "lat": 14.603644,
+          "lng": 120.983087,
+          "osm": "node/5397342978"
+        }
+      ]
+    },
+    {
+      "id": "MRT3",
+      "name": "MRT Line 3",
+      "colour": "#1F5FB8",
+      "relation": "relation/109159",
+      "stations": [
+        {
+          "name": "North Avenue",
+          "lat": 14.651694,
+          "lng": 121.032633,
+          "osm": "node/6264846311"
+        },
+        {
+          "name": "Quezon Avenue",
+          "lat": 14.642449,
+          "lng": 121.038645,
+          "osm": "node/6264846322"
+        },
+        {
+          "name": "GMA Kamuning",
+          "lat": 14.635333,
+          "lng": 121.043275,
+          "osm": "node/88775861"
+        },
+        {
+          "name": "Araneta Center - Cubao",
+          "lat": 14.619478,
+          "lng": 121.051057,
+          "osm": "node/11328560046"
+        },
+        {
+          "name": "Santolan-Annapolis",
+          "lat": 14.607541,
+          "lng": 121.056574,
+          "osm": "node/6264796043"
+        },
+        {
+          "name": "Ortigas",
+          "lat": 14.587341,
+          "lng": 121.056519,
+          "osm": "node/5397307747"
+        },
+        {
+          "name": "Shaw Boulevard",
+          "lat": 14.581102,
+          "lng": 121.053408,
+          "osm": "node/11328574094"
+        },
+        {
+          "name": "Boni",
+          "lat": 14.573093,
+          "lng": 121.047644,
+          "osm": "node/320131141"
+        },
+        {
+          "name": "Guadalupe",
+          "lat": 14.566719,
+          "lng": 121.045438,
+          "osm": "node/5397307750"
+        },
+        {
+          "name": "Buendia",
+          "lat": 14.553952,
+          "lng": 121.033684,
+          "osm": "node/5397307753"
+        },
+        {
+          "name": "Ayala",
+          "lat": 14.548755,
+          "lng": 121.02754,
+          "osm": "node/5397307754"
+        },
+        {
+          "name": "Magallanes",
+          "lat": 14.541743,
+          "lng": 121.01905,
+          "osm": "node/5286836714"
+        },
+        {
+          "name": "Taft Avenue",
+          "lat": 14.537597,
+          "lng": 121.00189,
+          "osm": "node/5397312963"
+        }
+      ]
+    }
+  ],
+  "transfers": [
+    {
+      "a": {
+        "line": "LRT1",
+        "station": "Doroteo Jose"
+      },
+      "b": {
+        "line": "LRT2",
+        "station": "Recto"
+      },
+      "note": "Covered walkway between Doroteo Jose (LRT-1) and Recto (LRT-2)"
+    },
+    {
+      "a": {
+        "line": "LRT1",
+        "station": "EDSA"
+      },
+      "b": {
+        "line": "MRT3",
+        "station": "Taft Avenue"
+      },
+      "note": "Walkway between EDSA (LRT-1) and Taft Avenue (MRT-3)"
+    },
+    {
+      "a": {
+        "line": "LRT2",
+        "station": "Araneta Center - Cubao"
+      },
+      "b": {
+        "line": "MRT3",
+        "station": "Araneta Center - Cubao"
+      },
+      "note": "Walkway between the two Araneta Center-Cubao stations (LRT-2 and MRT-3)"
+    }
+  ]
+}

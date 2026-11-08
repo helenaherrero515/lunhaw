@@ -38,11 +38,23 @@ export interface RealMapOptions {
   covered?: () => { top: number; right: number; bottom: number; left: number };
 }
 
+/** The parts of a planned trip leg the map draws (see lib/api/client Trip). */
+export interface TripLegShape {
+  mode: "walk" | "rail" | "transfer";
+  path?: [number, number][];
+  colour?: string;
+}
+
 export interface RealMap {
   /** Shows these places. `focus` flies to the selected place (used when it was picked outside the map). */
   update(places: MapPlace[], selected: string | null, focus: boolean): void;
   /** Draws the straight-line walking estimate from a starting point to a place and frames both. */
   showWalk(from: { la: number; ln: number }, to: MapPlace): void;
+  /**
+   * Draws a planned trip: walking legs dashed, train legs in their line's colour, boarding and alighting
+   * stations marked. Kept while `selected` stays `keepFor` (the destination place, or null for none).
+   */
+  showTrip(legs: TripLegShape[], keepFor: string | null): void;
   /** Call after the map's container becomes visible again. */
   resize(): void;
   destroy(): void;
@@ -238,11 +250,28 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
     paint: { "line-color": C.leaf, "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.6, 14, 2.6], "line-opacity": 0.9 },
   });
 
+  // Trips: train legs as solid lines in the line's colour (with a white casing), walking legs dashed.
+  map.addLayer({
+    id: "rail-casing",
+    type: "line",
+    source: "walk",
+    filter: ["==", ["get", "kind"], "rail"],
+    paint: { "line-color": "#FFFFFF", "line-width": 9 },
+    layout: { "line-cap": "round", "line-join": "round" },
+  });
+  map.addLayer({
+    id: "rail-line",
+    type: "line",
+    source: "walk",
+    filter: ["==", ["get", "kind"], "rail"],
+    paint: { "line-color": ["coalesce", ["get", "colour"], C.green], "line-width": 5 },
+    layout: { "line-cap": "round", "line-join": "round" },
+  });
   map.addLayer({
     id: "walk-line",
     type: "line",
     source: "walk",
-    filter: ["==", ["geometry-type"], "LineString"],
+    filter: ["all", ["==", ["geometry-type"], "LineString"], ["!=", ["get", "kind"], "rail"]],
     paint: { "line-color": C.green, "line-width": 4, "line-dasharray": [0.6, 2] },
     layout: { "line-cap": "round" },
   });
@@ -250,8 +279,15 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
     id: "walk-start",
     type: "circle",
     source: "walk",
-    filter: ["==", ["geometry-type"], "Point"],
+    filter: ["all", ["==", ["geometry-type"], "Point"], ["!=", ["get", "kind"], "station"]],
     paint: { "circle-radius": 7, "circle-color": "#FFFFFF", "circle-stroke-color": C.green, "circle-stroke-width": 4 },
+  });
+  map.addLayer({
+    id: "trip-station",
+    type: "circle",
+    source: "walk",
+    filter: ["==", ["get", "kind"], "station"],
+    paint: { "circle-radius": 6, "circle-color": "#FFFFFF", "circle-stroke-color": ["coalesce", ["get", "colour"], C.green], "circle-stroke-width": 3.5 },
   });
   map.addLayer({
     id: "clusters",
@@ -329,6 +365,7 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
   };
   let shownKey = "";
   let walkTo: string | null = null;
+  let tripFor: string | null | undefined; // undefined = no trip drawn
 
   return {
     update(places, selected, focus) {
@@ -336,6 +373,10 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
       if (walkTo && walkTo !== selected) {
         walkSource.setData(empty);
         walkTo = null;
+      }
+      if (tripFor !== undefined && tripFor !== selected) {
+        walkSource.setData(empty);
+        tripFor = undefined;
       }
       const sel = places.find((p) => p.id === selected) ?? null;
       placesSource.setData({ type: "FeatureCollection", features: places.filter((p) => p !== sel).map(point) });
@@ -362,6 +403,27 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
       });
       const b = new LngLatBounds([from.ln, from.la], [from.ln, from.la]).extend([to.ln, to.la]);
       map.fitBounds(b, { padding: padding(), maxZoom: 16, duration: 900 });
+    },
+    showTrip(legs, keepFor) {
+      walkTo = null;
+      tripFor = keepFor;
+      const features: any[] = [];
+      const b = new LngLatBounds();
+      legs.forEach((leg, i) => {
+        if (!leg.path || leg.path.length < 2) return;
+        leg.path.forEach((c) => b.extend(c));
+        if (leg.mode === "rail") {
+          features.push({ type: "Feature", properties: { kind: "rail", colour: leg.colour }, geometry: { type: "LineString", coordinates: leg.path } });
+          for (const c of [leg.path[0], leg.path[leg.path.length - 1]]) {
+            features.push({ type: "Feature", properties: { kind: "station", colour: leg.colour }, geometry: { type: "Point", coordinates: c } });
+          }
+        } else {
+          features.push({ type: "Feature", properties: { kind: "walk" }, geometry: { type: "LineString", coordinates: leg.path } });
+          if (i === 0) features.push({ type: "Feature", properties: { kind: "start" }, geometry: { type: "Point", coordinates: leg.path[0] } });
+        }
+      });
+      walkSource.setData({ type: "FeatureCollection", features });
+      if (!b.isEmpty()) map.fitBounds(b, { padding: padding(), maxZoom: 16, duration: 900 });
     },
     resize() {
       map.resize();

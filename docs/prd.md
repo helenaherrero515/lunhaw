@@ -49,7 +49,7 @@ Lunhaw is a public-spaces and green-mobility platform for Metro Manila (NCR), Ph
 |---|---|---|---|---|
 | **F-001** | Explore Directory & Map Previews | MVP | Civic space fragmentation; difficulty discovering nearby parks and open spaces. | Includes search, categorical filtering, and interactive map pins. |
 | **F-002** | Public Libraries & Barangay Reading Centers | MVP | Absence of free, quiet study spaces for students; hidden municipal facilities. | Lists amenities, rules, access requirements, and verified schedules. |
-| **F-003** | Commute & Walking Route Planner | MVP | Lack of walkable, shaded pathways and transparent transit directions. | Multi-modal walking + jeepney/bus/rail steps with boarding points. |
+| **F-003** | Commute & Walking Route Planner | MVP | Lack of walkable, shaded pathways and transparent transit directions. | Built: street walking routes (OpenRouteService on OpenStreetMap) and LRT-1/LRT-2/MRT-3 legs with boarding, transfer and alighting stations (OpenStreetMap). Jeepney and bus legs hand off to Sakay.ph until verified route data exists. An AI guide (Claude Haiku 5.5) explains trips but can only state what the planner returns. All times are Estimates; train fares Not available yet. |
 | **F-004** | Green Index & Canopy Shade Calculator | MVP | Urban heat island exposure; lack of environmental transparency. | Scores canopy cover and shade using open glass-box formulas. |
 | **F-005** | Saved Places & Trips | MVP | Inconvenience of repeating frequent searches. | Local storage persistence. Profile sync is not in 1.0 (saved places stay on the device). |
 | **F-006** | Manual Area Entry Fallback | MVP | Inability to access local info when GPS is unavailable or denied. | City & Barangay selector dropdowns. |
@@ -129,7 +129,7 @@ flowchart TD
 
 ## Dependencies
 - **Hosting & data:** Cloudflare Pages + Workers and Supabase (Postgres + PostGIS + Auth); see [ADR-001](decisions/ADR-001-cloud-architecture.md) and [RELEASE.md](RELEASE.md).
-- **Maps:** the Map tab uses MapLibre GL with OpenFreeMap vector tiles (ADR-001), restyled in Lunhaw colours, with clustered pins and a locate button. The map code loads only when the Map tab opens. If WebGL is unavailable or the tiles can't load, the app shows its simplified drawn map instead. Walking estimates are drawn as straight lines, not routed paths.
+- **Maps:** the Map tab uses MapLibre GL with OpenFreeMap vector tiles (ADR-001), restyled in Lunhaw colours, with clustered pins and a locate button. The map code loads only when the Map tab opens. If WebGL is unavailable or the tiles can't load, the app shows its simplified drawn map instead. Planned trips are drawn on the map (walking dashed, trains in their line colour); without the route planner the app falls back to a labelled straight-line walking estimate.
 - **Canopy & Environmental Data:** Copernicus / Sentinel. Not used in 1.0: Green Index shows *Not available yet* until measured inputs exist.
 - **Administrative Data:** NCR LGU directories and National Library of the Philippines (NLP) public library registries, confirmed by a person before anything is labelled Verified ([RELEASE.md](RELEASE.md) section 5).
 

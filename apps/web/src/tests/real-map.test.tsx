@@ -12,6 +12,9 @@ const fetchPlaces = vi.fn();
 vi.mock("@/lib/api/client", () => ({
   fetchPlaces: (...a: unknown[]) => fetchPlaces(...a),
   subscribeToNewsletter: vi.fn(),
+  planTrip: () => Promise.reject(new Error("offline")),
+  askGuide: () => Promise.reject(new Error("offline")),
+  guideStatus: () => Promise.resolve({ routing: false, guide: false }),
   fetchGreenIndex: () => Promise.resolve(null),
 }));
 
@@ -102,6 +105,8 @@ describe("Map tab: real map (MapLibre + OpenFreeMap)", () => {
     click(`#prev [data-a="route"]`);
     click('[data-a="manual"]');
     click('[data-a="st"][data-i="0"]'); // Cubao
+    // The real planner is offline in this test, so the sheet falls back to the straight-line estimate.
+    await waitFor(() => expect(document.querySelector('[data-a="wd"]')).not.toBeNull());
     click('[data-a="wd"]');
     click('[data-a="wmap"]');
 
@@ -124,6 +129,7 @@ describe("Map tab: real map (MapLibre + OpenFreeMap)", () => {
     click(`#prev [data-a="route"]`);
     click('[data-a="manual"]');
     click('[data-a="st"][data-i="0"]');
+    await waitFor(() => expect(document.querySelector('[data-a="wd"]')).not.toBeNull());
     click('[data-a="wd"]');
     expect(document.querySelector('[data-a="wmap"]')).toBeNull();
   });
