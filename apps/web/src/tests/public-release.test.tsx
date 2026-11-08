@@ -138,3 +138,21 @@ describe("Public release: newsletter", () => {
     expect(hrefs).toEqual(expect.arrayContaining(["/privacy", "/terms"]));
   });
 });
+
+describe("Public release: leaving /home before places load", () => {
+  it("ignores the late response instead of throwing", async () => {
+    await authService.logIn("helena@lunhaw.ph", "password123");
+    let resolve!: (v: unknown[]) => void;
+    fetchPlaces.mockReturnValue(new Promise((r) => (resolve = r)));
+    const errors: unknown[] = [];
+    const onErr = (e: PromiseRejectionEvent) => errors.push(e.reason);
+    window.addEventListener("unhandledrejection", onErr);
+    const { unmount } = render(<HomePage />);
+    await waitFor(() => expect(fetchPlaces).toHaveBeenCalled());
+    unmount();
+    resolve([place()]);
+    await new Promise((r) => setTimeout(r, 50));
+    window.removeEventListener("unhandledrejection", onErr);
+    expect(errors).toEqual([]);
+  });
+});
