@@ -1,5 +1,4 @@
 :root{--bg:#F7F7F0;--card:#fff;--fg:#26332D;--mut:#5F6A64;--line:#E1E8DF;--pri:#245C43;--onpri:#fff;--lime:#98D746;--mint:#B7F9ED;--leaf:#6B9B72;--water:#D6F3EC;--land:#E4F2C8;--soft:#E9F7EC;--warn:#FFF4DF;--warnfg:#7A3E06;--band:linear-gradient(135deg,#C6F1D9 0%,#E4F7CE 60%,#F3FBDD 100%);--hd:#1D3B2B;--font:Kufam,system-ui,sans-serif;--disp:MedievalSharp,Georgia,serif;color-scheme:light}
-@media(prefers-color-scheme:dark){:root{--bg:#0E1A15;--card:#16261F;--fg:#E8F1EA;--mut:#A5B7AB;--line:#2A4136;--pri:#98D746;--onpri:#17241C;--water:#12312B;--land:#1F3A2A;--soft:#1D3329;--warn:#3A2A0F;--warnfg:#F6D9A6;--band:linear-gradient(135deg,#17372A 0%,#12281F 100%);--hd:#E8F1EA;color-scheme:dark}}
 *{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--fg);font:15px/1.45 var(--font);padding-top:env(safe-area-inset-top,0px)}
 button,input{font:inherit;color:inherit}button{cursor:pointer}:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
 h1,h2,h3,p{margin:0}h2{font-size:20px;font-weight:700}.mut{color:var(--mut);font-size:14px}.row{display:flex;align-items:center;gap:10px}.sp{justify-content:space-between}
@@ -53,11 +52,9 @@ input.f{width:100%;min-height:48px;border:1px solid var(--line);border-radius:14
 
 /* ---- soft white & green style ---- */
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60% 50% at 6% 0,rgba(183,249,237,.8),transparent 70%),radial-gradient(45% 40% at 100% 22%,rgba(152,215,70,.22),transparent 70%),radial-gradient(60% 45% at 0 100%,rgba(183,249,237,.55),transparent 70%)}
-@media(prefers-color-scheme:dark){body::before{opacity:.16}}
 .gr{background:linear-gradient(90deg,#2F8F5B,#7CC243 65%,#B7F9ED);-webkit-background-clip:text;background-clip:text;color:transparent}
 .cd{border:1px solid rgba(36,92,67,.07);border-radius:28px;box-shadow:0 14px 36px rgba(36,92,67,.08)}
 .pill{background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-color:rgba(36,92,67,.08)}
-@media(prefers-color-scheme:dark){.pill{background:rgba(22,38,31,.8)}}
 .bar button[aria-current=page]{background:var(--card);color:var(--hd);box-shadow:0 8px 18px rgba(36,92,67,.16)}.bar button[aria-current=page] .ic{color:var(--pri)}
 .b:not(.s){background:linear-gradient(90deg,#2F8F5B,#5FB04A);border-color:transparent;color:#fff;box-shadow:0 10px 22px rgba(63,143,46,.28)}.b.s{border-color:rgba(36,92,67,.35);background:var(--card)}
 .ch{background:var(--card)}.ch.on{background:var(--card);color:var(--pri);border-color:var(--pri);box-shadow:0 0 0 1px var(--pri) inset;font-weight:600}
@@ -86,7 +83,6 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;ba
 @media(max-width:900px){.duo{grid-template-columns:1fr}.hero2{padding:28px 24px 100px}.mas{width:100px;height:105px}.stats{margin:-64px 12px 20px;gap:10px}}
 @media(max-width:720px){.bar{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));border-radius:999px;border:1px solid rgba(36,92,67,.08);box-shadow:0 16px 36px rgba(36,92,67,.24);background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);padding:6px}
  .qa button{padding:10px 16px 10px 10px}.prog{padding-left:150px}.prog img{width:96px;height:100px}.stat b{font-size:26px}.hrow{grid-template-columns:1fr auto}}
-@media(max-width:720px) and (prefers-color-scheme:dark){.bar{background:rgba(22,38,31,.92)}}
 
 /* ---- mobile polish ---- */
 html{overflow-x:clip}.hrow{grid-template-columns:minmax(0,1fr) auto}
@@ -141,7 +137,6 @@ img{max-width:100%}
  .toast{bottom:calc(104px + env(safe-area-inset-bottom,0px))}
  .mapbox{touch-action:pan-y}
 }
-@media(max-width:720px) and (prefers-color-scheme:dark){.pill{background:rgba(22,38,31,.96)}}
 @media(max-width:720px) and (orientation:landscape) and (max-height:500px){.mapbox{height:80svh}.hero2{padding-bottom:84px}.sheet{max-height:94svh}}
 @media(max-width:340px){.hero2 .disp{font-size:24px;padding-right:70px}.mas{width:64px;height:67px}.stats{margin-left:4px;margin-right:4px}.bar button{font-size:10px}.qa button{font-size:13.5px}}
 /* grid blowout fix: let 1fr tracks shrink below their content (chips row was widening the map layout) */

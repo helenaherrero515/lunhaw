@@ -15,6 +15,17 @@ export default function HomePage() {
   // null = checking, false = signed out, AuthUser = signed in. Only the auth session decides this.
   const [user, setUser] = useState<AuthUser | false | null>(null);
 
+  // The app is designed in light colours only, so turn off the site's dark theme while /home is open.
+  useEffect(() => {
+    const root = document.documentElement;
+    const previous = root.getAttribute("data-theme");
+    root.setAttribute("data-theme", "light");
+    return () => {
+      if (previous === null) root.removeAttribute("data-theme");
+      else root.setAttribute("data-theme", previous);
+    };
+  }, []);
+
   useEffect(() => {
     let isMounted = true;
     authService
