@@ -30,6 +30,24 @@
 
 ## 3. Pivots & decisions (newest first, append at top)
 
+### 2026-11-08 — Public release 1.0: honest data, real wiring, legal pages
+- **What changed:** Prepared the web app for public release ([RELEASE.md](RELEASE.md)).
+  - **Data:** earlier seeds marked records `VERIFIED` by automated tooling with no human check. Migration `00014` replaces them with 26 places (19 libraries, 7 parks/gardens) whose locations are `ESTIMATE`. Hours, amenities and Green Index are not published. No record may be `VERIFIED` without a named person, date and source ([verification-worksheet.csv](verification-worksheet.csv)).
+  - **Held back:** all 17 barangay reading centers, because their existence and several cited sources could not be confirmed.
+  - **Wiring:** `/home` reads the live directory through the API; the API reads Supabase and refuses to serve fixtures in production.
+  - **Hosting:** the site ships as a Next.js static export on Cloudflare Pages.
+  - **Retired:** `/explore` (prototype with hardcoded data) now redirects to `/home`.
+  - **Accounts and newsletter:** the mock login runs in development only; the newsletter stores consented sign-ups in Supabase.
+  - **Legal:** Privacy Notice and Terms published, operator HLN.
+  - **Disclaimer wording:** the PRD's `INV-002` text now matches the wording implemented and tested everywhere ("…before traveling…"); it had never shipped in its earlier form.
+- **Pivot type:** Release / Data integrity.
+- **Why:** `INV-001` is the product's core promise; publishing machine-asserted "Verified" data, or places that may not exist, would break it on day one.
+- **Accepted, revisit:** `/home` requires an account (decided in PRs #96–98). This diverges from [system-design.md](system-design.md)'s original open-access trade-off; tracked as an open question in the PRD.
+- **Rejected approaches:**
+  1. *Ship the agent-verified dataset as-is:* rejected (`INV-001`).
+  2. *Label unconfirmed hours as Estimate:* rejected. An estimate of unconfirmed values is still invention.
+  3. *Fall back to fixtures if the database is down:* rejected; the API returns 503 instead of serving stale or fake data.
+
 ### 2026-11-03 — ADR-003: Selection of React Native (Expo) for Phase 2 Mobile Application (C-M4-01)
 - **What changed:** Evaluated React Native (Expo) vs Flutter vs Progressive Web App (PWA) across monorepo code reuse, $0/month maintenance, offline vector map performance, and low-end Android responsiveness. Formally selected React Native with Expo (SDK 52+ with Fabric/TurboModules).
 - **Pivot type:** Architecture / Mobile Framework Selection.
