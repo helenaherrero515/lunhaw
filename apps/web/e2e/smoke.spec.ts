@@ -49,18 +49,13 @@ test.describe("Lunhaw Landing Page Smoke Test", () => {
     await dialog.getByRole("button", { name: "Close" }).click();
     await expect(dialog).not.toBeVisible();
 
-    // 7. Verify CTA Section (centered text, no mascot, falling leaves flanks)
+    // 7. Verify CTA band (statement, app link, manual-area link, mascot)
+    const cta = page.locator("#start");
     await expect(
-      page.getByRole("heading", {
-        name: "Every Filipino deserves more green spaces and places to learn.",
-      })
+      cta.getByRole("heading", { name: "Discover your space. Explore your city. Go greener." })
     ).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: "Explore Lunhaw" })
-    ).toBeVisible();
-    await expect(page.locator("#start #cta-mascot")).toHaveCount(0);
-    await expect(page.locator("#start img")).toHaveCount(0);
-    await expect(page.locator(".cta-leaves-left")).toBeAttached();
-    await expect(page.locator(".cta-leaves-right")).toBeAttached();
+    await expect(cta.getByRole("link", { name: "Explore green spaces near you" })).toHaveAttribute("href", "/home");
+    await expect(cta.getByRole("link", { name: "Enter your area manually" })).toBeVisible();
+    await expect(page.locator("#cta-mascot")).toBeVisible();
   });
 });
