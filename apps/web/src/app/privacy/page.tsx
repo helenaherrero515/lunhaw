@@ -11,6 +11,7 @@ export default function PrivacyPage() {
   const mail = <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
   return (
     <LegalPage
+      lastUpdated="9 November 2026"
       title="Privacy Notice"
       intro="Lunhaw helps people in Metro Manila find parks, gardens and public libraries, and how to get there. We collect as little personal data as we can. This notice explains what we collect, why, and the rights you have under the Data Privacy Act of 2012 (Republic Act No. 10173)."
     >
@@ -55,9 +56,9 @@ export default function PrivacyPage() {
       <h2>What stays on your device</h2>
       <ul>
         <li>
-          <strong>Your location.</strong> Lunhaw only asks for it when you tap “Use my current location”. It is used in
-          your browser to estimate walking distance and is never sent to our servers or stored by us. You can always
-          type a starting point instead.
+          <strong>Your location.</strong> Lunhaw only asks for it when you tap “Use my current location” or the map’s
+          locate button. It is used in your browser to estimate walking distance or show where you are on the map, and
+          is never sent to our servers or stored by us. You can always type a starting point instead.
         </li>
         <li>
           <strong>Saved places</strong> and your sign-in session are kept in your browser’s local storage. Clearing your
@@ -84,6 +85,11 @@ export default function PrivacyPage() {
         <li>
           <strong>Google Fonts</strong>: serves the typefaces used on the site, which means your browser requests them
           from Google.
+        </li>
+        <li>
+          <strong>OpenFreeMap</strong>: provides the map. To draw it, your browser requests map data for the area you
+          are viewing from OpenFreeMap, which therefore sees your IP address and that area. Map data © OpenStreetMap
+          contributors.
         </li>
       </ul>
       <p>

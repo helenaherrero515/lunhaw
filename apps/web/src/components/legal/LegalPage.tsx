@@ -4,7 +4,18 @@ import Link from "next/link";
 export const LEGAL_LAST_UPDATED = "8 November 2026";
 
 /** Shared shell for the Privacy Notice and Terms of Use. */
-export function LegalPage({ title, intro, children }: { title: string; intro: string; children: React.ReactNode }) {
+export function LegalPage({
+  title,
+  intro,
+  lastUpdated = LEGAL_LAST_UPDATED,
+  children,
+}: {
+  title: string;
+  intro: string;
+  /** Each page can carry its own date when only that page changes. */
+  lastUpdated?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="legal">
       <header className="legal-top">
@@ -20,7 +31,7 @@ export function LegalPage({ title, intro, children }: { title: string; intro: st
       </header>
       <main className="wrap legal-body">
         <h1>{title}</h1>
-        <p className="legal-meta">Last updated: {LEGAL_LAST_UPDATED}</p>
+        <p className="legal-meta">Last updated: {lastUpdated}</p>
         <p className="legal-intro">{intro}</p>
         {children}
         <nav className="legal-links" aria-label="Legal">

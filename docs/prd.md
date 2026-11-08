@@ -129,7 +129,7 @@ flowchart TD
 
 ## Dependencies
 - **Hosting & data:** Cloudflare Pages + Workers and Supabase (Postgres + PostGIS + Auth); see [ADR-001](decisions/ADR-001-cloud-architecture.md) and [RELEASE.md](RELEASE.md).
-- **Maps:** the 1.0 app draws a simplified Metro Manila map itself (no third-party tile provider). MapLibre + OpenFreeMap remain the plan for a full map.
+- **Maps:** the Map tab uses MapLibre GL with OpenFreeMap vector tiles (ADR-001), restyled in Lunhaw colours, with clustered pins and a locate button. The map code loads only when the Map tab opens. If WebGL is unavailable or the tiles can't load, the app shows its simplified drawn map instead. Walking estimates are drawn as straight lines, not routed paths.
 - **Canopy & Environmental Data:** Copernicus / Sentinel. Not used in 1.0: Green Index shows *Not available yet* until measured inputs exist.
 - **Administrative Data:** NCR LGU directories and National Library of the Philippines (NLP) public library registries, confirmed by a person before anything is labelled Verified ([RELEASE.md](RELEASE.md) section 5).
 
