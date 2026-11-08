@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -14,7 +13,7 @@ export function Footer() {
       setMsg("Please enter a valid email.");
       return;
     }
-    setMsg("Thanks! We will let you know when we launch.");
+    setMsg("Thanks! We’ll keep you posted.");
     setEmail("");
   };
 
@@ -92,12 +91,12 @@ export function Footer() {
           </div>
           <div className="ft-col">
             <h4>Pages</h4>
-            <Link href="#top" data-scroll>
+            <a href="#top" data-scroll>
               Lunhaw
-            </Link>
-            <Link href="#about" data-scroll>
+            </a>
+            <a href="#about" data-scroll>
               About Us
-            </Link>
+            </a>
             <a href="#">Blog</a>
             <a href="#">Contact Us</a>
           </div>
