@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authService, AuthUser } from "@/lib/auth/auth-service";
 import { initLunhawHome } from "./lunhaw-home";
-import { fetchPlaces, fetchGreenIndex } from "@/lib/api/client";
+import { fetchPlaces, fetchGreenIndex, planTrip, askGuide, guideStatus } from "@/lib/api/client";
 import "./home.css";
 
 // Exact HTML body markup from reference/Lunhaw_Home_2.html
@@ -57,7 +57,7 @@ export default function HomePage() {
         } catch {}
         window.location.href = "/";
       },
-      { user: { name: user.name, email: user.email }, loadPlaces: fetchPlaces, loadGreenIndex: fetchGreenIndex, openArea }
+      { user: { name: user.name, email: user.email }, loadPlaces: fetchPlaces, loadGreenIndex: fetchGreenIndex, planTrip, askGuide, guideStatus, openArea }
     );
     return () => {
       if (typeof cleanup === "function") cleanup();

@@ -2,7 +2,17 @@
  * Lunhaw API client (platform-neutral REST API, apps/api).
  * NEXT_PUBLIC_API_URL is baked in at build time; locally it defaults to `wrangler dev`.
  */
+import { getSupabaseClient } from "@/lib/auth/auth-service";
+
 export const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8787").replace(/\/+$/, "");
+
+/** The signed-in user's session token, for endpoints that require sign-in (none in local mock mode). */
+async function authHeader(): Promise<Record<string, string>> {
+  const client = getSupabaseClient();
+  if (!client) return {};
+  const { data } = await client.auth.getSession();
+  return data.session ? { Authorization: `Bearer ${data.session.access_token}` } : {};
+}
 
 export type VerificationStatus = "VERIFIED" | "ESTIMATE" | "NOT_AVAILABLE";
 
@@ -79,6 +89,81 @@ export async function fetchGreenIndex(placeId: string): Promise<GreenIndex | nul
     `/v1/places/${encodeURIComponent(placeId)}/green-index`
   );
   return body.data.status === "ESTIMATE" ? (body.data as GreenIndex) : null;
+}
+
+/** A trip from the planner (apps/api/src/guide/trip.ts). Durations are estimates; see `verification`. */
+export interface TripLeg {
+  mode: "walk" | "rail" | "transfer";
+  duration_min: number;
+  from?: string;
+  to?: string;
+  distance_m?: number;
+  steps?: { instruction: string; distance_m: number }[];
+  path?: [number, number][];
+  line?: string;
+  line_name?: string;
+  colour?: string;
+  board?: string;
+  alight?: string;
+  towards?: string;
+  stops?: number;
+  at?: string;
+  note?: string;
+}
+export interface Trip {
+  from: { label: string; lat: number; lng: number };
+  to: { label: string; lat: number; lng: number };
+  straight_line_km: number;
+  options: {
+    kind: "walk" | "train";
+    title: string;
+    duration_min: number;
+    legs: TripLeg[];
+    fare: { status: "NOT_AVAILABLE" | "VERIFIED"; note: string; amount_php?: number };
+  }[];
+  sakay_url: string;
+  verification: { status: "ESTIMATE"; note: string };
+  sources: string[];
+}
+type Point = { label: string; lat: number; lng: number };
+
+/** Whether trip planning and the AI guide are configured on the API (so the app only offers what works). */
+export async function guideStatus(): Promise<{ routing: boolean; guide: boolean }> {
+  try {
+    const body = await request<{ data: { routing: boolean; guide: boolean } }>("/v1/guide/status");
+    return body.data;
+  } catch {
+    return { routing: false, guide: false };
+  }
+}
+
+/** Real trip options between two points (signed-in users). */
+export async function planTrip(from: Point, to: Point): Promise<Trip> {
+  const body = await request<{ data: Trip }>("/v1/guide/plan", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...(await authHeader()) },
+    body: JSON.stringify({ from, to }),
+  });
+  return body.data;
+}
+
+export interface GuideReply {
+  reply: string;
+  trip: Trip | null;
+}
+
+/** One turn with the AI commute guide (signed-in users). */
+export async function askGuide(input: {
+  messages: { role: "user" | "assistant"; content: string }[];
+  location?: { lat: number; lng: number } | null;
+  destination_id?: string | null;
+}): Promise<GuideReply> {
+  const body = await request<{ data: GuideReply }>("/v1/guide", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...(await authHeader()) },
+    body: JSON.stringify(input),
+  });
+  return body.data;
 }
 
 export async function subscribeToNewsletter(email: string): Promise<void> {
