@@ -2,30 +2,50 @@ name = "lunhaw-api"
 main = "src/index.ts"
 compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
 
+# Local development (wrangler dev). Without SUPABASE_* set, the API serves in-repo fixtures.
 [vars]
 ENVIRONMENT = "development"
 CORS_ORIGIN = "*"
 RATE_LIMIT_PER_MINUTE = "60"
 
-[env.staging]
-name = "lunhaw-api-staging"
-routes = [
-  { pattern = "staging-api.lunhaw.ph/*", zone_name = "lunhaw.ph" }
-]
-
-[env.staging.vars]
-ENVIRONMENT = "staging"
-CORS_ORIGIN = "https://staging.lunhaw.ph"
-RATE_LIMIT_PER_MINUTE = "60"
-
+# ---------------------------------------------------------------------------
+# Production: https://lunhaw-api-production.<your-account>.workers.dev
+#   Secrets (set once, never committed):
+#     wrangler secret put SUPABASE_URL              --env production
+#     wrangler secret put SUPABASE_ANON_KEY         --env production
+#     wrangler secret put SUPABASE_SERVICE_ROLE_KEY --env production
+#   Without them the API refuses to serve (503) rather than falling back to fixtures.
+#   To use a custom domain later, add `routes` for a zone you own and extend CORS_ORIGIN.
+# ---------------------------------------------------------------------------
 [env.production]
 name = "lunhaw-api-production"
-routes = [
-  { pattern = "api.lunhaw.ph/*", zone_name = "lunhaw.ph" }
-]
+workers_dev = true
 
 [env.production.vars]
 ENVIRONMENT = "production"
-CORS_ORIGIN = "https://lunhaw.ph"
+CORS_ORIGIN = "https://lunhaw.pages.dev"
 RATE_LIMIT_PER_MINUTE = "60"
+
+# Shared rate limit across all Worker isolates (T-004: 60 requests/minute per client IP).
+[[env.production.unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 60, period = 60 }
+
+[env.staging]
+name = "lunhaw-api-staging"
+workers_dev = true
+
+[env.staging.vars]
+ENVIRONMENT = "staging"
+CORS_ORIGIN = "https://staging.lunhaw.pages.dev"
+RATE_LIMIT_PER_MINUTE = "60"
+
+[[env.staging.unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1002"
+simple = { limit = 60, period = 60 }
