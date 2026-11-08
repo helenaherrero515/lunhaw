@@ -1,0 +1,72 @@
+[
+  {
+    "id": "f0010000-0000-0000-0000-000000000010",
+    "name": "Rizal Park (Luneta Park)",
+    "category": "park",
+    "lgu_city": "Manila",
+    "barangay": "Ermita",
+    "address": "Roxas Blvd, Ermita, Manila, 1000 Metro Manila",
+    "lng": 120.9794,
+    "lat": 14.5831
+  },
+  {
+    "id": "f0010000-0000-0000-0000-000000000011",
+    "name": "Arroceros Forest Park",
+    "category": "park",
+    "lgu_city": "Manila",
+    "barangay": "Ermita",
+    "address": "Antonio Villegas St, Ermita, Manila (near LRT Central Terminal)",
+    "lng": 120.9836,
+    "lat": 14.5947
+  },
+  {
+    "id": "f0010000-0000-0000-0000-000000000012",
+    "name": "Paco Park",
+    "category": "park",
+    "lgu_city": "Manila",
+    "barangay": "Paco",
+    "address": "General Luna St, Paco, Manila",
+    "lng": 120.9886,
+    "lat": 14.5817
+  },
+  {
+    "id": "f0010000-0000-0000-0000-000000000013",
+    "name": "Quezon Memorial Circle",
+    "category": "park",
+    "lgu_city": "Quezon City",
+    "barangay": "Central",
+    "address": "Elliptical Rd, Diliman, Quezon City",
+    "lng": 121.0494,
+    "lat": 14.6514
+  },
+  {
+    "id": "f0010000-0000-0000-0000-000000000014",
+    "name": "Marikina River Park",
+    "category": "park",
+    "lgu_city": "Marikina",
+    "barangay": "Santa Elena",
+    "address": "Riverbanks Ave, Marikina, 1800 Metro Manila",
+    "lng": 121.0967,
+    "lat": 14.6331
+  },
+  {
+    "id": "f0010000-0000-0000-0000-000000000015",
+    "name": "Ayala Triangle Gardens",
+    "category": "garden",
+    "lgu_city": "Makati",
+    "barangay": "Bel-Air",
+    "address": "Paseo de Roxas cor Makati Ave, Makati",
+    "lng": 121.0242,
+    "lat": 14.5574
+  },
+  {
+    "id": "f0010000-0000-0000-0000-000000000016",
+    "name": "Washington SyCip Park",
+    "category": "garden",
+    "lgu_city": "Makati",
+    "barangay": "San Lorenzo",
+    "address": "Legazpi St, Legaspi Village, Makati",
+    "lng": 121.0183,
+    "lat": 14.5539
+  }
+]
