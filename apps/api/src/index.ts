@@ -11,6 +11,7 @@ import { savedRoute } from './routes/saved.js';
 import { transitRoute } from './routes/transit.js';
 import { tilesRoute } from './routes/tiles.js';
 import { adminRoute } from './routes/admin.js';
+import { newsletterRoute } from './routes/newsletter.js';
 import type { Env, ProblemDetails } from './types/index.js';
 
 export const app = new Hono<{ Bindings: Env }>();
@@ -53,6 +54,7 @@ app.route('/saved', savedRoute);
 app.route('/transit', transitRoute);
 app.route('/tiles', tilesRoute);
 app.route('/admin', adminRoute);
+app.route('/newsletter', newsletterRoute);
 
 // Versioned /v1 routes
 app.route('/v1/health', healthRoute);
@@ -63,6 +65,7 @@ app.route('/v1/saved', savedRoute);
 app.route('/v1/transit', transitRoute);
 app.route('/v1/tiles', tilesRoute);
 app.route('/v1/admin', adminRoute);
+app.route('/v1/newsletter', newsletterRoute);
 // 5. RFC 7807 404 Not Found Handler
 app.notFound((c) => {
   const problem: ProblemDetails = {
@@ -100,7 +103,7 @@ app.onError((err, c) => {
     code
   };
 
-  return c.json(problem, status as 400 | 500, { 'Content-Type': 'application/problem+json' });
+  return c.json(problem, status as 400 | 500 | 503, { 'Content-Type': 'application/problem+json' });
 });
 
 export default app;
