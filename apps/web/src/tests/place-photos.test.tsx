@@ -12,6 +12,7 @@ const fetchPlaces = vi.fn();
 vi.mock("@/lib/api/client", () => ({
   fetchPlaces: (...a: unknown[]) => fetchPlaces(...a),
   subscribeToNewsletter: vi.fn(),
+  fetchGreenIndex: () => Promise.resolve(null),
 }));
 
 import HomePage from "@/app/home/page";

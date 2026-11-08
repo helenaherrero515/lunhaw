@@ -1,4 +1,5 @@
 import { loadPlaces } from '../data/places-source.js';
+import { loadGreenIndex, presentGreenIndex } from '../data/green-index-source.js';
 import { Hono } from 'hono';
 import type {
   Env,
@@ -1199,4 +1200,38 @@ placesRoute.get('/:id/green-score', async (c) => {
     status: 'success',
     data: result
   });
+});
+
+/**
+ * GET /places/:id/green-index (EQ-005, BR-003, INV-001)
+ * The place's published Green Index: a rounded 0-100 score, band, uncertainty range, components against
+ * their targets, imagery dates, data credits and caveats. Always an ESTIMATE. Places whose result has not
+ * been photo-checked and published answer NOT_AVAILABLE; a number is never made up.
+ */
+placesRoute.get('/:id/green-index', async (c) => {
+  const id = c.req.param('id');
+  const place = (await loadPlaces(c.env, MOCK_PLACES)).find((p) => p.id === id);
+  if (!place) {
+    const problem: ProblemDetails = {
+      type: 'https://api.lunhaw.ph/errors/ERR_PLACE_NOT_FOUND',
+      title: 'Place Not Found',
+      status: 404,
+      detail: `Facility record with ID '${id}' does not exist.`,
+      instance: c.req.path,
+      code: 'ERR_PLACE_NOT_FOUND'
+    };
+    return c.json(problem, 404, { 'Content-Type': 'application/problem+json' });
+  }
+  const row = await loadGreenIndex(c.env, id);
+  if (!row) {
+    return c.json({
+      status: 'success',
+      data: {
+        place_id: id,
+        status: 'NOT_AVAILABLE' as VerificationStatus,
+        note: 'The Green Index for this place has not been checked and published yet.'
+      }
+    });
+  }
+  return c.json({ status: 'success', data: { place_id: id, ...presentGreenIndex(row) } });
 });

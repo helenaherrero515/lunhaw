@@ -54,6 +54,33 @@ export async function fetchPlaces(): Promise<ApiPlace[]> {
   return body.data.places;
 }
 
+/** A published Green Index (EQ-005). Always an Estimate; see apps/api/src/data/green-index-source.ts. */
+export interface GreenIndex {
+  status: "ESTIMATE";
+  method: string;
+  question: string;
+  score: number;
+  band: "Low" | "Moderate" | "High";
+  range: [number, number];
+  borderline: boolean;
+  unit: { type: "park_polygon" | "library_300m"; source: string; area_ha: number | null };
+  components: { key: string; label: string; value_pct: number; target_pct: number | null; weight: number; sub_score: number }[];
+  vegetation_vigour_ndvi: number | null;
+  green_access_300m: boolean | null;
+  imagery: { canopy: string | null; vegetation: string | null };
+  checked: { on: string | null; points: number | null };
+  sources: string[];
+  caveats: string[];
+}
+
+/** The place's published Green Index, or null when it hasn't been checked and published yet. */
+export async function fetchGreenIndex(placeId: string): Promise<GreenIndex | null> {
+  const body = await request<{ data: (GreenIndex & { status: string }) | { status: "NOT_AVAILABLE" } }>(
+    `/v1/places/${encodeURIComponent(placeId)}/green-index`
+  );
+  return body.data.status === "ESTIMATE" ? (body.data as GreenIndex) : null;
+}
+
 export async function subscribeToNewsletter(email: string): Promise<void> {
   await request("/v1/newsletter", {
     method: "POST",

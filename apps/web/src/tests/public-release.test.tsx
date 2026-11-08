@@ -14,6 +14,7 @@ const subscribeToNewsletter = vi.fn();
 vi.mock("@/lib/api/client", () => ({
   fetchPlaces: (...a: unknown[]) => fetchPlaces(...a),
   subscribeToNewsletter: (...a: unknown[]) => subscribeToNewsletter(...a),
+  fetchGreenIndex: () => Promise.resolve(null),
 }));
 
 import HomePage from "@/app/home/page";
