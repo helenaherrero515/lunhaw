@@ -20,6 +20,7 @@ import {
 import "maplibre-gl/dist/maplibre-gl.css";
 // NCR boundary from OpenStreetMap (scripts/data/fetch-ncr-boundary.mjs).
 import NCR from "./data/ncr-boundary.json";
+import { drawPin, PIN_RATIO } from "./pin-art";
 
 /** The fields of a place the map needs (the home engine's place objects; text fields are HTML-escaped). */
 export interface MapPlace {
@@ -92,62 +93,6 @@ export function webglAvailable(): boolean {
 const unescape = (s: string) =>
   s.replace(/&(amp|lt|gt|quot|#39);/g, (_, e) => ({ amp: "&", lt: "<", gt: ">", quot: '"', "#39": "'" })[e as string]!);
 
-// Teardrop map pin (24-unit box, tip at 12,22) and the white icons drawn in its head (centred on 12,9.5).
-const PIN_PATH = "M12 1.5C7.3 1.5 3.5 5.1 3.5 9.6c0 5.9 7.2 12 7.8 12.5a1.1 1.1 0 0 0 1.4 0c.6-.5 7.8-6.6 7.8-12.5 0-4.5-3.8-8.1-8.5-8.1z";
-const ICONS: Record<MapPlace["t"], { fill: string[]; stroke: string[] }> = {
-  // A round-canopy tree.
-  park: {
-    fill: ["M12 3.6c-1.9 0-3.4 1.4-3.6 3.2A3.1 3.1 0 0 0 7.2 12.4h9.6a3.1 3.1 0 0 0-1.2-5.6C15.4 5 13.9 3.6 12 3.6z"],
-    stroke: ["M12 11.6v4.3"],
-  },
-  // A stack of three books on a shelf, the last one leaning.
-  lib: {
-    fill: ["M6.6 5.4h2.5v8.8H6.6z", "M9.9 6.6h2.5v7.6H9.9z", "M13.3 6.9l2.4-.6 2 7.4-2.4.6z"],
-    stroke: ["M5.8 15.4h12.4"],
-  },
-};
-const PIN_COLOURS: Record<MapPlace["t"], { fill: string; dark: string }> = {
-  park: { fill: "#3D8F2B", dark: "#245C43" },
-  lib: { fill: "#E9A11B", dark: "#B4740B" },
-};
-
-/** Draws a teardrop pin with the place's icon. Returns ImageData at 2× for crispness; anchor it at the bottom. */
-function pinImage(type: MapPlace["t"], selected: boolean): ImageData {
-  const ratio = 2;
-  const scale = selected ? 2.2 : 1.75; // pin size in px per unit of the 24-unit box
-  const pad = 4; // room for the drop shadow
-  const w = Math.ceil(24 * scale + pad * 2);
-  const h = Math.ceil(23 * scale + pad * 2);
-  const canvas = document.createElement("canvas");
-  canvas.width = w * ratio;
-  canvas.height = h * ratio;
-  const ctx = canvas.getContext("2d")!;
-  ctx.scale(ratio, ratio);
-  ctx.translate(pad, pad - 1.5 * scale + 1);
-  ctx.scale(scale, scale);
-  const pin = new Path2D(PIN_PATH);
-  const { fill, dark } = PIN_COLOURS[type];
-  ctx.shadowColor = "rgba(29,59,43,.35)";
-  ctx.shadowBlur = 3;
-  ctx.shadowOffsetY = 1;
-  ctx.fillStyle = selected ? dark : fill;
-  ctx.fill(pin);
-  ctx.shadowColor = "transparent";
-  ctx.lineWidth = selected ? 1.6 : 1.3;
-  ctx.strokeStyle = "#FFFFFF";
-  ctx.stroke(pin);
-  ctx.fillStyle = "#FFFFFF";
-  ctx.strokeStyle = "#FFFFFF";
-  ctx.lineWidth = 1.5;
-  ctx.lineCap = "round";
-  // Icons are drawn in their own 24-unit box, shrunk to fit the pin's head.
-  ctx.translate(12, 9.5);
-  ctx.scale(0.72, 0.72);
-  ctx.translate(-12, -9.5);
-  for (const d of ICONS[type].fill) ctx.fill(new Path2D(d));
-  for (const d of ICONS[type].stroke) ctx.stroke(new Path2D(d));
-  return ctx.getImageData(0, 0, canvas.width, canvas.height);
-}
 
 // Lunhaw's palette for OpenFreeMap's light "Positron" style, by layer id. Layers a future style drops are skipped.
 const PAINT: Record<string, Record<string, unknown>> = {
@@ -237,10 +182,20 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
     throw err;
   }
 
-  map.addImage("pin-park", pinImage("park", false), { pixelRatio: 2 });
-  map.addImage("pin-lib", pinImage("lib", false), { pixelRatio: 2 });
-  map.addImage("pin-park-sel", pinImage("park", true), { pixelRatio: 2 });
-  map.addImage("pin-lib-sel", pinImage("lib", true), { pixelRatio: 2 });
+  // 3D-style pins (pin-art.ts). The image has room for a ground shadow below the tip, so it is shifted down
+  // by that much to keep the tip exactly on the place.
+  const art = {
+    park: drawPin("park", false),
+    lib: drawPin("lib", false),
+    parkSel: drawPin("park", true),
+    libSel: drawPin("lib", true),
+  };
+  map.addImage("pin-park", art.park.image, { pixelRatio: PIN_RATIO });
+  map.addImage("pin-lib", art.lib.image, { pixelRatio: PIN_RATIO });
+  map.addImage("pin-park-sel", art.parkSel.image, { pixelRatio: PIN_RATIO });
+  map.addImage("pin-lib-sel", art.libSel.image, { pixelRatio: PIN_RATIO });
+  const font12 = 12;
+  const labelAt = (a: { headAboveTip: number }, right: number) => [right / font12, -a.headAboveTip / font12] as [number, number];
 
   const empty = { type: "FeatureCollection" as const, features: [] as any[] };
   map.addSource("places", { type: "geojson", data: empty, cluster: true, clusterRadius: 44, clusterMaxZoom: 13 });
@@ -251,11 +206,12 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
   // Pins are anchored at their tip; labels sit to the right of the pin's head.
   const label: SymbolLayerSpecification["layout"] = {
     "icon-anchor": "bottom",
+    "icon-offset": [0, art.park.padBottom],
     "text-field": ["get", "name"],
     "text-font": font,
     "text-size": 12,
     "text-anchor": "left",
-    "text-offset": [1.4, -2.5],
+    "text-offset": labelAt(art.park, 22),
     "text-max-width": 12,
     "text-justify": "left",
     "text-optional": true,
@@ -333,7 +289,8 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
       "icon-image": ["concat", "pin-", ["get", "t"], "-sel"],
       "icon-allow-overlap": true,
       ...label,
-      "text-offset": [1.75, -3.1],
+      "text-offset": labelAt(art.parkSel, 32),
+      "icon-offset": [0, art.parkSel.padBottom],
       "text-optional": false,
       "text-allow-overlap": true,
     },
