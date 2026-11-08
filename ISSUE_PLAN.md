@@ -1,6 +1,6 @@
 # Lunhaw — GitHub Issue Plan (Dry Run)
 
-> **Document Status:** PROPOSED / DRY RUN REVIEW  
+> **Document Status:** PROPOSED / DRY RUN REVIEW (historical). The implemented web stack is Next.js 14 (static export on Cloudflare Pages), not React + Vite; see `docs/RELEASE.md`.  
 > **Prepared by:** Senior Engineering Lead & Delivery Manager  
 > **Target Repository:** `helenaherrero515/lunhaw`  
 > **Target Cost Profile:** $0/month Free Tier Architecture  
