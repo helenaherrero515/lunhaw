@@ -68,6 +68,21 @@ describe("Place photos (Wikimedia Commons)", () => {
     expect(cards[1]!.querySelector(".pa svg")).not.toBeNull();
   });
 
+  it("greets by first name, counts places per tile, and shows at most 8 popular places", async () => {
+    const many = Array.from({ length: 10 }, (_, i) => ({
+      ...WITHOUT_PHOTO,
+      id: `ae100000-0000-4000-8000-0000000001${String(i).padStart(2, "0")}`,
+      name: `Library ${i}`,
+    }));
+    fetchPlaces.mockResolvedValue([WITH_PHOTO, ...many]);
+    render(<HomePage />);
+    await waitFor(() => expect(document.querySelectorAll(".pops .plc").length).toBe(8));
+    expect(document.querySelector(".hello")!.textContent).toMatch(/^Good (morning|afternoon|evening), helena$/);
+    expect(document.querySelector('.ac2[data-f="lib"] small')!.textContent).toBe("10 libraries");
+    expect(document.querySelector('.ac2[data-f="park"] small')!.textContent).toBe("1 park");
+    expect(screen.getByRole("button", { name: "See all 11 places on the map" })).toBeInTheDocument();
+  });
+
   it("shows the full, linked credit with the photo in the place details", async () => {
     render(<HomePage />);
     await waitFor(() => expect(screen.getAllByText("Arroceros Forest Park").length).toBeGreaterThan(0));

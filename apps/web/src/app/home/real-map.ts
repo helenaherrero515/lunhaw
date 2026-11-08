@@ -18,6 +18,8 @@ import {
   type TransformStyleFunction,
 } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+// NCR boundary from OpenStreetMap (scripts/data/fetch-ncr-boundary.mjs).
+import NCR from "./data/ncr-boundary.json";
 
 /** The fields of a place the map needs (the home engine's place objects; text fields are HTML-escaped). */
 export interface MapPlace {
@@ -53,6 +55,27 @@ const MAX_BOUNDS: [[number, number], [number, number]] = [[120.55, 14.05], [121.
 const LOAD_TIMEOUT_MS = 15000;
 
 const C = { green: "#245C43", leaf: "#2F7D26", ink: "#1D3B2B" };
+
+type Ring = number[][];
+// Twice the signed area (shoelace); the sign tells the ring's winding.
+const signedArea = (r: Ring) => r.reduce((s, [x1, y1], i) => { const [x2, y2] = r[(i + 1) % r.length]!; return s + (x1! * y2! - x2! * y1!); }, 0);
+
+/** NCR's outer rings, whichever geometry type OpenStreetMap returned. */
+const ncrRings = (): Ring[] => {
+  const coords = NCR.geometry.coordinates as unknown;
+  return NCR.geometry.type === "Polygon" ? [(coords as Ring[])[0]!] : (coords as Ring[][]).map((p) => p[0]!);
+};
+
+/**
+ * A large rectangle with NCR cut out of it, used to dim everything outside Metro Manila.
+ * MapLibre treats a ring as a hole only when it winds opposite to the outer ring, so the holes are reversed as needed.
+ */
+function outsideNcr() {
+  const world: Ring = [[110, 0], [135, 0], [135, 25], [110, 25], [110, 0]];
+  const sign = Math.sign(signedArea(world));
+  const holes = ncrRings().map((r) => (Math.sign(signedArea(r)) === sign ? [...r].reverse() : r));
+  return { type: "Feature" as const, properties: {}, geometry: { type: "Polygon" as const, coordinates: [world, ...holes] } };
+}
 
 /** True when this browser can draw the map at all. */
 export function webglAvailable(): boolean {
@@ -297,6 +320,26 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
     "text-optional": true,
   };
   const labelPaint = { "text-color": C.ink, "text-halo-color": "#FFFFFF", "text-halo-width": 2 };
+
+  // NCR highlight: everything outside Metro Manila (labels included) is washed out, and the boundary gets a
+  // green outline with a soft glow. Drawn above the base map and under the walk line, clusters and pins.
+  map.addSource("ncr-outside", { type: "geojson", data: outsideNcr() });
+  map.addSource("ncr", { type: "geojson", data: NCR as any });
+  map.addLayer({ id: "ncr-outside", type: "fill", source: "ncr-outside", paint: { "fill-color": "#F4F8EE", "fill-opacity": 0.72 } });
+  map.addLayer({
+    id: "ncr-glow",
+    type: "line",
+    source: "ncr",
+    layout: { "line-join": "round" },
+    paint: { "line-color": "#98D746", "line-width": ["interpolate", ["linear"], ["zoom"], 9, 6, 14, 12], "line-opacity": 0.35, "line-blur": 4 },
+  });
+  map.addLayer({
+    id: "ncr-line",
+    type: "line",
+    source: "ncr",
+    layout: { "line-join": "round" },
+    paint: { "line-color": C.leaf, "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.6, 14, 2.6], "line-opacity": 0.9 },
+  });
 
   map.addLayer({
     id: "walk-line",
