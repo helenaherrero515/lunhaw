@@ -14,7 +14,7 @@ BEGIN;
 INSERT INTO verification_meta (id, status, official_source_name, official_source_url, derivation_note, last_verified_at, verified_by)
 VALUES
     (
-        'v0030000-0000-0000-0000-000000000001',
+        'd0030000-0000-0000-0000-000000000001',
         'VERIFIED',
         'European Space Agency (ESA) Copernicus Sentinel-2 Multi-Spectral Imagery (DS-002)',
         'https://dataspace.copernicus.eu',
@@ -23,7 +23,7 @@ VALUES
         'esa_sentinel_ingest'
     ),
     (
-        'v0030000-0000-0000-0000-000000000002',
+        'd0030000-0000-0000-0000-000000000002',
         'VERIFIED',
         'DENR Forest Management Bureau - Urban Green Spaces Assessment',
         'https://forestry.denr.gov.ph',
@@ -32,7 +32,7 @@ VALUES
         'denr_urban_forestry_auditor'
     ),
     (
-        'v0030000-0000-0000-0000-000000000003',
+        'd0030000-0000-0000-0000-000000000003',
         'ESTIMATE',
         'Copernicus Sentinel-2 NDVI & OpenStreetMap Land Cover (DS-001, DS-002)',
         'https://dataspace.copernicus.eu',
@@ -113,7 +113,7 @@ VALUES
         'Elliptical Rd, Diliman, Quezon City',
         ST_SetSRID(ST_MakePoint(121.0441, 14.6508), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000002'
+        'd0030000-0000-0000-0000-000000000002'
     ),
     (
         'f0010000-0000-0000-0000-000000000031',
@@ -125,7 +125,7 @@ VALUES
         'La Mesa Dam Compound, Greater Lagro, Quezon City',
         ST_SetSRID(ST_MakePoint(121.0747, 14.7138), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000002'
+        'd0030000-0000-0000-0000-000000000002'
     ),
     (
         'f0010000-0000-0000-0000-000000000032',
@@ -137,7 +137,7 @@ VALUES
         'Rada St cor Trasierra, Legaspi Village, Makati',
         ST_SetSRID(ST_MakePoint(121.0189, 14.5534), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000001'
+        'd0030000-0000-0000-0000-000000000001'
     ),
     (
         'f0010000-0000-0000-0000-000000000033',
@@ -149,7 +149,7 @@ VALUES
         'Tordesillas cor Leviste St, Salcedo Village, Makati',
         ST_SetSRID(ST_MakePoint(121.0247, 14.5601), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000001'
+        'd0030000-0000-0000-0000-000000000001'
     ),
     (
         'f0010000-0000-0000-0000-000000000034',
@@ -161,7 +161,7 @@ VALUES
         'Pinaglabanan St, San Juan, Metro Manila',
         ST_SetSRID(ST_MakePoint(121.0315, 14.6045), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000002'
+        'd0030000-0000-0000-0000-000000000002'
     ),
     (
         'f0010000-0000-0000-0000-000000000035',
@@ -173,7 +173,7 @@ VALUES
         'De Jesus Oval, Bonifacio Global City, Taguig',
         ST_SetSRID(ST_MakePoint(121.0475, 14.5492), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000001'
+        'd0030000-0000-0000-0000-000000000001'
     ),
     (
         'f0010000-0000-0000-0000-000000000036',
@@ -185,7 +185,7 @@ VALUES
         'Academic Oval, University of the Philippines Diliman, Quezon City',
         ST_SetSRID(ST_MakePoint(121.0690, 14.6538), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000002'
+        'd0030000-0000-0000-0000-000000000002'
     ),
     (
         'f0010000-0000-0000-0000-000000000037',
@@ -197,7 +197,7 @@ VALUES
         'F. Legaspi St, Maybunga, Pasig, Metro Manila',
         ST_SetSRID(ST_MakePoint(121.0911, 14.5772), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000002'
+        'd0030000-0000-0000-0000-000000000002'
     ),
     (
         'f0010000-0000-0000-0000-000000000038',
@@ -209,7 +209,7 @@ VALUES
         'MacArthur Hwy, Karuhatan, Valenzuela, Metro Manila',
         ST_SetSRID(ST_MakePoint(120.9635, 14.6938), 4326)::geography,
         NULL,
-        'v0030000-0000-0000-0000-000000000002'
+        'd0030000-0000-0000-0000-000000000002'
     )
 ON CONFLICT (id) DO NOTHING;
 
@@ -363,7 +363,7 @@ SELECT
         'Computed via EQ-001: Score = (0.50 * %s) + (0.30 * %s) + (0.20 * %s) = %s. Sourced from Copernicus Sentinel-2 (DS-002) and OSM land cover.',
         sub.c, sub.v, sub.p, ROUND((0.50 * sub.c) + (0.30 * sub.v) + (0.20 * sub.p), 2)
     ) AS derivation_note,
-    'v0030000-0000-0000-0000-000000000003'::uuid AS verification_id
+    'd0030000-0000-0000-0000-000000000003'::uuid AS verification_id
 FROM barangays b
 CROSS JOIN LATERAL (
     SELECT
