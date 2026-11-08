@@ -106,9 +106,9 @@ if(!b.children.length)b.innerHTML=T.map(t=>`<button data-a="${t[3]}" ${t[3]==='t
 [...b.children].forEach((e,i)=>{if(T[i][3]==='tab'){T[i][0]===S.tab?e.setAttribute('aria-current','page'):e.removeAttribute('aria-current')}if(T[i][0]==='saved'){const g=e.querySelector('.bdg'),c=String(S.saved.size);g.hidden=!S.saved.size;if(g.textContent!==c){g.textContent=c;g.classList.remove('pop');void g.offsetWidth;g.classList.add('pop')}}});
 $('#pbtn').innerHTML=ic('profile')}
 onDoc('keydown',e=>{if(e.key==='Escape')close();if((e.key==='Enter'||e.key===' ')&&e.target.matches('svg g[data-a]')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
-function load(){LOAD.state='loading';LOAD.err='';go(S.tab);(homeOptions.loadPlaces?homeOptions.loadPlaces():Promise.resolve([])).then(r=>{P=r.map(toP);LOAD.state='ready';
+function load(){LOAD.state='loading';LOAD.err='';go(S.tab);(homeOptions.loadPlaces?homeOptions.loadPlaces():Promise.resolve([])).then(r=>{if(AC.signal.aborted)return;P=r.map(toP);LOAD.state='ready';
 const keep=[...S.saved].filter(id=>byId(id));if(keep.length!==S.saved.size){S.saved=new Set(keep);try{localStorage.setItem('lunhaw.saved',JSON.stringify(keep))}catch(x){}}
-go(S.tab);if(homeOptions.openArea)areas()}).catch(e=>{LOAD.state='error';LOAD.err=esc((e&&e.message)||'Couldn’t load places.');go(S.tab)})}
+go(S.tab);if(homeOptions.openArea)areas()}).catch(e=>{if(AC.signal.aborted)return;LOAD.state='error';LOAD.err=esc((e&&e.message)||'Couldn’t load places.');go(S.tab)})}
 load();
 onDoc('keydown',e=>{if(e.key==='Escape')close()});
 (()=>{const s=$('#sheet');let y0=null;s.addEventListener('touchstart',e=>{y0=s.scrollTop<=0?e.touches[0].clientY:null},{passive:true});s.addEventListener('touchend',e=>{if(y0!==null&&e.changedTouches[0].clientY-y0>90)close();y0=null},{passive:true})})();
