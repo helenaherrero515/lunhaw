@@ -1,22 +1,29 @@
 // @ts-nocheck
-// Lunhaw Landing Page 3D & Animation Engine
-// Extracted verbatim from Lunhaw-landingpage.html
+// Lunhaw landing page: 3D scenes (three.js) + scroll effects (GSAP/ScrollTrigger + Lenis).
+// The scene and effect code is taken from the landing design (Lunhaw-landingpage.html);
+// changes from it: r128-equivalent color/light settings on three r169, a StrictMode-safe hero intro, and
+// teardown support so the page can mount/unmount cleanly under Next.js navigation.
 
 import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
-export function initLunhawVisuals() {
-  if (typeof window === "undefined") return;
+/** Starts the landing visuals. Returns a cleanup function that undoes everything it set up. */
+export function initLunhawVisuals(): () => void {
+  if (typeof window === "undefined") return () => {};
 
   window.THREE = THREE;
   window.gsap = gsap;
   window.ScrollTrigger = ScrollTrigger;
   window.Lenis = Lenis;
 
-  // Execute verbatim script:
-  
+  const controller = new AbortController();
+  const signal = controller.signal; // removes every DOM listener on teardown
+  const disposers: Array<() => void> = []; // observers, render loop, Lenis, GPU resources
+
+  // gsap.context records the tweens/timelines/ScrollTriggers created inside, so revert() kills them
+  const ctx = gsap.context(() => {
 (function () {
   'use strict';
   var root = document.documentElement;
@@ -31,6 +38,13 @@ export function initLunhawVisuals() {
   root.classList.add('js');
 
   var T = THREE;
+  var on = function (target, type, fn) { target.addEventListener(type, fn, { signal: signal }); };
+  var track = function (obs) { disposers.push(function () { obs.disconnect(); }); return obs; };
+  // The design renders with three r128 (no color management). Match it on r169: use hex colors
+  // as-is (no sRGB->linear) and write linear output; restored on teardown.
+  var prevColorManagement = T.ColorManagement.enabled;
+  T.ColorManagement.enabled = false;
+  disposers.push(function () { T.ColorManagement.enabled = prevColorManagement; });
   gsap.registerPlugin(ScrollTrigger);
   var $ = function (s) { return document.querySelector(s); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
@@ -43,12 +57,14 @@ export function initLunhawVisuals() {
     if (window.Lenis) {
       lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
       lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+      var lenisTick = function (t) { lenis.raf(t * 1000); };
+      gsap.ticker.add(lenisTick);
+      disposers.push(function () { gsap.ticker.remove(lenisTick); lenis.destroy(); });
       gsap.ticker.lagSmoothing(0);
     }
   } catch (e) { lenis = null; }
   document.querySelectorAll('[data-scroll]').forEach(function (a) {
-    a.addEventListener('click', function (e) {
+    on(a, 'click', function (e) {
       var el = document.querySelector(a.getAttribute('href'));
       if (!el) return;
       e.preventDefault();
@@ -136,25 +152,24 @@ export function initLunhawVisuals() {
 
   /* ---------- stage framework + single rAF loop ---------- */
   var stages = [];
+  disposers.push(function () {
+    stages.forEach(function (st) {
+      st.scene.traverse(function (o) {
+        if (o.geometry) o.geometry.dispose();
+        [].concat(o.material || []).forEach(function (m) { if (m.map) m.map.dispose(); m.dispose(); });
+      });
+      st.renderer.dispose();
+    });
+  });
   function makeStage(canvas, o) {
     var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    if (T.SRGBColorSpace) {
-      renderer.outputColorSpace = T.SRGBColorSpace;
-    }
-    renderer.toneMapping = T.NoToneMapping;
-
+    renderer.outputColorSpace = T.LinearSRGBColorSpace; // r128 wrote output without sRGB encoding
     var scene = new T.Scene();
     var camera = new T.OrthographicCamera(-1, 1, 1, -1, -60, 120);
-    scene.add(new T.AmbientLight(0xffffff, 0.96));
-    var sun = new T.DirectionalLight(0xffffff, 1.15);
-    sun.position.set(6, 15, 9);
-    scene.add(sun);
-    var fill = new T.DirectionalLight(0xfffef0, 0.42);
-    fill.position.set(-8, 12, 6);
-    scene.add(fill);
-    var hemi = new T.HemisphereLight(0xffffff, 0x98D746, 0.38);
-    scene.add(hemi);
+    // design's lights; x PI converts r128 "legacy" intensities to r155+ units (three migration guide)
+    scene.add(new T.AmbientLight(0xffffff, .74 * Math.PI));
+    var sun = new T.DirectionalLight(0xffffff, .78 * Math.PI); sun.position.set(6, 12, 5); scene.add(sun);
 
     var st = { canvas: canvas, renderer: renderer, scene: scene, camera: camera, size: o.size, minHalfW: o.minHalfW || 0, cam: new T.Vector3(o.cam[0], o.cam[1], o.cam[2]), look: new T.Vector3((o.look || [0, 0, 0])[0], (o.look || [0, 0, 0])[1], (o.look || [0, 0, 0])[2]), visible: false, update: function () {} };
     function resize() {
@@ -165,13 +180,15 @@ export function initLunhawVisuals() {
     }
     st.resize = resize;
     camera.position.copy(st.cam); camera.lookAt(st.look);
-    if (window.ResizeObserver) new ResizeObserver(resize).observe(canvas); else window.addEventListener('resize', resize);
-    if (window.IntersectionObserver) new IntersectionObserver(function (e) { st.visible = e[0].isIntersecting; }, { rootMargin: '120px' }).observe(canvas); else st.visible = true;
+    if (window.ResizeObserver) track(new ResizeObserver(resize)).observe(canvas); else on(window, 'resize', resize);
+    if (window.IntersectionObserver) track(new IntersectionObserver(function (e) { st.visible = e[0].isIntersecting; }, { rootMargin: '120px' })).observe(canvas); else st.visible = true;
     stages.push(st); resize(); return st;
   }
   var clock = new T.Clock();
+  var rafId = 0;
+  disposers.push(function () { cancelAnimationFrame(rafId); });
   (function loop() {
-    requestAnimationFrame(loop);
+    rafId = requestAnimationFrame(loop);
     if (document.hidden) { clock.getDelta(); return; }
     var dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime;
     for (var i = 0; i < stages.length; i++) {
@@ -182,10 +199,10 @@ export function initLunhawVisuals() {
 
   function draggable(canvas, group, range) {
     var drag = false, sx = 0, base = 0, rot = 0, target = 0;
-    canvas.addEventListener('pointerdown', function (e) { drag = true; sx = e.clientX; base = target; try { canvas.setPointerCapture(e.pointerId); } catch (x) {} canvas.classList.add('grab'); });
-    canvas.addEventListener('pointermove', function (e) { if (drag) target = clamp(base + (e.clientX - sx) * .006, -range, range); });
+    on(canvas, 'pointerdown', function (e) { drag = true; sx = e.clientX; base = target; try { canvas.setPointerCapture(e.pointerId); } catch (x) {} canvas.classList.add('grab'); });
+    on(canvas, 'pointermove', function (e) { if (drag) target = clamp(base + (e.clientX - sx) * .006, -range, range); });
     var end = function () { drag = false; canvas.classList.remove('grab'); };
-    canvas.addEventListener('pointerup', end); canvas.addEventListener('pointercancel', end);
+    on(canvas, 'pointerup', end); on(canvas, 'pointercancel', end);
     return function (dt, idle) { rot += (target - rot) * Math.min(1, dt * 8); group.rotation.y = rot + (idle || 0); };
   }
 
@@ -258,7 +275,7 @@ export function initLunhawVisuals() {
     function bounce(sp) { gsap.fromTo(sp.o.scale, { x: sp.s * 1.35, y: sp.s * 1.35, z: sp.s * 1.35 }, { x: sp.s, y: sp.s, z: sp.s, duration: .8, ease: 'elastic.out(1,.4)' }); }
     gsap.from(world.scale, { x: .5, y: .5, z: .5, duration: 1.2, ease: 'back.out(1.4)' });
     var mx = 0, my = 0, rotY = 0;
-    window.addEventListener('pointermove', function (e) { mx = e.clientX / window.innerWidth - .5; my = e.clientY / window.innerHeight - .5; });
+    on(window, 'pointermove', function (e) { mx = e.clientX / window.innerWidth - .5; my = e.clientY / window.innerHeight - .5; });
     st.update = function (t, dt) {
       rotY += (mx * .2 - rotY) * Math.min(1, dt * 3); world.rotation.y = rotY + Math.sin(t * .2) * .03;
       st.camera.position.y = st.cam.y + my * -.8; st.camera.lookAt(st.look);
@@ -429,8 +446,8 @@ export function initLunhawVisuals() {
       });
       if (out) out.textContent = nv + ' of 12 trees planted. Illustration only.';
     }
-    if (range) range.addEventListener('input', function () { setCount(range.value); });
-    document.querySelectorAll('[data-trees]').forEach(function (b) { b.addEventListener('click', function () { range.value = b.getAttribute('data-trees'); setCount(range.value); }); });
+    if (range) on(range, 'input', function () { setCount(range.value); });
+    document.querySelectorAll('[data-trees]').forEach(function (b) { on(b, 'click', function () { range.value = b.getAttribute('data-trees'); setCount(range.value); }); });
     ScrollTrigger.create({ trigger: canvas, start: 'top 85%', once: true, onEnter: function () { setCount(range ? range.value : 4); } });
     var drag = draggable(canvas, world, .7);
     st.update = function (t, dt) {
@@ -471,7 +488,7 @@ export function initLunhawVisuals() {
       books.forEach(function (bk, i) { tl.to(bk.position, { y: bk.userData.fin.y, duration: .9, ease: 'bounce.out' }, i * .07); });
     }
     ScrollTrigger.create({ trigger: canvas, start: 'top 80%', once: true, onEnter: drop });
-    var rp = $('#replay'); if (rp) rp.addEventListener('click', drop);
+    var rp = $('#replay'); if (rp) on(rp, 'click', drop);
     var drag = draggable(canvas, world, .8);
     st.update = function (t, dt) {
       drag(dt, Math.sin(t * .25) * .06);
@@ -482,6 +499,32 @@ export function initLunhawVisuals() {
   })();
 
   /* ---------- scroll effects ---------- */
+  /* why: pinned scroll story */
+  (function () {
+    var sec = document.querySelector('.why'); if (!sec) return;
+    var eb = sec.querySelector('.eyebrow'), h = sec.querySelector('.statement'), sub = sec.querySelector('.sub'), big = sec.querySelector('.payoff'), hl = sec.querySelector('.hl2'), hop = sec.querySelector('.why-hopper'), decos = sec.querySelectorAll('.deco svg');
+    if (!eb || !h || !sub || !big || !hl || !hop) return;
+    var text = h.textContent.trim();
+    h.setAttribute('aria-label', text);
+    h.innerHTML = text.split(/\s+/).map(function (w) { return '<span class="w" aria-hidden="true">' + w + '</span>'; }).join(' ');
+    disposers.push(function () { h.textContent = text; h.removeAttribute('aria-label'); });
+    var words = h.querySelectorAll('.w');
+    gsap.set(words, { opacity: .14 });
+    gsap.set(hl, { '--sw': 0 });
+    var tl = gsap.timeline({ defaults: { ease: 'none' }, scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom bottom', scrub: .6, invalidateOnRefresh: true } });
+    tl.from(eb, { y: 20, opacity: 0, duration: .5 }, 0)
+      .to(words, { opacity: 1, duration: .5, stagger: .35 }, .2)
+      .from(sub, { y: 40, opacity: 0, duration: 1, ease: 'power2.out' }, 3.9)
+      .from(big, { y: 50, scale: .75, opacity: 0, duration: 1.1, ease: 'back.out(1.8)' }, 5.1)
+      .to(hl, { '--sw': 1, duration: 1 }, 6)
+      .fromTo(hop, { x: -100 }, { x: function () { return window.innerWidth / 2 - hop.offsetWidth / 2; }, duration: 7.2 }, 0)
+      .to(hop, { keyframes: { y: [0, -70, 0, -70, 0, -70, 0, -70, 0, -70, 0], easeEach: 'sine.inOut' }, duration: 7.2, ease: 'none' }, 0);
+    var speeds = [-.8, .5, -.4, .9, -.6, .3];
+    decos.forEach(function (el, i) {
+      var s = speeds[i % speeds.length];
+      tl.fromTo(el, { y: 160 * s, rotate: -12 * s }, { y: -200 * s, rotate: 14 * s, duration: 7.2 }, 0);
+    });
+  })();
 
   ScrollTrigger.batch('[data-reveal]', {
     start: 'top 92%', once: true,
@@ -515,335 +558,27 @@ export function initLunhawVisuals() {
     document.querySelectorAll('.tilt').forEach(function (el) {
       var rx = gsap.quickTo(el, 'rotationX', { duration: .4, ease: 'power3' }), ry = gsap.quickTo(el, 'rotationY', { duration: .4, ease: 'power3' });
       gsap.set(el, { transformPerspective: 800 });
-      el.addEventListener('pointermove', function (e) { var r = el.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - .5) * 9); rx(-((e.clientY - r.top) / r.height - .5) * 9); });
-      el.addEventListener('pointerleave', function () { rx(0); ry(0); });
+      on(el, 'pointermove', function (e) { var r = el.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - .5) * 9); rx(-((e.clientY - r.top) / r.height - .5) * 9); });
+      on(el, 'pointerleave', function () { rx(0); ry(0); });
     });
   }
 
-  // closing mascot bob (guarded in case mascot is removed)
-  var ctaMascot = document.querySelector('#cta-mascot');
-  if (ctaMascot) {
-    gsap.to(ctaMascot, { y: -14, rotation: 3, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-  }
+  // closing mascot bob
+  gsap.to('#cta-mascot', { y: -14, rotation: 3, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1 });
 
-  /* ===== Reference Lunhaw_4.html Script 8: FAQ 3D question blocks & hopping mascot ===== */
-  (function initFaq3D() {
-    function stage3d(id, island) {
-      var cv = document.getElementById(id);
-      if (!cv) return null;
-      var r = new T.WebGLRenderer({ canvas: cv, alpha: true, antialias: true });
-      r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      var sc = new T.Scene(),
-        cam = new T.OrthographicCamera(-1, 1, 1, -1, -80, 120),
-        vis = true,
-        asp = 1;
-      sc.add(new T.AmbientLight(0xffffff, 0.74));
-      var sun = new T.DirectionalLight(0xffffff, 0.78);
-      sun.position.set(6, 12, 5);
-      sc.add(sun);
-      var isl = new T.Group();
-      isl.add(box(island, 1.2, island, P.bark, 0, -1.2, 0));
-      isl.add(box(island, 0.4, island, P.lime, 0, 0, 0));
-      isl.add(box(island - 0.5, 0.2, island - 0.5, P.leaf, 0, -1.4, 0));
-      sc.add(isl);
-      if (window.IntersectionObserver) {
-        new IntersectionObserver(function (e) {
-          vis = e[0].isIntersecting;
-        }).observe(cv);
-      }
-      function rs() {
-        var w = cv.clientWidth,
-          h = cv.clientHeight;
-        if (!w || !h) return;
-        r.setSize(w, h, false);
-        asp = w / h;
-      }
-      window.addEventListener("resize", rs);
-      rs();
-      return {
-        r: r,
-        sc: sc,
-        isl: isl,
-        vis: function () {
-          return vis;
-        },
-        view: function (tx, tz, az, zoom, base) {
-          var h = base / zoom;
-          cam.left = -h * asp;
-          cam.right = h * asp;
-          cam.top = h;
-          cam.bottom = -h;
-          cam.updateProjectionMatrix();
-          cam.position.set(tx + Math.sin(az) * 20, 13, tz + Math.cos(az) * 20);
-          cam.lookAt(tx, 0.6, tz);
-          r.render(sc, cam);
-        },
-      };
-    }
-
-    var Q = stage3d("faq-canvas", 9);
-    if (Q) {
-      var cv = document.createElement("canvas");
-      cv.width = cv.height = 128;
-      var x2 = cv.getContext("2d");
-      if (x2) {
-        x2.fillStyle = "#98D746";
-        x2.fillRect(0, 0, 128, 128);
-        x2.strokeStyle = "#245C43";
-        x2.lineWidth = 8;
-        x2.strokeRect(6, 6, 116, 116);
-        x2.fillStyle = "#245C43";
-        x2.font = "bold 92px sans-serif";
-        x2.textAlign = "center";
-        x2.textBaseline = "middle";
-        x2.fillText("?", 64, 70);
-      }
-      var tx = new T.CanvasTexture(cv),
-        fm = new T.MeshLambertMaterial({ map: tx }),
-        fin = [
-          [-1.8, 0.4, 0],
-          [0, 0.4, 0],
-          [1.8, 0.4, 0],
-          [-0.9, 2.1, 0],
-          [0.9, 2.1, 0],
-        ],
-        bl = [],
-        j;
-      for (j = 0; j < 5; j++) {
-        var bx = new T.Mesh(new T.BoxGeometry(1.6, 1.6, 1.6), [
-          fm,
-          fm,
-          M(P.mint),
-          M(P.forest),
-          fm,
-          fm,
-        ]);
-        bx.position.set(fin[j][0], fin[j][1] + 0.8, 0);
-        Q.sc.add(bx);
-        bl.push(bx);
-      }
-      var hq = hopper();
-      Q.sc.add(hq);
-      [
-        [-4, 2.5, 1],
-        [4, 2, 0.9],
-        [3.8, -2.5, 1.1],
-      ].forEach(function (p, q) {
-        var t = tree(p[2], q % 2 === 0);
-        t.position.set(p[0], 0.4, p[1]);
-        Q.sc.add(t);
-      });
-      var det = [].slice.call(document.querySelectorAll(".faq-list details")),
-        fp = 0,
-        fs = 0,
-        lo = -1;
-      var sm = function (t) {
-        return t * t * (3 - 2 * t);
-      };
-      var lerp = function (a, b, t) {
-        return a + (b - a) * t;
-      };
-      ScrollTrigger.create({
-        trigger: "#faqs",
-        start: "top 60%",
-        end: "bottom bottom",
-        onUpdate: function (s) {
-          fp = s.progress;
-        },
-      });
-      gsap.ticker.add(function (t) {
-        if (!Q.vis()) return;
-        fs += (fp - fs) * 0.1;
-        var landed = -1;
-        bl.forEach(function (b, i) {
-          var k = clamp((fs - 0.05 - i * 0.14) / 0.14, 0, 1),
-            e = easeOutBack(k);
-          b.position.y = fin[i][1] + 0.8 + (1 - e) * 12;
-          b.rotation.y = (1 - e) * 2.4;
-          b.visible = k > 0;
-          if (k >= 1) landed = i;
-        });
-        var up = sm(clamp((fs - 0.82) / 0.14, 0, 1));
-        hq.position.set(
-          lerp(3, 0.9, up),
-          lerp(0.4, 2.9 + 0.8, up) +
-            (up > 0 && up < 1
-              ? Math.sin(up * Math.PI) * 1.4
-              : Math.sin(t * 3) * 0.03),
-          lerp(1.4, 0, up)
-        );
-        hq.rotation.y = lerp(Math.PI * 0.9, Math.PI * 0.5, up);
-        if (hq.userData && hq.userData.wings) {
-          hq.userData.wings.forEach(function (w, q) {
-            w.rotation.x =
-              (q ? -1 : 1) * (up > 0 && up < 1 ? Math.sin(t * 30) * 0.5 : 0.1);
-          });
-        }
-        Q.isl.position.y = Math.sin(t * 0.8) * 0.1;
-        Q.view(0, 1, 0.5 + fs * 1.2, 1 + fs * 0.2, 7);
-        var o = Math.max(0, landed);
-        if (o !== lo) {
-          lo = o;
-          det.forEach(function (d, q) {
-            d.open = q === o;
-          });
-        }
-      });
-    }
-  })();
-
-  /* ===== Reference Lunhaw_4.html Script 9: Footer curtain reveal ===== */
-  (function initCurtainReveal() {
-    var f = document.querySelector(".rv footer"),
-      w = document.querySelector(".rv .cta .wrap");
-    if (!f || !w) return;
-    gsap.to(w, {
-      scale: 0.9,
-      opacity: 0.1,
-      y: -60,
-      ease: "none",
-      scrollTrigger: {
-        trigger: f,
-        start: "top 85%",
-        end: "top 5%",
-        scrub: true,
-      },
-    });
-    gsap.fromTo(
-      ".rv footer .ft-grid > *",
-      { y: 50, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        ease: "none",
-        stagger: 0.12,
-        scrollTrigger: {
-          trigger: f,
-          start: "top 75%",
-          end: "top 20%",
-          scrub: true,
-        },
-      }
-    );
-    gsap.fromTo(
-      f,
-      { "--x": 0 },
-      {
-        "--x": 1,
-        scrollTrigger: {
-          trigger: f,
-          start: "top bottom",
-          end: "top top",
-          scrub: true,
-        },
-      }
-    );
-  })();
-
-  /* ===== Reference Lunhaw_4.html Script 10: Why Lunhaw text split & animations ===== */
-  (function initWhyLunhawAnimation() {
-    var sec = document.getElementById("about"),
-      h = sec && sec.querySelector(".h2");
-    if (!sec || !h) return;
-    h.innerHTML = h.textContent
-      .trim()
-      .split(/\s+/)
-      .map(function (w) {
-        return '<span class="w">' + w + "</span>";
-      })
-      .join(" ");
-    gsap.fromTo(
-      h.querySelectorAll(".w"),
-      { opacity: 0.12, y: 34, rotation: 2 },
-      {
-        opacity: 1,
-        y: 0,
-        rotation: 0,
-        stagger: 0.14,
-        ease: "none",
-        scrollTrigger: {
-          trigger: h,
-          start: "top 88%",
-          end: "top 35%",
-          scrub: true,
-        },
-      }
-    );
-    var bigEl = sec.querySelector(".big");
-    if (bigEl) {
-      gsap.to(sec, {
-        "--sw": "100%",
-        duration: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: bigEl,
-          start: "top 85%",
-          end: "top 55%",
-          scrub: true,
-        },
-      });
-    }
-    var sweep = sec.querySelector(".sweep");
-    if (sweep) {
-      sweep.style.setProperty("--sw", "0%");
-    }
-    var pills = sec.querySelectorAll(".why-pills span");
-    if (pills.length) {
-      gsap.fromTo(
-        pills,
-        { opacity: 0, y: 24, scale: 0.9 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          stagger: 0.12,
-          ease: "back.out(1.6)",
-          scrollTrigger: {
-            trigger: ".why-pills",
-            start: "top 92%",
-            once: true,
-          },
-        }
-      );
-    }
-    sec.querySelectorAll(".lf").forEach(function (l, i) {
-      gsap.to(l, {
-        y: (i % 2 ? -1 : 1) * (80 + i * 25),
-        rotation: (i % 2 ? -1 : 1) * 40,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sec,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    });
-    gsap.to(".why .o1", {
-      x: 160,
-      y: 90,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sec,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-    gsap.to(".why .o2", {
-      x: -140,
-      y: -80,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sec,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-  })();
-
-  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+  on(window, 'load', function () { ScrollTrigger.refresh(); });
 })();
+  });
 
+  return () => {
+    controller.abort();
+    disposers.splice(0).reverse().forEach((dispose) => {
+      try {
+        dispose();
+      } catch {
+        /* keep tearing down the rest */
+      }
+    });
+    ctx.revert();
+  };
 }
