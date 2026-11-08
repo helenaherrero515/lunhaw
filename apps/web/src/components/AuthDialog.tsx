@@ -41,6 +41,7 @@ export function AuthDialog() {
   const emailRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
   const doneRef = useRef<HTMLAnchorElement>(null);
+  const doneButtonRef = useRef<HTMLButtonElement>(null);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -50,6 +51,8 @@ export function AuthDialog() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [doneMode, setDoneMode] = useState<Mode | null>(null);
+  // Set when sign-up needs the emailed confirmation link before the account can be used.
+  const [confirmEmail, setConfirmEmail] = useState<string | null>(null);
 
   const isSignup = authMode === "signup";
   const copy = COPY[authMode];
@@ -68,6 +71,7 @@ export function AuthDialog() {
     setServerError(null);
     setPending(false);
     setDoneMode(null);
+    setConfirmEmail(null);
     html.style.overflow = "hidden";
     const openedAs = useLunhawStore.getState().authMode;
     const t = window.setTimeout(() => (openedAs === "signup" ? nameRef : emailRef).current?.focus(), 30);
@@ -107,8 +111,8 @@ export function AuthDialog() {
 
   // The form (and its focused submit button) is replaced by the success view; keep focus in the dialog.
   useEffect(() => {
-    if (doneMode) doneRef.current?.focus();
-  }, [doneMode]);
+    if (doneMode) (doneButtonRef.current ?? doneRef.current)?.focus();
+  }, [doneMode, confirmEmail]);
 
   const switchMode = (m: Mode) => {
     setAuthMode(m);
@@ -143,12 +147,12 @@ export function AuthDialog() {
         setServerError(res.error);
         return;
       }
-      if (res.user) {
-        setCurrentUser(res.user);
-        try {
-          localStorage.setItem("lunhaw.auth_user", JSON.stringify(res.user));
-        } catch {}
+      if (res.needsEmailConfirmation) {
+        setConfirmEmail(emailTrim);
+        setDoneMode(authMode);
+        return;
       }
+      if (res.user) setCurrentUser(res.user);
       setDoneMode(authMode);
     } catch {
       setServerError("An unexpected error occurred. Please try again.");
@@ -188,7 +192,18 @@ export function AuthDialog() {
           </svg>
         </button>
 
-        {doneMode ? (
+        {doneMode && confirmEmail ? (
+          <div className="auth-done" id="auth-done">
+            <span className="mascot" role="img" aria-label="Lunhaw grasshopper mascot" />
+            <h2 id="done-title">Check your email</h2>
+            <p id="done-text">
+              We sent a confirmation link to <b>{confirmEmail}</b>. Open it to finish creating your account.
+            </p>
+            <button ref={doneButtonRef} className="btn" type="button" data-auth-close onClick={closeAuth}>
+              Done
+            </button>
+          </div>
+        ) : doneMode ? (
           <div className="auth-done" id="auth-done">
             <span className="mascot" role="img" aria-label="Lunhaw grasshopper mascot" />
             <h2 id="done-title">{COPY[doneMode].doneTitle}</h2>
@@ -302,6 +317,12 @@ export function AuthDialog() {
               <button className="btn" type="submit" id="auth-submit" disabled={pending} aria-busy={pending}>
                 {copy.submit}
               </button>
+              {isSignup && (
+                <p className="auth-legal">
+                  By creating an account you agree to the <a href="/terms">Terms of Use</a> and acknowledge the{" "}
+                  <a href="/privacy">Privacy Notice</a>.
+                </p>
+              )}
             </form>
 
             <p className="auth-switch">
