@@ -53,13 +53,29 @@ export default function PrivacyPage() {
         </tbody>
       </table>
 
-      <h2>What stays on your device</h2>
+      <h2>Your location and trips</h2>
       <ul>
         <li>
-          <strong>Your location.</strong> Lunhaw only asks for it when you tap “Use my current location” or the map’s
-          locate button. It is used in your browser to estimate walking distance or show where you are on the map, and
-          is never sent to our servers or stored by us. You can always type a starting point instead.
+          <strong>Your location.</strong> Lunhaw only asks for it when you tap “Use my current location”, “Use my
+          location” in the guide, or the map’s locate button. On the map it stays in your browser. To plan a trip, your
+          starting point and destination are sent through our API to the route planner (below) and are not stored by
+          us. You can always type a starting point instead.
         </li>
+        <li>
+          <strong>The Lunhaw guide (AI).</strong> When you chat with the guide, your messages, the destination you
+          opened it from and, only if you chose to share it, your location are sent through our API to Anthropic to
+          write the replies, and to the route planner to find places and routes. We don’t store your conversations;
+          they stay in this browser tab until you leave /home. Please don’t share sensitive personal information in the
+          chat.
+        </li>
+        <li>
+          <strong>Sakay.ph.</strong> “Open this trip in Sakay.ph” opens Sakay.ph’s website with the trip’s start and end
+          points. Sakay.ph is a separate service with its own privacy policy.
+        </li>
+      </ul>
+
+      <h2>What stays on your device</h2>
+      <ul>
         <li>
           <strong>Saved places</strong> and your sign-in session are kept in your browser’s local storage. Clearing your
           browser data removes them.
@@ -70,7 +86,7 @@ export default function PrivacyPage() {
       <ul>
         <li>We don’t sell or rent personal data.</li>
         <li>We don’t use advertising, analytics or tracking tools.</li>
-        <li>We don’t record the locations you search from.</li>
+        <li>We don’t record the locations you search from or the trips you plan.</li>
       </ul>
 
       <h2>Who processes data for us</h2>
@@ -90,6 +106,14 @@ export default function PrivacyPage() {
           <strong>OpenFreeMap</strong>: provides the map. To draw it, your browser requests map data for the area you
           are viewing from OpenFreeMap, which therefore sees your IP address and that area. Map data © OpenStreetMap
           contributors.
+        </li>
+        <li>
+          <strong>OpenRouteService (HeiGIT)</strong>: plans walking routes and finds places. It receives the trip’s
+          start and end points and the place names you search for, sent from our API (not from your browser).
+        </li>
+        <li>
+          <strong>Anthropic</strong>: runs the AI model (Claude) behind the Lunhaw guide. It receives your guide
+          messages and the trip details above, sent from our API.
         </li>
       </ul>
       <p>

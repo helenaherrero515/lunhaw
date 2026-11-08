@@ -57,6 +57,8 @@ unsubscribes are handled by email (see §6).
 | `SUPABASE_URL` | variable | `https://<ref>.supabase.co` |
 | `SUPABASE_ANON_KEY` | variable | anon key (public by design; protected by RLS) |
 | `API_URL` | variable | the Worker URL printed by the first API deploy (§3, step 2) |
+| `ORS_API_KEY` | secret (optional) | free OpenRouteService key (openrouteservice.org → Dashboard): walking routes and place search. Without it, "How to go there?" shows the labelled straight-line estimate. Free plan is non-commercial. |
+| `ANTHROPIC_API_KEY` | secret (optional) | Anthropic API key (console.anthropic.com): the Lunhaw guide (Claude Haiku 5.5). Needs `ORS_API_KEY` too; without both, the guide button is hidden. |
 
 Until all of these exist, the **Deploy** workflow skips itself with a warning instead of failing.
 
