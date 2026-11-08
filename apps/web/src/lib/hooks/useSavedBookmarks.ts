@@ -464,50 +464,8 @@ export function useSavedBookmarks(): UseSavedBookmarksReturn {
           }
         }
 
-        const sid = getOrCreateSessionId();
-        const currentPlaceIds = safeReadJson<string[]>(STORAGE_PLACES_KEY, []);
-        const currentRouteIds = safeReadJson<string[]>(STORAGE_ROUTES_KEY, []);
 
-        // Optional best-effort session sync with API endpoint
-        if (typeof fetch !== "undefined") {
-          try {
-            for (const pid of currentPlaceIds.slice(0, 10)) {
-              await fetch("/api/saved", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "X-Session-ID": sid,
-                },
-                body: JSON.stringify({
-                  client_session_id: sid,
-                  item_type: "place",
-                  place_id: pid,
-                }),
-              }).catch(() => {
-                // Offline or API endpoint unavailable
-              });
-            }
-
-            for (const rid of currentRouteIds.slice(0, 10)) {
-              await fetch("/api/saved", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "X-Session-ID": sid,
-                },
-                body: JSON.stringify({
-                  client_session_id: sid,
-                  item_type: "route",
-                  route_id: rid,
-                }),
-              }).catch(() => {
-                // Offline or API endpoint unavailable
-              });
-            }
-          } catch {
-            // Ignore offline network sync errors
-          }
-        }
+        // Account sync of saved items is not part of this release; saved items stay on this device.
 
         setLastSyncedAt(new Date().toISOString());
         return { success: true };
