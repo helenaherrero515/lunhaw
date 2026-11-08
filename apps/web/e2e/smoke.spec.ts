@@ -49,13 +49,14 @@ test.describe("Lunhaw Landing Page Smoke Test", () => {
     await dialog.getByRole("button", { name: "Close" }).click();
     await expect(dialog).not.toBeVisible();
 
-    // 7. Verify CTA band (statement, app link, manual-area link, mascot)
+    // 7. Verify CTA band (statement, links, mascot) and the footer revealed beneath it
     const cta = page.locator("#start");
     await expect(
       cta.getByRole("heading", { name: "Discover your space. Explore your city. Go greener." })
     ).toBeVisible();
-    await expect(cta.getByRole("link", { name: "Explore green spaces near you" })).toHaveAttribute("href", "/home");
+    await expect(cta.getByRole("link", { name: "Explore green spaces near you" })).toHaveAttribute("href", "#top");
     await expect(cta.getByRole("link", { name: "Enter your area manually" })).toBeVisible();
     await expect(page.locator("#cta-mascot")).toBeVisible();
+    await expect(page.locator(".rv footer")).toBeAttached();
   });
 });

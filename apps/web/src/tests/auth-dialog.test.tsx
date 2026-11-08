@@ -67,7 +67,10 @@ describe("AuthDialog Component", () => {
       },
       { timeout: 2000 }
     );
-    expect(screen.getByRole("link", { name: "Done" })).toHaveAttribute("href", "/home");
+    expect(screen.getByRole("link", { name: "Open my account" })).toHaveAttribute("href", "/home");
+
+    fireEvent.click(screen.getByRole("button", { name: "Stay on this page" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   });
 
   it("uses login copy and asks for the password when it is missing", async () => {

@@ -63,6 +63,23 @@ export function Hero() {
 
       <div className="wrap">
         <div className="hero-copy">
+          <span className="pill bob">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.9"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 21v-6" />
+              <path d="M12 3c3.5 2.5 5.5 5 5.5 8a5.5 5.5 0 0 1-11 0c0-3 2-5.5 5.5-8z" />
+            </svg>
+            Public Spaces &amp; Green Mobility
+          </span>
           <h1 className="display" id="hero-title">
             <span className="ln">
               <span>Discover your space.</span>
