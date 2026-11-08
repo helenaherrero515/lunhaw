@@ -194,12 +194,14 @@ describe("E-M3-03 / C-M3-03: WCAG 2.1 AA Accessibility & Sunlight Audit", () => 
       expect(tabRoutes.className).toContain("h-11");
     });
 
-    it("ensures Header saved items button meets 44px touch target height", () => {
+    it("ensures Header menu toggle and account button are labelled controls", () => {
       render(<Header />);
 
-      const savedBtn = screen.getByTestId("header-saved-btn");
-      expect(savedBtn).toBeInTheDocument();
-      expect(savedBtn.className).toContain("h-11"); // 44px
+      // sized to 44px (menu-btn) / 44px min-height (btn sm) in globals.css
+      const menuBtn = screen.getByRole("button", { name: "Menu" });
+      expect(menuBtn).toHaveClass("menu-btn");
+      expect(menuBtn).toHaveAttribute("aria-controls", "menu");
+      expect(screen.getByRole("button", { name: "Create Account" })).toHaveClass("btn", "sm");
     });
 
     it("ensures LGUSelectorModal close button has accessible click target and clear label", () => {
