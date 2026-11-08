@@ -16,11 +16,11 @@ outlives_demo: true             # Long-term production application
 selection_mode: auto
 
 # Known unknowns marked as [TBD]
-tech_stack: "[TBD]"
-data_sources_and_licensing: "[TBD]"
+tech_stack: "Next.js 14 static export on Cloudflare Pages; Hono API on Cloudflare Workers; Supabase (Postgres + PostGIS + Auth). See RELEASE.md"
+data_sources_and_licensing: "Public directory listings and map data, labelled Estimate until confirmed (ADR-002, RELEASE.md section 5)"
 business_model: "[TBD]"
-launch_date: "[TBD]"
-analytics: "[TBD]"
+launch_date: "[TBD: set when the RELEASE.md launch checklist is complete]"
+analytics: "none (no analytics or trackers; see /privacy)"
 ---
 
 # Project Context — Lunhaw
@@ -69,7 +69,7 @@ Lunhaw **never** invents routes, fares, opening hours, or amenities. Every piece
 - **Mandatory Disclaimer:** Clear, persistent notice advising users to verify with the facility before traveling.
 
 ## 6. Platforms & Architecture
-- **Phase 1 (Current):** Web application. Landing page is built; core web app is `[TBD: status]`.
+- **Phase 1 (Current):** Web application 1.0: landing page, account sign-up, app at `/home` on live data, legal pages. Release steps in [RELEASE.md](RELEASE.md).
 - **Phase 2 (Planned):** Native/cross-platform Mobile app (iOS/Android) `[TBD: framework, timeline]`.
 - **Architecture Requirement:** Requirements, data model, and API must remain strictly platform-neutral so web and mobile clients share one unified backend.
 
@@ -84,9 +84,8 @@ Lunhaw **never** invents routes, fares, opening hours, or amenities. Every piece
   - UI & Body: `Kufam`
 
 ## 8. Known Unknowns `[TBD]`
-- Tech stack: `[TBD]`
 - Team size: `[TBD]`
-- Data sources & licensing: `[TBD]`
+- Data sources & licensing: see [ADR-002](decisions/ADR-002-lgu-data-licensing.md) and [RELEASE.md](RELEASE.md) section 5.
 - Business model: `[TBD]`
 - Launch date: `[TBD]`
 - Analytics & instrumentation: `[TBD]`
