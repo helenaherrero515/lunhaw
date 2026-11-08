@@ -149,33 +149,6 @@ function pinImage(type: MapPlace["t"], selected: boolean): ImageData {
   return ctx.getImageData(0, 0, canvas.width, canvas.height);
 }
 
-/** A map button that shows or hides the heat map. */
-class HeatToggle {
-  private el = document.createElement("div");
-  constructor(private onToggle: (on: boolean) => void, private on = true) {}
-  onAdd() {
-    this.el.className = "maplibregl-ctrl maplibregl-ctrl-group";
-    const b = document.createElement("button");
-    b.type = "button";
-    b.className = "lh-heat";
-    b.title = "Heat map: where parks and libraries are concentrated";
-    b.setAttribute("aria-label", "Heat map");
-    b.setAttribute("aria-pressed", String(this.on));
-    b.innerHTML =
-      '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.4 2.6-5.4 3.6-8.6 1.9 1.3 2.6 3 2.4 4.6 1.3-.8 2-2.4 1.9-4.4 2.7 2 5.1 5.1 5.1 8.4 0 3.6-2.6 6.2-6.5 6.2z"/></svg>';
-    b.addEventListener("click", () => {
-      this.on = !this.on;
-      b.setAttribute("aria-pressed", String(this.on));
-      this.onToggle(this.on);
-    });
-    this.el.appendChild(b);
-    return this.el;
-  }
-  onRemove() {
-    this.el.remove();
-  }
-}
-
 // Lunhaw's palette for OpenFreeMap's light "Positron" style, by layer id. Layers a future style drops are skipped.
 const PAINT: Record<string, Record<string, unknown>> = {
   background: { "background-color": "#F1F7EA" },
@@ -273,38 +246,6 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
   map.addSource("places", { type: "geojson", data: empty, cluster: true, clusterRadius: 44, clusterMaxZoom: 13 });
   map.addSource("selected", { type: "geojson", data: empty });
   map.addSource("walk", { type: "geojson", data: empty });
-  map.addSource("heat", { type: "geojson", data: empty });
-
-  // Heat map: where parks and libraries are concentrated. Strongest zoomed out, fading as pins take over.
-  // Drawn under the base map's labels so street and city names stay readable.
-  const firstLabel = map.getStyle().layers?.find((l) => l.type === "symbol")?.id;
-  map.addLayer(
-    {
-      id: "heat",
-      type: "heatmap",
-      source: "heat",
-      maxzoom: 16,
-      paint: {
-        "heatmap-weight": 1,
-        "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 9, 1, 14, 2],
-        "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 9, 36, 12, 70, 15, 110],
-        "heatmap-color": [
-          "interpolate", ["linear"], ["heatmap-density"],
-          0, "rgba(183,249,237,0)",
-          0.15, "rgba(183,249,237,0.55)",
-          0.4, "rgba(152,215,70,0.6)",
-          0.7, "rgba(61,143,43,0.62)",
-          1, "rgba(36,92,67,0.7)",
-        ],
-        "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0.9, 15.5, 0],
-      },
-    },
-    firstLabel
-  );
-  map.addControl(
-    new HeatToggle((on) => map.setLayoutProperty("heat", "visibility", on ? "visible" : "none")),
-    "top-right"
-  );
 
   const font = ["Noto Sans Bold"];
   // Pins are anchored at their tip; labels sit to the right of the pin's head.
@@ -402,7 +343,6 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
   const placesSource = map.getSource("places") as GeoJSONSource;
   const selectedSource = map.getSource("selected") as GeoJSONSource;
   const walkSource = map.getSource("walk") as GeoJSONSource;
-  const heatSource = map.getSource("heat") as GeoJSONSource;
 
   const pick = (e: { features?: MapGeoJSONFeature[] }) => {
     const id = e.features?.[0]?.properties?.id;
@@ -441,7 +381,6 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
         walkTo = null;
       }
       const sel = places.find((p) => p.id === selected) ?? null;
-      heatSource.setData({ type: "FeatureCollection", features: places.map(point) });
       placesSource.setData({ type: "FeatureCollection", features: places.filter((p) => p !== sel).map(point) });
       selectedSource.setData({ type: "FeatureCollection", features: sel ? [point(sel)] : [] });
       const key = places.map((p) => p.id).join(",");
