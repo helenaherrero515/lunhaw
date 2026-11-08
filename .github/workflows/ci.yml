@@ -78,3 +78,21 @@ jobs:
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
         run: bash scripts/test-migrations.sh
+
+  green-index:
+    name: Green Index pipeline (unit tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: scripts/green-index
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Run scoring and publication tests
+        run: uv run --locked --group dev pytest -q
