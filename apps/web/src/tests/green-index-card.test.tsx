@@ -14,6 +14,9 @@ vi.mock("@/lib/api/client", () => ({
   fetchPlaces: (...a: unknown[]) => fetchPlaces(...a),
   fetchGreenIndex: (...a: unknown[]) => fetchGreenIndex(...a),
   subscribeToNewsletter: vi.fn(),
+  planTrip: () => Promise.reject(new Error("offline")),
+  askGuide: () => Promise.reject(new Error("offline")),
+  guideStatus: () => Promise.resolve({ routing: false, guide: false }),
 }));
 
 import HomePage from "@/app/home/page";
