@@ -124,6 +124,7 @@ without a person having checked it (`INV-001`).
 |---|---|
 | Delete an account (privacy request) | Supabase → Authentication → Users → delete. Reply within 30 days. |
 | Unsubscribe from the newsletter | `delete from newsletter_signups where lower(email) = lower('<email>');` |
+| Change the account emails (sign-up, password reset, …) | Edit `scripts/email/auth-emails.mjs`, then `node scripts/email/auth-emails.mjs --apply` (writes `supabase/templates/` and updates the live project) |
 | Export the newsletter list | Supabase → Table editor → `newsletter_signups` → export CSV |
 | Roll back the website | Cloudflare → Pages → lunhaw → Deployments → *Rollback* |
 | Roll back the API | `pnpm --filter @lunhaw/api exec wrangler rollback --env production` |

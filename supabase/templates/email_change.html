@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only">
+<title>Confirm your new email</title>
+<link href="https://fonts.googleapis.com/css2?family=Kufam:wght@400;600&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; padding:0; background:#F7F7F0; }
+  a { color:#245C43; }
+  @media (max-width: 520px) {
+    .card { border-radius:0 !important; }
+    .pad { padding-left:24px !important; padding-right:24px !important; }
+    .h1 { font-size:26px !important; }
+  }
+</style>
+</head>
+<body style="margin:0;padding:0;background:#F7F7F0;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#F7F7F0;font-size:1px;line-height:1px;">Confirm the new email address on your Lunhaw account.&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F7F7F0;">
+<tr><td align="center" style="padding:32px 12px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;">
+    <!-- Wordmark -->
+    <tr><td align="center" style="padding:0 0 20px;">
+      <a href="https://lunhaw.pages.dev" style="text-decoration:none;color:#245C43;">
+        <img src="https://lunhaw.pages.dev/email/lunhaw-icon.png" width="36" height="36" alt="" style="display:inline-block;vertical-align:middle;border:0;border-radius:9px;">
+        <span style="display:inline-block;vertical-align:middle;margin-left:10px;font-family:'MedievalSharp', Georgia, 'Times New Roman', serif;font-size:26px;letter-spacing:.06em;color:#245C43;">LUNHAW</span>
+      </a>
+    </td></tr>
+    <!-- Card -->
+    <tr><td class="card" style="background:#FFFFFF;border:1px solid #DDE5DF;border-radius:20px;overflow:hidden;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr><td align="center" style="background:#DDF3E6;padding:28px 24px 0;">
+          <img src="https://lunhaw.pages.dev/email/lunti-wave.png" width="132" alt="Lunti, the Lunhaw grasshopper, waving" style="display:block;border:0;width:132px;height:auto;">
+        </td></tr>
+        <tr><td style="height:6px;background:#98D746;font-size:0;line-height:0;">&nbsp;</td></tr>
+        <tr><td class="pad" style="padding:36px 40px 8px;font-family:'Kufam', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;color:#26332D;">
+          <h1 class="h1" style="margin:0 0 14px;font-family:'MedievalSharp', Georgia, 'Times New Roman', serif;font-weight:400;font-size:30px;line-height:1.2;color:#245C43;">Confirm your new email</h1>
+          <p style="margin:0 0 28px;font-size:16px;line-height:1.6;color:#26332D;">You asked to change your Lunhaw email from <strong>{{ .Email }}</strong> to <strong>{{ .NewEmail }}</strong>. Confirm to make the switch.</p>
+          <!-- Button -->
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;">
+            <tr><td align="center" bgcolor="#245C43" style="border-radius:999px;">
+              <a href="{{ .ConfirmationURL }}" target="_blank" style="display:inline-block;padding:15px 34px;font-family:'Kufam', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:16px;font-weight:600;line-height:1;color:#FFFFFF;text-decoration:none;border-radius:999px;">Confirm new email</a>
+            </td></tr>
+          </table>
+          
+          <p style="margin:0 0 6px;font-size:13px;line-height:1.5;color:#55605A;">Button not working? Copy this link into your browser:</p>
+          <p style="margin:0 0 28px;font-size:13px;line-height:1.5;word-break:break-all;"><a href="{{ .ConfirmationURL }}" style="color:#245C43;">{{ .ConfirmationURL }}</a></p>
+        </td></tr>
+        <tr><td class="pad" style="padding:0 40px 32px;font-family:'Kufam', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="border-top:1px solid #DDE5DF;padding-top:18px;font-size:13px;line-height:1.55;color:#55605A;">If you didn't ask for this change, ignore this email and your address stays the same. Worried? Write to lunhaw.hln@gmail.com.</td>
+          </tr></table>
+        </td></tr>
+      </table>
+    </td></tr>
+    <!-- Footer -->
+    <tr><td align="center" style="padding:24px 16px 0;font-family:'Kufam', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-size:12px;line-height:1.6;color:#55605A;">
+      Lunhaw helps you find parks, gardens and public libraries across Metro Manila.<br>
+      Questions? <a href="mailto:lunhaw.hln@gmail.com" style="color:#245C43;">lunhaw.hln@gmail.com</a><br>
+      <a href="https://lunhaw.pages.dev/privacy" style="color:#55605A;">Privacy Notice</a> &nbsp;·&nbsp; <a href="https://lunhaw.pages.dev/terms" style="color:#55605A;">Terms of Use</a><br>
+      <span style="color:#8A958F;">Operated by HLN · Metro Manila, Philippines</span>
+    </td></tr>
+  </table>
+</td></tr>
+</table>
+</body>
+</html>
