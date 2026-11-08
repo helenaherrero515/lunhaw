@@ -1,3 +1,4 @@
+import { loadPlaces } from '../data/places-source.js';
 import { Hono } from 'hono';
 import type {
   Env,
@@ -883,7 +884,7 @@ export const MOCK_PLACES: Place[] = [
  * GET /places - Search & Filter (A-M1-02, F-001, BR-001, INV-003)
  * Supports query, category, city, barangay, lat/lng/radius_km, and amenities filters.
  */
-placesRoute.get('/', (c) => {
+placesRoute.get('/', async (c) => {
   const query = c.req.query('query')?.toLowerCase().trim();
   const category = c.req.query('category') as PlaceCategory | undefined;
   const city = c.req.query('city')?.toLowerCase().trim();
@@ -964,8 +965,8 @@ placesRoute.get('/', (c) => {
     }
   }
 
-  // 2. Filter facilities
-  let results = MOCK_PLACES;
+  // 2. Filter facilities (database in deployed environments, fixtures in local dev/tests)
+  let results = await loadPlaces(c.env, MOCK_PLACES);
 
   // Category filter
   if (category) {
@@ -1093,9 +1094,9 @@ placesRoute.get('/', (c) => {
  * GET /places/:id - Place Profile & Operating Hours (A-M1-03, F-002, INV-001, INV-002)
  * Returns detailed facility profile with mandatory advisory disclaimer and explicit tri-state integrity status.
  */
-placesRoute.get('/:id', (c) => {
+placesRoute.get('/:id', async (c) => {
   const id = c.req.param('id');
-  const place = MOCK_PLACES.find((p) => p.id === id);
+  const place = (await loadPlaces(c.env, MOCK_PLACES)).find((p) => p.id === id);
 
   if (!place) {
     const problem: ProblemDetails = {
@@ -1137,9 +1138,9 @@ placesRoute.get('/:id', (c) => {
  * with glass-box mathematical transparency per EQ-001:
  * Score = (0.50 * Canopy%) + (0.30 * NDVI%) + (0.20 * Permeable%)
  */
-placesRoute.get('/:id/green-score', (c) => {
+placesRoute.get('/:id/green-score', async (c) => {
   const id = c.req.param('id');
-  const place = MOCK_PLACES.find((p) => p.id === id);
+  const place = (await loadPlaces(c.env, MOCK_PLACES)).find((p) => p.id === id);
 
   if (!place) {
     const problem: ProblemDetails = {
@@ -1167,16 +1168,22 @@ placesRoute.get('/:id/green-score', (c) => {
     };
   } else {
     const baseline = PLACE_GREEN_INPUTS[place.id];
-    if (baseline) {
-      inputs = baseline;
-    } else {
-      const s = place.green_index_score ?? 50.0;
-      inputs = {
-        canopy_cover_pct: s,
-        ndvi_density_scaled: s,
-        permeable_surface_pct: s
-      };
+    if (!baseline) {
+      // INV-001 / BR-003: without measured inputs there is no score. Never fall back to a made-up value.
+      return c.json({
+        status: 'success',
+        data: {
+          place_id: place.id,
+          place_name: place.name,
+          score: null,
+          verification: {
+            status: 'NOT_AVAILABLE' as VerificationStatus,
+            derivation_note: 'No measured canopy, vegetation or surface data is available for this place yet.'
+          }
+        }
+      });
     }
+    inputs = baseline;
   }
 
   const result = calculateGreenIndexScore(

@@ -61,13 +61,13 @@ Lunhaw is built around three core ideas:
 
 ## What you can explore
 
-- 🗺️ **Interactive NCR Map (`/map`):** Explore public spaces across Metro Manila using map pins, facility previews, and available location information.
-- 🌳 **Public Space Discovery (`/`):** Find parks, gardens, public libraries, barangay reading centers, and other supported public facilities.
-- 🌿 **Green Index:** Explore environmental indicators and modeled insights, with transparent explanations of the data and methodology used.
-- 🧭 **Route Planning:** Select a destination and choose the “How to go there?” action to begin a supported route-planning flow.
-- 📚 **Libraries & Reading Centers:** Discover learning-oriented public spaces and review available facility information.
-- ❤️ **Saved Places (`/saved`):** Bookmark places and revisit destinations you want to explore.
-- 👤 **Profile (`/profile`):** Access account settings and supported personalization features.
+- 🌳 **Landing page (`/`):** what Lunhaw is, with account sign-up.
+- 🗺️ **The app (`/home`, needs an account):** Home, Map, Saved and Profile tabs over the live directory of parks, gardens and public libraries.
+- 🧭 **How to go there?:** a straight-line walking estimate, clearly labelled. Public transport routes and fares aren't shown until they can be confirmed.
+- 📚 **Libraries:** city and national public libraries. Barangay reading centers are added once each one is confirmed.
+- 🌿 **Green Index:** shows *Not available yet* until measured data exists. We don't publish a score we can't back up.
+- ❤️ **Saved places:** kept on your device.
+- 📄 **Privacy Notice (`/privacy`) and Terms of Use (`/terms`).**
 - 🦗 **Lunti, the Grasshopper:** Meet Lunhaw's friendly mascot, representing curiosity, discovery, and greener cities.
 - 📱 **Mobile-First Experience:** Navigate the app using a streamlined mobile interface with Home, Map, Saved, and Profile tabs.
 
@@ -159,34 +159,36 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ### Environment Variables
 
-Create `apps/web/.env.local` for the Supabase configuration:
+Create `apps/web/.env.local` (all optional locally: without them the API serves in-repo fixtures and a development-only mock handles sign-in):
 
 ```dotenv
+NEXT_PUBLIC_API_URL=http://localhost:8787          # the API (`pnpm --filter @lunhaw/api dev`)
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 ```
+
+Deploying to production (Cloudflare + Supabase) is covered step by step in **[docs/RELEASE.md](docs/RELEASE.md)**.
 
 These variables are examples. Replace them with the values for your Supabase project.
 
 **Security note:** Never expose a Supabase service-role key or other privileged secret through a `NEXT_PUBLIC_` environment variable.
 
-If the project supports mock authentication, use it only for local development and testing.
+The mock sign-in accepts any email and password, so it only runs in development and tests. Production builds never use it.
 
 ---
 
 ## Verification & Scripts
 
-The following commands describe the intended workspace workflow. Confirm that each script exists in the root `package.json` before relying on it.
-
 | Command | Description |
 | :-- | :-- |
-| `pnpm dev` | Starts the development server |
-| `pnpm build` | Builds the application and configured workspace packages |
-| `pnpm lint` | Runs lint checks |
-| `pnpm test` | Runs unit and component tests |
-| `pnpm test:e2e` | Runs Playwright end-to-end tests |
-| `pnpm typecheck` | Runs TypeScript checks, if configured |
-| `pnpm test:all` | Runs the full validation suite, if configured |
+| `pnpm dev` | Starts the website and API in development |
+| `pnpm build` | Builds everything; the website is exported to `apps/web/out` |
+| `pnpm --filter web start` | Serves the exported website the way Cloudflare Pages does |
+| `pnpm lint` | Lint and typecheck |
+| `pnpm lint:api` | Lints the OpenAPI contract |
+| `pnpm test` | Unit and component tests (web + API) |
+| `pnpm test:e2e` | Playwright end-to-end tests |
+| `DATABASE_URL=… bash scripts/test-migrations.sh` | Applies all migrations to a disposable PostGIS database and checks the data rules |
 
 ---
 

@@ -9,6 +9,8 @@ export interface AuthUser {
 export interface AuthResponse {
   user: AuthUser | null;
   error?: string;
+  /** Sign-up succeeded but the account must be confirmed from the email link before logging in. */
+  needsEmailConfirmation?: boolean;
 }
 
 export interface AuthService {
@@ -19,142 +21,105 @@ export interface AuthService {
   signInWithMagicLink(email: string): Promise<{ success: boolean; error?: string }>;
 }
 
-// Browser Supabase client instantiation with fallback for local demo
+export const ACCOUNTS_UNAVAILABLE = "Accounts aren’t available right now. Please try again later.";
+
+/**
+ * The in-memory mock accepts any email and password, so it must never run for real visitors.
+ * It is only used when Supabase isn't configured AND we're in development/tests (or explicitly allowed).
+ */
+export function isMockAuthAllowed(): boolean {
+  return process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_ALLOW_MOCK_AUTH === "true";
+}
+
+let supabaseClient: SupabaseClient | null | undefined;
+
+// One browser Supabase client per page (it owns the session in storage).
 export function getSupabaseClient(): SupabaseClient | null {
+  if (supabaseClient !== undefined) return supabaseClient;
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  if (!url || !anonKey) {
-    return null;
-  }
-
-  return createClient(url, anonKey);
+  supabaseClient = url && anonKey ? createClient(url, anonKey) : null;
+  return supabaseClient;
 }
+
+const toUser = (u: { id: string; email?: string | null; user_metadata?: { full_name?: string } }, fallbackEmail = "", fallbackName?: string): AuthUser => ({
+  id: u.id,
+  email: u.email ?? fallbackEmail,
+  name: u.user_metadata?.full_name ?? fallbackName,
+});
 
 // Production Supabase Auth implementation
 export class SupabaseAuthService implements AuthService {
-  private client: SupabaseClient | null;
+  private get client(): SupabaseClient | null {
+    return getSupabaseClient();
+  }
 
-  constructor() {
-    this.client = getSupabaseClient();
+  /** Mock in dev/tests only; in production without Supabase, accounts are simply unavailable. */
+  private get fallback(): MockAuthService | null {
+    return isMockAuthAllowed() ? new MockAuthService() : null;
   }
 
   async signUp(name: string, email: string, password: string): Promise<AuthResponse> {
-    if (!this.client) {
-      // Fallback to stub mode if environment variables are not yet configured
-      return new MockAuthService().signUp(name, email, password);
-    }
+    const client = this.client;
+    if (!client) return this.fallback ? this.fallback.signUp(name, email, password) : { user: null, error: ACCOUNTS_UNAVAILABLE };
 
-    const { data, error } = await this.client.auth.signUp({
+    const { data, error } = await client.auth.signUp({
       email,
       password,
       options: {
         data: { full_name: name },
+        emailRedirectTo: typeof window !== "undefined" ? `${window.location.origin}/home` : undefined,
       },
     });
-
-    if (error) {
-      return { user: null, error: error.message };
-    }
+    if (error) return { user: null, error: error.message };
 
     return {
-      user: data.user
-        ? {
-            id: data.user.id,
-            email: data.user.email ?? email,
-            name: data.user.user_metadata?.full_name ?? name,
-          }
-        : null,
+      user: data.user ? toUser(data.user, email, name) : null,
+      // With email confirmation on (Supabase default) there is no session until the link is opened.
+      needsEmailConfirmation: !data.session,
     };
   }
 
   async logIn(email: string, password: string): Promise<AuthResponse> {
-    if (!this.client) {
-      return new MockAuthService().logIn(email, password);
-    }
+    const client = this.client;
+    if (!client) return this.fallback ? this.fallback.logIn(email, password) : { user: null, error: ACCOUNTS_UNAVAILABLE };
 
-    const { data, error } = await this.client.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      return { user: null, error: error.message };
-    }
-
-    return {
-      user: data.user
-        ? {
-            id: data.user.id,
-            email: data.user.email ?? email,
-            name: data.user.user_metadata?.full_name,
-          }
-        : null,
-    };
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
+    if (error) return { user: null, error: error.message };
+    return { user: data.user ? toUser(data.user, email) : null };
   }
 
   async logOut(): Promise<void> {
-    if (typeof window !== "undefined") {
-      try {
-        localStorage.removeItem("lunhaw.auth_user");
-      } catch {}
-    }
-    if (!this.client) {
+    const client = this.client;
+    if (!client) {
       await new MockAuthService().logOut();
       return;
     }
-    await this.client.auth.signOut();
+    await client.auth.signOut();
   }
 
+  /** Only the Supabase session counts. No local copy of the user is trusted. */
   async getCurrentUser(): Promise<AuthUser | null> {
-    if (!this.client) {
-      return new MockAuthService().getCurrentUser();
-    }
-
+    const client = this.client;
+    if (!client) return this.fallback ? this.fallback.getCurrentUser() : null;
     try {
-      const { data } = await this.client.auth.getUser();
-      if (!data.user) {
-        if (typeof window !== "undefined") {
-          try {
-            const raw = localStorage.getItem("lunhaw.auth_user");
-            if (raw) return JSON.parse(raw);
-          } catch {}
-        }
-        return null;
-      }
-
-      return {
-        id: data.user.id,
-        email: data.user.email ?? "",
-        name: data.user.user_metadata?.full_name,
-      };
+      const { data } = await client.auth.getUser();
+      return data.user ? toUser(data.user) : null;
     } catch {
-      if (typeof window !== "undefined") {
-        try {
-          const raw = localStorage.getItem("lunhaw.auth_user");
-          if (raw) return JSON.parse(raw);
-        } catch {}
-      }
       return null;
     }
   }
 
   async signInWithMagicLink(email: string): Promise<{ success: boolean; error?: string }> {
-    if (!this.client) {
-      return new MockAuthService().signInWithMagicLink(email);
+    const client = this.client;
+    if (!client) {
+      return this.fallback ? this.fallback.signInWithMagicLink(email) : { success: false, error: ACCOUNTS_UNAVAILABLE };
     }
-
-    const { error } = await this.client.auth.signInWithOtp({
+    const { error } = await client.auth.signInWithOtp({
       email,
-      options: {
-        emailRedirectTo: typeof window !== "undefined" ? window.location.origin : undefined,
-      },
+      options: { emailRedirectTo: typeof window !== "undefined" ? `${window.location.origin}/home` : undefined },
     });
-
-    if (error) {
-      return { success: false, error: error.message };
-    }
-
+    if (error) return { success: false, error: error.message };
     return { success: true };
   }
 }

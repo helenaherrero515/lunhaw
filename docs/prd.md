@@ -51,7 +51,7 @@ Lunhaw is a public-spaces and green-mobility platform for Metro Manila (NCR), Ph
 | **F-002** | Public Libraries & Barangay Reading Centers | MVP | Absence of free, quiet study spaces for students; hidden municipal facilities. | Lists amenities, rules, access requirements, and verified schedules. |
 | **F-003** | Commute & Walking Route Planner | MVP | Lack of walkable, shaded pathways and transparent transit directions. | Multi-modal walking + jeepney/bus/rail steps with boarding points. |
 | **F-004** | Green Index & Canopy Shade Calculator | MVP | Urban heat island exposure; lack of environmental transparency. | Scores canopy cover and shade using open glass-box formulas. |
-| **F-005** | Saved Places & Trips | MVP | Inconvenience of repeating frequent searches. | Local storage persistence with optional profile sync. |
+| **F-005** | Saved Places & Trips | MVP | Inconvenience of repeating frequent searches. | Local storage persistence. Profile sync is not in 1.0 (saved places stay on the device). |
 | **F-006** | Manual Area Entry Fallback | MVP | Inability to access local info when GPS is unavailable or denied. | City & Barangay selector dropdowns. |
 | **F-101** | Native Mobile App (iOS / Android) | Phase 2 | Mobile-first ergonomics and push notifications for route alerts. | Platform-neutral API integration. `[TBD]` |
 | **F-102** | Community Verification Portal | Phase 2 | Stale civic hours and facility updates across 17 LGUs. | Moderated crowdsourcing pipeline. `[TBD]` |
@@ -71,7 +71,7 @@ Lunhaw is a public-spaces and green-mobility platform for Metro Manila (NCR), Ph
 ## Hard rules / must-never (invariants — `INV-###`)
 
 - **INV-001 (Zero Hallucination of Civic and Transit Data):** The system SHALL NEVER invent, hallucinate, or unreliably extrapolate routes, transit fares, operating hours, or facility amenities. IF an attribute is unknown or unverified, THEN the system SHALL label it `Not available yet` or provide an explicitly labelled `Estimate`. (Enforced by: Security Threat T-001, Banned Copy Rule 1, QA Negative Test TC-N01).
-- **INV-002 (Mandatory Facility Verification Disclaimer):** The system SHALL NEVER render facility operating hours, study desk availability, or amenities without displaying the advisory disclaimer: *"Please verify operating hours and rules directly with the facility before visiting, as local barangay schedules may change without notice."* (Enforced by: Security Threat T-002, Banned Copy Rule 2, QA Negative Test TC-N02).
+- **INV-002 (Mandatory Facility Verification Disclaimer):** The system SHALL NEVER render facility operating hours, study desk availability, or amenities without displaying the advisory disclaimer: *"Please verify operating hours directly with the facility before traveling, as local barangay schedules may change without notice."* (canonical wording; tests assert this exact text). (Enforced by: Security Threat T-002, Banned Copy Rule 2, QA Negative Test TC-N02).
 - **INV-003 (Platform-Neutral Core Architecture):** The system backend and domain models SHALL NEVER expose platform-specific dependencies or business logic restricted to a single client (Web vs. Mobile). All contracts SHALL remain platform-neutral JSON REST endpoints. (Enforced by: API Contract Linting, QA Contract Test TC-N03).
 
 ## User flows
@@ -128,12 +128,14 @@ flowchart TD
 - Commercial advertisements or sponsored business listings.
 
 ## Dependencies
-- **Map & Geocoding Services:** OpenStreetMap (OSM) / Leaflet / MapLibre `[TBD: specific provider]`.
-- **Canopy & Environmental Data:** Copernicus / Sentinel satellite canopy data or municipal environmental reports `[TBD]`.
-- **Administrative Data:** NCR LGU directories and National Library of the Philippines (NLP) public library registries.
+- **Hosting & data:** Cloudflare Pages + Workers and Supabase (Postgres + PostGIS + Auth); see [ADR-001](decisions/ADR-001-cloud-architecture.md) and [RELEASE.md](RELEASE.md).
+- **Maps:** the 1.0 app draws a simplified Metro Manila map itself (no third-party tile provider). MapLibre + OpenFreeMap remain the plan for a full map.
+- **Canopy & Environmental Data:** Copernicus / Sentinel. Not used in 1.0: Green Index shows *Not available yet* until measured inputs exist.
+- **Administrative Data:** NCR LGU directories and National Library of the Philippines (NLP) public library registries, confirmed by a person before anything is labelled Verified ([RELEASE.md](RELEASE.md) section 5).
 
-## Open questions `[TBD]`
-- Selected production backend and database tech stack: `[TBD]`.
-- Data licensing and update cadence agreements with NCR LGUs: `[TBD]`.
-- Mobile app framework (React Native vs. Flutter) for Phase 2: `[TBD]`.
-- Long-term hosting and maintenance funding model: `[TBD]`.
+## Open questions
+- ~~Production backend and database stack~~: resolved in [ADR-001](decisions/ADR-001-cloud-architecture.md) (Cloudflare + Supabase).
+- ~~Data licensing and update cadence with NCR LGUs~~: resolved in [ADR-002](decisions/ADR-002-lgu-data-licensing.md).
+- ~~Mobile framework for Phase 2~~: resolved in [ADR-003](decisions/ADR-003-mobile-framework.md) (React Native / Expo).
+- Long-term hosting and maintenance funding model: `[TBD]` (issue D-MR-02).
+- Whether search should work without an account again (1.0 requires an account for `/home`; see the decision ledger, 2026-11-08): `[TBD]`.

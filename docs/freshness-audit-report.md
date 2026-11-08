@@ -1,5 +1,7 @@
 # Verification Freshness Audit Report — Lunhaw
 
+> **Superseded (2026-11-08).** This report audited the pre-release, tool-generated dataset (`data/seed-libraries.json`). That dataset was never live, and its `VERIFIED` labels had no human confirmation. The public dataset is described in [RELEASE.md](RELEASE.md); verification status is tracked in [verification-worksheet.csv](verification-worksheet.csv).
+
 > **Audit Date:** 2026-11-03  
 > **Freshness Policy Window:** 180 Days (`BR-002`)  
 > **Enforces Invariants:** `INV-001` (Data Honesty), `BR-001` (Tri-State Integrity), `BR-002` (Verification Freshness)  

@@ -99,6 +99,12 @@ flowchart TD
 | **Public Transit Networks** (LTFRB, DOTr, LRT/MRT) | Periodic CSV/GTFS or manual batch ingest | Fixed route lines, fare matrices, and station coordinates. | Cached static routing graphs; if fare is unverified, tag explicitly as `Estimate` or `Not available yet`. |
 | **Satellite Canopy Imagery** (Copernicus / Sentinel) `[TBD]` | GeoTIFF / GIS raster layers | Tree canopy and green space index baselines. | Precomputed static canopy tiles updated semi-annually; fallback to baseline district green ratios. |
 
+## Implementation status (1.0, 2026-11-08)
+What actually ships differs from the target design above in a few places:
+- **Hosting:** Cloudflare Pages (static Next.js export) + Cloudflare Worker API + Supabase; no containers, VPC or Redis. The Worker caches reads in memory for 60 s; see [RELEASE.md](RELEASE.md).
+- **Routing:** the 1.0 app gives straight-line walking estimates only. Transit routing and shade scoring exist in code but have no production data yet.
+- **Access:** `/home` requires an account (see the decision ledger, 2026-11-08).
+
 ## Deployment topology
 - **Staging / Production Environments:** Cloud container runtime (e.g. Docker / Kubernetes or serverless containers) `[TBD: provider]`.
 - **Edge Layer:** CDN caching static assets, base map vector tiles, and unchanging municipal boundary geometries.

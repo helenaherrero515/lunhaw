@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "pnpm --filter @lunhaw/api exec wrangler pages dev ../web/out --port 3000",
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",

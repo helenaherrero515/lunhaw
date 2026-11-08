@@ -520,3 +520,38 @@ html.js .dots .dot{background:rgba(255,255,255,.35)}html.js .dots .dot.on{backgr
 @media(max-width:900px){html.js .stage-copy{position:absolute;left:0;right:0;bottom:0;height:auto;margin:0;padding:0 14px 16px;justify-content:flex-end}
  html.js .stage-copy .inner{width:100%;padding:16px 16px 14px;border-radius:24px}html.js .panels{min-height:104px}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){html.js .stage-copy .inner{background:rgba(14,38,27,.82)}}
+/* ---- public release additions (not in the landing design) ---- */
+/* consent notices under the sign-up form and the newsletter field */
+.auth-legal { margin: 2px 0 0; font-size: 13px; line-height: 1.45; color: #55605A; text-align: center; }
+.auth-legal a { color: #245C43; font-weight: 600; }
+footer .signup-fine { margin: 10px 0 0 6px; font-size: 13px; line-height: 1.45; color: var(--foot-muted); max-width: 46ch; }
+footer .signup-fine a { color: var(--lime); }
+footer .signup button:disabled, #auth-form .btn:disabled { opacity: .7; cursor: progress; }
+/* legal pages (/privacy, /terms) */
+.legal { min-height: 100vh; background: var(--bg); color: var(--fg); }
+.legal-top { border-bottom: 1px solid var(--line); background: var(--surface); }
+.legal-top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.legal-top .brand .mascot { width: 36px; }
+.legal-back { color: var(--accent-text); font-weight: 600; text-decoration: none; padding: 10px 0; }
+.legal-body { max-width: 760px; padding-block: 48px 72px; }
+.legal-body h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(36px, 6vw, 52px); line-height: 1.1; color: var(--accent-text); }
+.legal-body h2 { font-size: 22px; font-weight: 700; margin: 36px 0 10px; color: var(--accent-text); }
+.legal-body p, .legal-body li { font-size: 17px; line-height: 1.65; }
+.legal-body p + p { margin-top: 12px; }
+.legal-body ul { margin: 10px 0 0; padding-left: 22px; list-style: disc; }
+.legal-body li + li { margin-top: 6px; }
+.legal-body a { color: var(--accent-text); font-weight: 600; }
+.legal-meta { margin-top: 10px; color: var(--muted); font-size: 15px; }
+.legal-intro { margin-top: 18px; font-size: 19px !important; }
+.legal-body table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px; }
+.legal-body th, .legal-body td { text-align: left; vertical-align: top; padding: 10px 12px; border: 1px solid var(--line); }
+.legal-body th { background: var(--surface); }
+.legal-links { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); }
+@media (max-width: 640px) {
+  .legal-body { padding-block: 32px 56px; }
+  .legal-body table, .legal-body thead, .legal-body tbody, .legal-body tr, .legal-body th, .legal-body td { display: block; }
+  .legal-body thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .legal-body tr { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; background: var(--surface); }
+  .legal-body td { border: 0; padding: 8px 12px; }
+  .legal-body td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+}

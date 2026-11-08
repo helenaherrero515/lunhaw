@@ -50,3 +50,31 @@ jobs:
 
       - name: Build Web Application & Packages
         run: pnpm build
+
+  migrations:
+    name: Database migrations (PostGIS) + release data checks
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:15-3.4
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generated dataset migration is up to date
+        run: |
+          node scripts/data/build-public-release-seed.mjs
+          git diff --exit-code -- supabase/migrations/00014_public_release_dataset.sql
+
+      - name: Apply all migrations and check release invariants
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+        run: bash scripts/test-migrations.sh

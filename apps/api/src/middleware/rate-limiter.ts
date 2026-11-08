@@ -103,6 +103,25 @@ export function rateLimiter(options?: RateLimiterOptions): MiddlewareHandler<{ B
     const refillRatePerMs = maxRequests / windowMs; // tokens per millisecond
 
     const clientKey = keyGen(c);
+
+    // Deployed: the Cloudflare rate-limiting binding is shared across all Worker isolates, unlike the
+    // in-memory buckets below (which only see one isolate's traffic). Configured in wrangler.toml.
+    if (c.env?.RATE_LIMITER) {
+      const { success } = await c.env.RATE_LIMITER.limit({ key: clientKey });
+      if (!success) {
+        const retryAfterSeconds = Math.ceil(windowMs / 1000);
+        const problem: ProblemDetails = {
+          type: 'https://api.lunhaw.ph/errors/ERR_RATE_LIMIT_EXCEEDED',
+          title: 'Too Many Requests',
+          status: 429,
+          detail: `Rate limit of ${maxRequests} requests per minute exceeded. Please retry after ${retryAfterSeconds} seconds.`,
+          instance: c.req.path,
+          code: 'ERR_RATE_LIMIT_EXCEEDED'
+        };
+        c.header('Retry-After', retryAfterSeconds.toString());
+        return c.json(problem, 429, { 'Content-Type': 'application/problem+json' });
+      }
+    }
     const now = Date.now();
 
     pruneStaleBuckets(maxRequests, windowMs, now);
