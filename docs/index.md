@@ -40,16 +40,21 @@ To stop drift and context-poisoning, **each concern has exactly one canonical ow
 | Design System & UX Spec | [design-system.md](design-system.md) | Active | 2026-11-01 |
 | API Specification | [api-spec.md](api-spec.md) | Active | 2026-11-01 |
 | Security & Compliance | [security-compliance.md](security-compliance.md) | Active | 2026-11-01 |
-| QA Test Plan & Traceability | [qa-test-plan.md](qa-test-plan.md) | Active | 2026-11-01 |
+| QA Test Plan & Traceability | [qa-test-plan.md](qa-test-plan.md) | Active | 2026-11-08 |
+| Release Runbook | [RELEASE.md](RELEASE.md) | Active | 2026-11-08 |
+| Facility Verification Worksheet | [verification-worksheet.csv](verification-worksheet.csv) | Active | 2026-11-08 |
 
 ---
 
 ## 2. Health check (verification checklist)
 
+*Re-checked 2026-11-08 against the code, not just the docs.*
+
 - [x] Every `F-###` in the PRD has &ge;1 test in the QA plan (consistency check: `F-001`&rarr;`TC-001`, `F-002`&rarr;`TC-002`, `F-003`&rarr;`TC-003`, `F-004`&rarr;`TC-004`, `F-005`&rarr;`TC-005`, `F-006`&rarr;`TC-006`).
 - [x] Every hard invariant (`INV-###`) has a corresponding negative test (`INV-001`&rarr;`TC-N01`, `INV-002`&rarr;`TC-N02`, `INV-003`&rarr;`TC-N03`).
 - [x] No doc restates a fact owned by another (§0 respected).
 - [x] Every network-exposed surface declares auth/authz ([security-compliance.md](security-compliance.md) and [api-spec.md](api-spec.md)).
-- [x] Every computed number cites an `EQ-###` from Methods ([methods.md](methods.md)).
-- [x] Data-integrity principle strictly enforced: `VERIFIED`, `ESTIMATE`, or `NOT_AVAILABLE`.
+- [x] Every computed number cites an `EQ-###` from Methods ([methods.md](methods.md)). The 1.0 app shows no Green Index score without measured inputs.
+- [x] Data-integrity principle enforced in data, API and UI: `VERIFIED`, `ESTIMATE`, or `NOT_AVAILABLE`. Nothing is `VERIFIED` without a named person, date and source (checked in CI).
+- [ ] Security sign-off: done except the legal review of `/privacy` and `/terms` ([security-compliance.md](security-compliance.md)).
 - [x] Platform neutrality verified across data models, architecture, and API endpoints.
