@@ -81,6 +81,7 @@ lerna-debug.log*
 # 4. Next.js, Turborepo & Build Artifacts
 # ------------------------------------------------------------------------------
 .next/
+.next-*/
 out/
 build/
 dist/
