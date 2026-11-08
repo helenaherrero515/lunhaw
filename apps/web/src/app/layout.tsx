@@ -17,14 +17,19 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+const ENHANCE_SCRIPT = `(function(){try{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;var c=document.createElement('canvas');if(window.WebGLRenderingContext&&(c.getContext('webgl')||c.getContext('experimental-webgl')))document.documentElement.classList.add('js')}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="js">
+    // `js` is added before paint only when the 3D/scroll layer can run (no reduced
+    // motion + WebGL); otherwise the landing page keeps its plain static layout.
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: ENHANCE_SCRIPT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
