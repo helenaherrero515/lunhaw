@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 
 export function CtaSection() {
   return (
@@ -8,9 +7,9 @@ export function CtaSection() {
         <div className="col">
           <h2>Discover your space. Explore your city. Go greener.</h2>
           <div className="cta-row">
-            <Link className="btn onband" href="/home">
+            <a className="btn onband" href="#top" data-scroll>
               Explore green spaces near you
-            </Link>
+            </a>
             <a className="btn onband ghost" href="#top" data-scroll>
               Enter your area manually
             </a>
