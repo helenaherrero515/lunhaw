@@ -31,8 +31,6 @@ export interface MapPlace {
 export interface RealMapOptions {
   /** Called when someone taps a pin. */
   onSelect: (id: string) => void;
-  /** SVG inner markup for the pin icons (24×24 stroke icons), keyed by place type. */
-  icons: { park: string; lib: string };
   /** How much of each map edge is covered by floating UI (header, side panel, place card), in pixels. */
   covered?: () => { top: number; right: number; bottom: number; left: number };
 }
@@ -54,7 +52,7 @@ const METRO_MANILA: [number, number] = [121.02, 14.6];
 const MAX_BOUNDS: [[number, number], [number, number]] = [[120.55, 14.05], [121.55, 15.1]];
 const LOAD_TIMEOUT_MS = 15000;
 
-const C = { green: "#245C43", leaf: "#2F7D26", park: "#98D746", lib: "#F6B93B", ink: "#1D3B2B" };
+const C = { green: "#245C43", leaf: "#2F7D26", ink: "#1D3B2B" };
 
 /** True when this browser can draw the map at all. */
 export function webglAvailable(): boolean {
@@ -71,49 +69,88 @@ export function webglAvailable(): boolean {
 const unescape = (s: string) =>
   s.replace(/&(amp|lt|gt|quot|#39);/g, (_, e) => ({ amp: "&", lt: "<", gt: ">", quot: '"', "#39": "'" })[e as string]!);
 
-/** Draws a round pin with the place's icon, matching the app's drawn pins. Returns ImageData at 2× for crispness. */
-function pinImage(fill: string, iconSvg: string, selected: boolean): ImageData {
+// Teardrop map pin (24-unit box, tip at 12,22) and the white icons drawn in its head (centred on 12,9.5).
+const PIN_PATH = "M12 1.5C7.3 1.5 3.5 5.1 3.5 9.6c0 5.9 7.2 12 7.8 12.5a1.1 1.1 0 0 0 1.4 0c.6-.5 7.8-6.6 7.8-12.5 0-4.5-3.8-8.1-8.5-8.1z";
+const ICONS: Record<MapPlace["t"], { fill: string[]; stroke: string[] }> = {
+  // A round-canopy tree.
+  park: {
+    fill: ["M12 3.6c-1.9 0-3.4 1.4-3.6 3.2A3.1 3.1 0 0 0 7.2 12.4h9.6a3.1 3.1 0 0 0-1.2-5.6C15.4 5 13.9 3.6 12 3.6z"],
+    stroke: ["M12 11.6v4.3"],
+  },
+  // A stack of three books on a shelf, the last one leaning.
+  lib: {
+    fill: ["M6.6 5.4h2.5v8.8H6.6z", "M9.9 6.6h2.5v7.6H9.9z", "M13.3 6.9l2.4-.6 2 7.4-2.4.6z"],
+    stroke: ["M5.8 15.4h12.4"],
+  },
+};
+const PIN_COLOURS: Record<MapPlace["t"], { fill: string; dark: string }> = {
+  park: { fill: "#3D8F2B", dark: "#245C43" },
+  lib: { fill: "#E9A11B", dark: "#B4740B" },
+};
+
+/** Draws a teardrop pin with the place's icon. Returns ImageData at 2× for crispness; anchor it at the bottom. */
+function pinImage(type: MapPlace["t"], selected: boolean): ImageData {
   const ratio = 2;
-  const r = selected ? 16 : 13;
-  const ring = selected ? 21 : 0;
-  const size = (Math.max(r, ring) + 4) * 2;
+  const scale = selected ? 2.2 : 1.75; // pin size in px per unit of the 24-unit box
+  const pad = 4; // room for the drop shadow
+  const w = Math.ceil(24 * scale + pad * 2);
+  const h = Math.ceil(23 * scale + pad * 2);
   const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = size * ratio;
+  canvas.width = w * ratio;
+  canvas.height = h * ratio;
   const ctx = canvas.getContext("2d")!;
   ctx.scale(ratio, ratio);
-  ctx.translate(size / 2, size / 2);
-  if (selected) {
-    ctx.beginPath();
-    ctx.arc(0, 0, ring, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(255,255,255,.85)";
-    ctx.fill();
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = C.green;
-    ctx.stroke();
-  }
-  ctx.beginPath();
-  ctx.arc(0, 0, r, 0, Math.PI * 2);
-  ctx.fillStyle = fill;
-  ctx.shadowColor = "rgba(29,59,43,.25)";
-  ctx.shadowBlur = 4;
-  ctx.shadowOffsetY = 1;
-  ctx.fill();
-  ctx.shadowColor = "transparent";
-  ctx.lineWidth = 2.5;
-  ctx.strokeStyle = "#fff";
-  ctx.stroke();
-  // The icons are 24×24 stroked paths; scale them to sit inside the circle.
-  const scale = (r * 1.15) / 24;
-  ctx.save();
-  ctx.translate(-12 * scale, -12 * scale);
+  ctx.translate(pad, pad - 1.5 * scale + 1);
   ctx.scale(scale, scale);
-  ctx.lineWidth = 2.2;
+  const pin = new Path2D(PIN_PATH);
+  const { fill, dark } = PIN_COLOURS[type];
+  ctx.shadowColor = "rgba(29,59,43,.35)";
+  ctx.shadowBlur = 3;
+  ctx.shadowOffsetY = 1;
+  ctx.fillStyle = selected ? dark : fill;
+  ctx.fill(pin);
+  ctx.shadowColor = "transparent";
+  ctx.lineWidth = selected ? 1.6 : 1.3;
+  ctx.strokeStyle = "#FFFFFF";
+  ctx.stroke(pin);
+  ctx.fillStyle = "#FFFFFF";
+  ctx.strokeStyle = "#FFFFFF";
+  ctx.lineWidth = 1.5;
   ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.strokeStyle = C.ink;
-  for (const m of iconSvg.matchAll(/d="([^"]+)"/g)) ctx.stroke(new Path2D(m[1]));
-  ctx.restore();
+  // Icons are drawn in their own 24-unit box, shrunk to fit the pin's head.
+  ctx.translate(12, 9.5);
+  ctx.scale(0.72, 0.72);
+  ctx.translate(-12, -9.5);
+  for (const d of ICONS[type].fill) ctx.fill(new Path2D(d));
+  for (const d of ICONS[type].stroke) ctx.stroke(new Path2D(d));
   return ctx.getImageData(0, 0, canvas.width, canvas.height);
+}
+
+/** A map button that shows or hides the heat map. */
+class HeatToggle {
+  private el = document.createElement("div");
+  constructor(private onToggle: (on: boolean) => void, private on = true) {}
+  onAdd() {
+    this.el.className = "maplibregl-ctrl maplibregl-ctrl-group";
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "lh-heat";
+    b.title = "Heat map: where parks and libraries are concentrated";
+    b.setAttribute("aria-label", "Heat map");
+    b.setAttribute("aria-pressed", String(this.on));
+    b.innerHTML =
+      '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.4 2.6-5.4 3.6-8.6 1.9 1.3 2.6 3 2.4 4.6 1.3-.8 2-2.4 1.9-4.4 2.7 2 5.1 5.1 5.1 8.4 0 3.6-2.6 6.2-6.5 6.2z"/></svg>';
+    b.addEventListener("click", () => {
+      this.on = !this.on;
+      b.setAttribute("aria-pressed", String(this.on));
+      this.onToggle(this.on);
+    });
+    this.el.appendChild(b);
+    return this.el;
+  }
+  onRemove() {
+    this.el.remove();
+  }
 }
 
 // Lunhaw's palette for OpenFreeMap's light "Positron" style, by layer id. Layers a future style drops are skipped.
@@ -204,23 +241,57 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
     throw err;
   }
 
-  map.addImage("pin-park", pinImage(C.park, options.icons.park, false), { pixelRatio: 2 });
-  map.addImage("pin-lib", pinImage(C.lib, options.icons.lib, false), { pixelRatio: 2 });
-  map.addImage("pin-park-sel", pinImage(C.park, options.icons.park, true), { pixelRatio: 2 });
-  map.addImage("pin-lib-sel", pinImage(C.lib, options.icons.lib, true), { pixelRatio: 2 });
+  map.addImage("pin-park", pinImage("park", false), { pixelRatio: 2 });
+  map.addImage("pin-lib", pinImage("lib", false), { pixelRatio: 2 });
+  map.addImage("pin-park-sel", pinImage("park", true), { pixelRatio: 2 });
+  map.addImage("pin-lib-sel", pinImage("lib", true), { pixelRatio: 2 });
 
   const empty = { type: "FeatureCollection" as const, features: [] as any[] };
   map.addSource("places", { type: "geojson", data: empty, cluster: true, clusterRadius: 44, clusterMaxZoom: 13 });
   map.addSource("selected", { type: "geojson", data: empty });
   map.addSource("walk", { type: "geojson", data: empty });
+  map.addSource("heat", { type: "geojson", data: empty });
+
+  // Heat map: where parks and libraries are concentrated. Strongest zoomed out, fading as pins take over.
+  // Drawn under the base map's labels so street and city names stay readable.
+  const firstLabel = map.getStyle().layers?.find((l) => l.type === "symbol")?.id;
+  map.addLayer(
+    {
+      id: "heat",
+      type: "heatmap",
+      source: "heat",
+      maxzoom: 16,
+      paint: {
+        "heatmap-weight": 1,
+        "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 9, 1, 14, 2],
+        "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 9, 36, 12, 70, 15, 110],
+        "heatmap-color": [
+          "interpolate", ["linear"], ["heatmap-density"],
+          0, "rgba(183,249,237,0)",
+          0.15, "rgba(183,249,237,0.55)",
+          0.4, "rgba(152,215,70,0.6)",
+          0.7, "rgba(61,143,43,0.62)",
+          1, "rgba(36,92,67,0.7)",
+        ],
+        "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0.9, 15.5, 0],
+      },
+    },
+    firstLabel
+  );
+  map.addControl(
+    new HeatToggle((on) => map.setLayoutProperty("heat", "visibility", on ? "visible" : "none")),
+    "top-right"
+  );
 
   const font = ["Noto Sans Bold"];
+  // Pins are anchored at their tip; labels sit to the right of the pin's head.
   const label: SymbolLayerSpecification["layout"] = {
+    "icon-anchor": "bottom",
     "text-field": ["get", "name"],
     "text-font": font,
     "text-size": 12,
     "text-anchor": "left",
-    "text-offset": [1.35, 0],
+    "text-offset": [1.4, -2.5],
     "text-max-width": 12,
     "text-justify": "left",
     "text-optional": true,
@@ -278,7 +349,7 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
       "icon-image": ["concat", "pin-", ["get", "t"], "-sel"],
       "icon-allow-overlap": true,
       ...label,
-      "text-offset": [1.9, 0],
+      "text-offset": [1.75, -3.1],
       "text-optional": false,
       "text-allow-overlap": true,
     },
@@ -288,6 +359,7 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
   const placesSource = map.getSource("places") as GeoJSONSource;
   const selectedSource = map.getSource("selected") as GeoJSONSource;
   const walkSource = map.getSource("walk") as GeoJSONSource;
+  const heatSource = map.getSource("heat") as GeoJSONSource;
 
   const pick = (e: { features?: MapGeoJSONFeature[] }) => {
     const id = e.features?.[0]?.properties?.id;
@@ -326,6 +398,7 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
         walkTo = null;
       }
       const sel = places.find((p) => p.id === selected) ?? null;
+      heatSource.setData({ type: "FeatureCollection", features: places.map(point) });
       placesSource.setData({ type: "FeatureCollection", features: places.filter((p) => p !== sel).map(point) });
       selectedSource.setData({ type: "FeatureCollection", features: sel ? [point(sel)] : [] });
       const key = places.map((p) => p.id).join(",");

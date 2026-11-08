@@ -380,3 +380,14 @@ body[data-tab=home] .bar button::before{display:none}
  #mgl .maplibregl-ctrl-top-right{top:96px;right:12px}
  #mgl .maplibregl-ctrl-top-left{top:auto;left:auto;right:0;bottom:0}
 }
+/* ---- Place photos (Wikimedia Commons, credited) ---- */
+.th{position:relative}
+.th,.pa{overflow:hidden}
+.th img,.pa img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sheet .th.ph{height:190px!important}
+.pacr{position:absolute;left:10px;top:12px;max-width:calc(100% - 70px);padding:2px 8px;border-radius:99px;background:rgba(17,32,24,.5);color:#fff;font-size:10px;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcred{margin:6px 4px 0;font-size:11.5px;line-height:1.45;color:var(--mut)}
+.pcred a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+#mgl .lh-heat{display:grid;place-items:center;color:#4A6354}
+#mgl .lh-heat[aria-pressed=true]{color:#fff;background:#3D8F2B}
+#mgl .lh-heat[aria-pressed=true]:hover{background:#2F7D26}

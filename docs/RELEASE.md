@@ -126,6 +126,7 @@ without a person having checked it (`INV-001`).
 | Delete an account (privacy request) | Supabase → Authentication → Users → delete. Reply within 30 days. |
 | Unsubscribe from the newsletter | `delete from newsletter_signups where lower(email) = lower('<email>');` |
 | Change the account emails (sign-up, password reset, …) | Edit `scripts/email/auth-emails.mjs`, then `node scripts/email/auth-emails.mjs --apply` (writes `supabase/templates/` and updates the live project) |
+| Add a place photo | Find a freely licensed photo of that exact place on Wikimedia Commons, check it's the right building/branch, add its `File:` title to `scripts/data/fetch-place-photos.mjs`, run it, and commit the new `apps/web/public/places/*.webp` and `place-photos.json`. Credits show automatically. |
 | Export the newsletter list | Supabase → Table editor → `newsletter_signups` → export CSV |
 | Roll back the website | Cloudflare → Pages → lunhaw → Deployments → *Rollback* |
 | Roll back the API | `pnpm --filter @lunhaw/api exec wrangler rollback --env production` |
