@@ -41,7 +41,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/media/lunhaw.gif" alt="Lunhaw in use: the signed-in home page, browsing popular places, filtering libraries, then the map of Metro Manila with a place selected" width="800">
+  <img src="docs/media/lunhaw.gif" alt="Lunti the grasshopper hops from home along a tree-shaded path to a public library; the path turns green as it goes" width="720">
 </p>
 
 <p align="center">
