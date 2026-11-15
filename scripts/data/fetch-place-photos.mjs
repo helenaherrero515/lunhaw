@@ -31,6 +31,7 @@ const PHOTOS = {
   "ae100000-0000-4000-8000-000000000002": "File:Manila City Library, Jun 2024.jpg",
   "ae100000-0000-4000-8000-000000000003": "File:Quezon City Public Library 2017.jpg",
   "ae100000-0000-4000-8000-000000000005": "File:The Caloocan High School 14.jpg",
+  "ae100000-0000-4000-8000-000000000009": "File:Mandaluyong Library.jpg", // interior, City Government Complex
   "ae100000-0000-4000-8000-000000000010": "File:Marikina City Library.jpeg",
   "ae200000-0000-4000-8000-000000000001": "File:RizalParkManila20190521.jpg",
   "ae200000-0000-4000-8000-000000000002": "File:Arroceros Forest Park 22Dec2025 07.jpg",
