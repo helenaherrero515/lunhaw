@@ -91,6 +91,14 @@ jobs:
         run: |
           if [ -n "$ANTHROPIC_API_KEY" ]; then printf '%s' "$ANTHROPIC_API_KEY" | pnpm exec wrangler secret put ANTHROPIC_API_KEY --env production; fi
           if [ -n "$ORS_API_KEY" ]; then printf '%s' "$ORS_API_KEY" | pnpm exec wrangler secret put ORS_API_KEY --env production; fi
+      - name: Set admin secrets (optional; /admin answers 401 without them)
+        working-directory: apps/api
+        env:
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
+          SUPABASE_JWT_SECRET: ${{ secrets.SUPABASE_JWT_SECRET }}
+        run: |
+          if [ -n "$ADMIN_API_KEY" ]; then printf '%s' "$ADMIN_API_KEY" | pnpm exec wrangler secret put ADMIN_API_KEY --env production; fi
+          if [ -n "$SUPABASE_JWT_SECRET" ]; then printf '%s' "$SUPABASE_JWT_SECRET" | pnpm exec wrangler secret put SUPABASE_JWT_SECRET --env production; fi
       - name: Deploy
         working-directory: apps/api
         run: pnpm exec wrangler deploy --env production

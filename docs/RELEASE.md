@@ -59,6 +59,8 @@ unsubscribes are handled by email (see §6).
 | `API_URL` | variable | the Worker URL printed by the first API deploy (§3, step 2) |
 | `ORS_API_KEY` | secret (optional) | free OpenRouteService key (openrouteservice.org → Dashboard): walking routes and place search. Without it, "How to go there?" shows the labelled straight-line estimate. Free plan is non-commercial. |
 | `ANTHROPIC_API_KEY` | secret (optional) | Anthropic API key (console.anthropic.com): the Lunhaw guide (Claude Haiku 5.5). Needs `ORS_API_KEY` too; without both, the guide button is hidden. |
+| `ADMIN_API_KEY` | secret (optional) | long random string (e.g. `openssl rand -hex 32`) sent as `X-Admin-Key` to `/v1/admin/freshness-audit`. Without it, key access to `/admin` is off. There is no default key. |
+| `SUPABASE_JWT_SECRET` | secret (optional) | only if your Supabase project still has the **legacy JWT secret** (*Project Settings → JWT Keys*). Lets admins (`app_metadata.role` = `admin`/`moderator`) use their sign-in token on `/admin`. Projects on the newer asymmetric signing keys don't have one; use `ADMIN_API_KEY` instead. Without it, every bearer token is rejected. |
 
 Until all of these exist, the **Deploy** workflow skips itself with a warning instead of failing.
 
