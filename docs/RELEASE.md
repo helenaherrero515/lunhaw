@@ -77,7 +77,7 @@ pnpm exec wrangler secret put SUPABASE_URL --env production
 pnpm exec wrangler secret put SUPABASE_ANON_KEY --env production
 pnpm exec wrangler secret put SUPABASE_SERVICE_ROLE_KEY --env production
 pnpm exec wrangler deploy --env production        # prints https://lunhaw-api-production.<account>.workers.dev
-curl https://lunhaw-api-production.<account>.workers.dev/v1/places | head -c 300   # expect 26 places
+curl https://lunhaw-api-production.<account>.workers.dev/v1/places?per_page=100 | head -c 300   # expect "total":26 (default page size is 20)
 
 # 3. Website
 pnpm exec wrangler pages project create lunhaw --production-branch main
@@ -98,17 +98,19 @@ database → API → website → smoke test).
 
 ## 4. Launch checklist (E-MR-02)
 
-- [ ] Privacy Notice and Terms of Use (`/privacy`, `/terms`) reviewed by someone qualified in Philippine law.
-- [ ] Custom SMTP configured, and a test sign-up confirmation email received at a non-team address.
-- [ ] `curl $API_URL/v1/places` returns 26 places, none `VERIFIED` (until the worksheet is used, §5).
-- [ ] Release rehearsal (E-MR-01) on the live site, on a phone and a desktop:
-  - [ ] **UJ-001** sign up → confirm email → `/home` → Libraries → open a library → hours show *Not available yet*, the facility notice is shown → save it → it appears under *Saved*.
-  - [ ] **UJ-002** open a park → *How to go there?* → *Enter starting location* → pick *Cubao* → walking estimate shown and labelled *Estimate*; public transport says it isn't available yet.
-  - [ ] **UJ-003** deny the location prompt → you're offered manual entry; *My Location* → choose a city → only that city's places are listed.
-- [ ] Map tab shows the real map (OpenFreeMap streets, pins, ⓘ attribution) on a phone and a desktop; the locate button asks for location only when tapped.
+Signed off 2026-11-16. Rehearsal also run headless against the live site (desktop + iPhone 13 viewport) with a temporary, since-deleted test account.
+
+- [x] Privacy Notice and Terms of Use (`/privacy`, `/terms`) reviewed by someone qualified in Philippine law.
+- [x] Custom SMTP configured, and a test sign-up confirmation email received at a non-team address.
+- [x] `curl "$API_URL/v1/places?per_page=100"` returns all 26 places, none `VERIFIED` (until the worksheet is used, §5).
+- [x] Release rehearsal (E-MR-01) on the live site, on a phone and a desktop:
+  - [x] **UJ-001** sign up → confirm email → `/home` → Libraries → open a library → hours show *Not available yet*, the facility notice is shown → save it → it appears under *Saved*.
+  - [x] **UJ-002** open a park → *How to go there?* → *Enter starting location* → pick *Cubao* → walking estimate shown and labelled *Estimate*; public transport says it isn't available yet.
+  - [x] **UJ-003** deny the location prompt → you're offered manual entry; *My Location* → choose a city → only that city's places are listed.
+- [x] Map tab shows the real map (OpenFreeMap streets, pins, ⓘ attribution) on a phone and a desktop; the locate button asks for location only when tapped.
 - [ ] Footer newsletter: sign up once; the row appears in Supabase `newsletter_signups`.
-- [ ] Security headers present: `curl -I https://lunhaw.pages.dev` shows `content-security-policy` and `x-frame-options: DENY`.
-- [ ] GitHub repository visibility decided (it's private today; the site works either way).
+- [x] Security headers present: `curl -I https://lunhaw.pages.dev` shows `content-security-policy` and `x-frame-options: DENY`.
+- [x] GitHub repository visibility decided (it's private today; the site works either way).
 
 ## 5. Verifying places after launch (Estimate → Verified)
 
