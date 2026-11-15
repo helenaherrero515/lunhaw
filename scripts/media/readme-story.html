@@ -1,0 +1,281 @@
+<!doctype html>
+<!--
+  README story animation: problem → solution → impact.
+  Every frame is a pure function of time: render(t) in seconds.
+  Rendered to docs/media/lunhaw.gif by scripts/media/render-readme-gif.mjs.
+  Open in a browser with ?play to preview it live.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lunhaw story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kufam:wght@400;500;600;700&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #245C43; --lime: #98D746; --mint: #B7F9ED; --offwhite: #F7F7F0;
+    --ink: #1E293B; --muted: #64748B;
+    --ver-bg: #DCFCE7; --ver-fg: #166534;
+    --est-bg: #FEF3C7; --est-fg: #92400E;
+    --na-bg: #F1F5F9; --na-fg: #475569;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 720px; height: 405px; overflow: hidden; background: var(--offwhite); }
+  body { font-family: Kufam, system-ui, sans-serif; color: var(--ink); position: relative; }
+  .abs { position: absolute; }
+  #stage { position: absolute; inset: 0; background: var(--offwhite); }
+
+  .chip { left: 28px; top: 22px; font-size: 12px; font-weight: 700; letter-spacing: .12em;
+          padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+  .headline { left: 28px; top: 52px; width: 664px; font-size: 25px; font-weight: 700; line-height: 1.2; }
+
+  #map { left: 28px; top: 108px; width: 380px; height: 270px; border-radius: 16px; overflow: hidden;
+         box-shadow: 0 2px 10px rgba(36,92,67,.12); }
+
+  .scrap { width: 190px; padding: 9px 12px; border-radius: 10px; background: #fff; font-size: 13px;
+           line-height: 1.3; box-shadow: 0 2px 8px rgba(30,41,59,.14); color: var(--muted); }
+  .scrap b { display: block; color: var(--ink); font-size: 13px; }
+  .stat { left: 434px; top: 334px; width: 260px; font-size: 13px; color: var(--muted); line-height: 1.35; }
+  .stat b { color: var(--ink); font-size: 22px; display: block; }
+
+  #card { left: 432px; top: 108px; width: 260px; padding: 14px 16px; border-radius: 16px; background: #fff;
+          box-shadow: 0 4px 16px rgba(36,92,67,.14); }
+  #card h3 { font-size: 16px; line-height: 1.2; }
+  #card .sub { font-size: 12px; color: var(--muted); margin: 2px 0 10px; }
+  .row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding: 5px 0;
+         border-top: 1px solid #EEF0EA; }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .ver { background: var(--ver-bg); color: var(--ver-fg); }
+  .est { background: var(--est-bg); color: var(--est-fg); }
+  .na  { background: var(--na-bg);  color: var(--na-fg); }
+  .gi { display: inline-flex; gap: 6px; align-items: center; margin-top: 10px; font-size: 13px; font-weight: 700;
+        color: var(--forest); background: var(--mint); padding: 4px 10px; border-radius: 999px; }
+
+  #lunti { left: 40px; top: 112px; width: 250px; }
+  .impact { left: 300px; width: 392px; display: flex; gap: 12px; align-items: center; font-size: 15px;
+            line-height: 1.3; }
+  .impact .ic { flex: none; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+                background: var(--mint); }
+  .impact b { display: block; font-size: 16px; color: var(--forest); }
+
+  #outro { inset: 0; background: var(--forest); color: var(--offwhite); display: flex; flex-direction: column;
+           align-items: center; justify-content: center; gap: 8px; text-align: center; }
+  #outro img { width: 88px; height: 88px; border-radius: 22px; background: var(--offwhite); padding: 6px; }
+  #outro .word { font-family: MedievalSharp, serif; font-size: 44px; line-height: 1; }
+  #outro .tag { font-size: 17px; color: var(--mint); }
+  #outro .url { margin-top: 6px; font-size: 14px; font-weight: 600; background: var(--lime); color: var(--forest);
+                padding: 5px 14px; border-radius: 999px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- scene chips + headlines -->
+  <div class="abs chip" id="chip1" style="background:#E2E8F0;color:#475569">THE PROBLEM</div>
+  <div class="abs chip" id="chip2" style="background:var(--lime);color:var(--forest)">THE SOLUTION · LUNHAW</div>
+  <div class="abs chip" id="chip3" style="background:var(--mint);color:var(--forest)">THE IMPACT</div>
+  <div class="abs headline" id="h1">Metro Manila's parks and libraries are hidden in plain sight.</div>
+  <div class="abs headline" id="h2">One map of public spaces, with the facts labeled honestly.</div>
+  <div class="abs headline" id="h3">Free, green places to study and rest, closer than you think.</div>
+
+  <!-- the city map, shared by scenes 1 and 2 -->
+  <svg class="abs" id="map" viewBox="0 0 380 270">
+    <rect id="ground" width="380" height="270"/>
+    <g id="blocks"></g>
+    <path id="route" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <g id="unknowns"></g>
+    <g id="pins"></g>
+    <g id="home"></g>
+  </svg>
+
+  <!-- scene 1: scattered information -->
+  <div class="abs scrap" id="s1"><b>"Open daw Tuesdays?"</b>old Facebook comment</div>
+  <div class="abs scrap" id="s2"><b>Hours: 8–5 (2017)</b>scanned PDF notice</div>
+  <div class="abs scrap" id="s3"><b>"May library ba dito?"</b>word of mouth</div>
+  <div class="abs scrap" id="s4"><b>No pin found</b>on the usual map apps</div>
+  <div class="abs stat" id="stat"><b>17 cities</b>and no one place that lists their public parks and libraries</div>
+
+  <!-- scene 2: a place card -->
+  <div class="abs" id="card">
+    <h3>City Public Library</h3>
+    <div class="sub">Library · 650 m away</div>
+    <div class="row" id="r1"><span>Opening hours</span><span class="badge ver">✓ Verified</span></div>
+    <div class="row" id="r2"><span>Walking time</span><span class="badge est">ⓘ Estimate</span></div>
+    <div class="row" id="r3"><span>Wi-Fi</span><span class="badge na">– Not available yet</span></div>
+    <div class="gi" id="gi">🍃 Green Index · coming soon</div>
+  </div>
+
+  <!-- scene 3: impact -->
+  <img class="abs" id="lunti" src="../../apps/web/public/mascot.png" alt="">
+  <div class="abs impact" id="i1"><div class="ic">📚</div><div><b>Study for free</b>Libraries and reading centers instead of ₱150–300 café sessions</div></div>
+  <div class="abs impact" id="i2"><div class="ic">🌳</div><div><b>Walk greener</b>Walking estimates to the parks and gardens near you</div></div>
+  <div class="abs impact" id="i3"><div class="ic">✅</div><div><b>Trust what you see</b>Nothing invented: every fact is Verified, Estimate or Not available yet</div></div>
+
+  <!-- outro -->
+  <div class="abs" id="outro">
+    <img src="../../assets/logo/logo.png" alt="">
+    <div class="word">Lunhaw</div>
+    <div class="tag">Discover your space. Explore your city. Go greener.</div>
+    <div class="url">lunhaw.pages.dev</div>
+  </div>
+</div>
+
+<script>
+const DURATION = 17;
+const $ = (id) => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+const easeOut = (k) => 1 - Math.pow(1 - k, 3);
+const easeInOut = (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+const backOut = (k) => { const c = 1.7; return 1 + (c + 1) * Math.pow(k - 1, 3) + c * Math.pow(k - 1, 2); };
+/** progress of t through [start, start+dur], clamped 0..1 */
+const p = (t, start, dur) => clamp((t - start) / dur);
+const mix = (c1, c2, k) => {
+  const h = (c) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+  const a = h(c1), b = h(c2);
+  return 'rgb(' + a.map((v, i) => Math.round(lerp(v, b[i], k))).join(',') + ')';
+};
+function show(el, opacity, dx = 0, dy = 0, scale = 1) {
+  el.style.opacity = opacity;
+  el.style.visibility = opacity <= 0.001 ? 'hidden' : 'visible';
+  el.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+}
+/** fade+rise in at `a`, fade out at `b` */
+function enterExit(el, t, a, b, rise = 10) {
+  const i = easeOut(p(t, a, .45)), o = p(t, b, .35);
+  show(el, i * (1 - o), 0, (1 - i) * rise - o * 6);
+}
+
+// ---- map geometry -------------------------------------------------------
+const COLS = 5, ROWS = 4, BW = 60, BH = 52, ROAD = 14, OX = 14, OY = 14;
+const bx = (c) => OX + c * (BW + ROAD), by = (r) => OY + r * (BH + ROAD);
+const blocks = [];
+for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+  const el = document.createElementNS(NS, 'rect');
+  Object.entries({ x: bx(c), y: by(r), width: BW, height: BH, rx: 6 }).forEach(([k, v]) => el.setAttribute(k, v));
+  $('blocks').appendChild(el);
+  blocks.push({ r, c, el });
+}
+const GREEN_BLOCKS = new Set(['0,1', '2,3', '3,0', '1,4']); // parks / gardens
+// places: [col,row] of the block they sit on, icon, delay
+const PLACES = [
+  { c: 1, r: 0, icon: '🌳', d: 0.0 }, { c: 3, r: 2, icon: '📚', d: 0.15, dest: true },
+  { c: 0, r: 3, icon: '📖', d: 0.3 }, { c: 4, r: 1, icon: '🌷', d: 0.45 },
+  { c: 2, r: 1, icon: '📚', d: 0.6 }, { c: 3, r: 0, icon: '🌳', d: 0.75 },
+];
+const pin = (pl) => ({ x: bx(pl.c) + BW / 2, y: by(pl.r) + BH / 2 });
+const unknownEls = PLACES.map((pl) => {
+  const g = document.createElementNS(NS, 'g');
+  const { x, y } = pin(pl);
+  g.innerHTML = `<circle cx="${x}" cy="${y}" r="13" fill="none" stroke="#94A3B8" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="${x}" y="${y + 5}" text-anchor="middle" font-size="15" font-weight="700" fill="#94A3B8" font-family="Kufam">?</text>`;
+  $('unknowns').appendChild(g); return g;
+});
+const pinEls = PLACES.map((pl) => {
+  const g = document.createElementNS(NS, 'g');
+  const { x, y } = pin(pl);
+  const fill = pl.dest ? '#245C43' : '#FFFFFF';
+  g.innerHTML = `<g transform="translate(${x} ${y})"><g class="s">
+    <path d="M0 6 C-10 -4 -15 -10 -15 -18 A15 15 0 1 1 15 -18 C15 -10 10 -4 0 6Z" fill="${fill}" stroke="#245C43" stroke-width="2"/>
+    <text x="0" y="-12" text-anchor="middle" font-size="14">${pl.icon}</text></g></g>`;
+  $('pins').appendChild(g); return g;
+});
+// home marker + route along the roads to the destination library (block 3,2)
+const roadX = (c) => bx(c) - ROAD / 2, roadY = (r) => by(r) - ROAD / 2;
+const HOME = { x: roadX(0) + 2 + ROAD / 2 + 4, y: roadY(2) };
+$('home').innerHTML = `<g transform="translate(${bx(0) + 18} ${roadY(2)})">
+  <circle r="11" fill="#1E293B"/><text y="5" text-anchor="middle" font-size="12">🏠</text></g>`;
+const ROUTE = [[bx(0) + 18, roadY(2)], [roadX(2), roadY(2)], [roadX(2), roadY(3) ], [roadX(3), roadY(3)], [roadX(3), by(2) + BH / 2], [bx(3) + 6, by(2) + BH / 2]];
+$('route').setAttribute('d', 'M' + ROUTE.map((q) => q.join(' ')).join(' L'));
+const routeLen = $('route').getTotalLength();
+$('route').style.strokeDasharray = routeLen;
+
+// ---- scrap layout -------------------------------------------------------
+const SCRAPS = [
+  { id: 's1', x: 434, y: 110, rot: -3, at: 1.0 }, { id: 's2', x: 498, y: 164, rot: 3, at: 1.5 },
+  { id: 's3', x: 440, y: 218, rot: -2, at: 2.0 }, { id: 's4', x: 496, y: 270, rot: 4, at: 2.5 },
+];
+
+// ---- timeline -----------------------------------------------------------
+// 0.0–5.4 problem · 5.4–10.8 solution · 10.8–14.6 impact · 14.6–17 outro
+function render(t) {
+  const toSolution = easeInOut(p(t, 5.0, 0.9));
+
+  // headlines & chips
+  enterExit($('chip1'), t, 0.1, 5.0); enterExit($('h1'), t, 0.2, 5.0);
+  enterExit($('chip2'), t, 5.5, 10.6); enterExit($('h2'), t, 5.6, 10.6);
+  enterExit($('chip3'), t, 10.9, 14.5); enterExit($('h3'), t, 11.0, 14.5);
+
+  // map: grey and anonymous → off-white with green parks
+  const mapIn = easeOut(p(t, 0.3, 0.6)), mapOut = p(t, 10.4, 0.4);
+  show($('map'), mapIn * (1 - mapOut), 0, (1 - mapIn) * 12);
+  $('ground').setAttribute('fill', mix('#E5E7E2', '#F2F5EA', toSolution));
+  for (const b of blocks) {
+    const green = GREEN_BLOCKS.has(`${b.c},${b.r}`);
+    b.el.setAttribute('fill', mix('#CBD0C9', green ? '#98D746' : '#E3E8DA', toSolution));
+  }
+  unknownEls.forEach((g, i) => {
+    const a = easeOut(p(t, 0.9 + i * 0.25, 0.4)) * (1 - p(t, 5.0, 0.4));
+    const pulse = 0.55 + 0.45 * Math.sin((t - i) * 3);
+    g.style.opacity = a * pulse;
+  });
+  pinEls.forEach((g, i) => {
+    const k = p(t, 6.0 + PLACES[i].d, 0.45);
+    const s = k <= 0 ? 0 : backOut(k);
+    g.querySelector('.s').setAttribute('transform', `translate(0 ${(1 - easeOut(k)) * -14}) scale(${Math.max(0, s)})`);
+    g.style.opacity = clamp(k * 3);
+  });
+  // home + route
+  $('home').style.opacity = easeOut(p(t, 6.9, 0.3));
+  const draw = easeInOut(p(t, 7.2, 1.4));
+  const route = $('route');
+  route.setAttribute('stroke', '#245C43');
+  route.setAttribute('stroke-width', 6);
+  route.style.strokeDashoffset = routeLen * (1 - draw);
+  route.style.opacity = draw > 0 ? 1 : 0;
+
+  // scene 1 scraps & stat
+  for (const s of SCRAPS) {
+    const el = $(s.id);
+    const i = backOut(p(t, s.at, 0.5)), o = easeInOut(p(t, 4.7, 0.6));
+    el.style.left = s.x + 'px'; el.style.top = s.y + 'px';
+    // on exit, scraps get swept toward the map (where Lunhaw collects them)
+    show(el, clamp(p(t, s.at, 0.2) * 1) * (1 - o), -o * 160, (1 - clamp(i)) * 16, lerp(0.85, 1, clamp(i)) * (1 - o * 0.5));
+    el.style.transform += ` rotate(${s.rot * (1 - o)}deg)`;
+  }
+  enterExit($('stat'), t, 3.0, 4.8);
+
+  // scene 2 card
+  const cIn = easeOut(p(t, 8.3, 0.5)), cOut = p(t, 10.4, 0.35);
+  show($('card'), cIn * (1 - cOut), (1 - cIn) * 24, 0);
+  ['r1', 'r2', 'r3', 'gi'].forEach((id, i) => {
+    const k = easeOut(p(t, 8.7 + i * 0.3, 0.35));
+    show($(id), k, (1 - k) * 10, 0);
+  });
+
+  // scene 3: Lunti + impact rows
+  const lIn = easeOut(p(t, 10.9, 0.6)), lOut = p(t, 14.3, 0.3);
+  const bob = Math.sin(t * 4) * 3;
+  show($('lunti'), lIn * (1 - lOut), 0, (1 - lIn) * 40 + bob, lerp(0.9, 1, lIn));
+  ['i1', 'i2', 'i3'].forEach((id, i) => {
+    $(id).style.top = (128 + i * 82) + 'px';
+    enterExit($(id), t, 11.4 + i * 0.6, 14.3, 14);
+  });
+
+  // outro
+  const oIn = easeInOut(p(t, 14.5, 0.5)), oFade = p(t, 16.6, 0.4);
+  show($('outro'), oIn * (1 - oFade));
+  const logoK = backOut(p(t, 14.8, 0.5));
+  $('outro').querySelector('img').style.transform = `scale(${Math.max(0, logoK)})`;
+}
+window.DURATION = DURATION;
+window.render = render;
+render(0);
+if (location.search.includes('play')) {
+  const t0 = performance.now();
+  const loop = () => { render(((performance.now() - t0) / 1000) % DURATION); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>
