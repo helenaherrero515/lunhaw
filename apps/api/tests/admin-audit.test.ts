@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { app } from '../src/index.js';
-import { createTestJwt } from '../src/utils/auth.js';
+import { testApp as app } from './helpers.js';
+import { createTestJwt, TEST_ENV } from './helpers.js';
 import { DEFAULT_FRESHNESS_THRESHOLD_DAYS } from '../src/routes/admin.js';
 
 describe('Admin Freshness Audit Endpoint (A-M3-02, BR-002, T-005)', () => {
@@ -86,7 +86,7 @@ describe('Admin Freshness Audit Endpoint (A-M3-02, BR-002, T-005)', () => {
 
     it('allows access with X-Admin-Key header', async () => {
       const res = await app.request('/admin/freshness-audit', {
-        headers: { 'X-Admin-Key': 'lunhaw-admin-secret-2026' }
+        headers: { 'X-Admin-Key': TEST_ENV.ADMIN_API_KEY! }
       });
       expect(res.status).toBe(200);
       const json = await res.json<{ status: string }>();

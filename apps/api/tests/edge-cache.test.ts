@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { app } from '../src/index.js';
-import { createTestJwt } from '../src/utils/auth.js';
+import { testApp as app } from './helpers.js';
+import { createTestJwt } from './helpers.js';
 
 describe('Edge Caching & ETag Middleware (A-M3-03, INV-003, Free Tier Sizing)', () => {
   describe('Public Read Cache-Control & ETag Injection', () => {
