@@ -137,5 +137,5 @@ flowchart TD
 - ~~Production backend and database stack~~: resolved in [ADR-001](decisions/ADR-001-cloud-architecture.md) (Cloudflare + Supabase).
 - ~~Data licensing and update cadence with NCR LGUs~~: resolved in [ADR-002](decisions/ADR-002-lgu-data-licensing.md).
 - ~~Mobile framework for Phase 2~~: resolved in [ADR-003](decisions/ADR-003-mobile-framework.md) (React Native / Expo).
-- Long-term hosting and maintenance funding model: `[TBD]` (issue D-MR-02).
+- ~~Long-term hosting and maintenance funding model~~: resolved in [ADR-004](decisions/ADR-004-funding-model.md) (free tiers, no personal liability, `lunhaw.pages.dev`).
 - Whether search should work without an account again (1.0 requires an account for `/home`; see the decision ledger, 2026-11-08): `[TBD]`.
