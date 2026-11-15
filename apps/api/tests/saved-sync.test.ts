@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { app } from '../src/index.js';
+import { testApp as app } from './helpers.js';
 import { resetSavedItemsStore, type SavedItem } from '../src/routes/saved.js';
-import { createTestJwt } from '../src/utils/auth.js';
+import { createTestJwt } from './helpers.js';
 
 describe('Saved Places & Commute Routes Sync (A-M3-01, F-005, INV-003)', () => {
   beforeEach(() => {

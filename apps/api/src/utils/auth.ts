@@ -1,4 +1,6 @@
 import type { Context } from 'hono';
+import { createHmac, timingSafeEqual } from 'node:crypto';
+import { Buffer } from 'node:buffer';
 import type { Env, ProblemDetails } from '../types/index.js';
 
 export interface AuthUser {
@@ -35,54 +37,68 @@ function base64UrlDecode(str: string): string {
   return atob(base64);
 }
 
+function base64UrlEncode(buf: Buffer): string {
+  return buf.toString('base64').replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
+}
+
 /**
- * Decodes and validates a JWT token payload
+ * Signs `<header>.<payload>` with HMAC-SHA256 and returns the base64url signature.
  */
-export function decodeJwtClaims(token: string): { user: AuthUser | null; error?: string } {
+export function signHs256(signingInput: string, secret: string): string {
+  return base64UrlEncode(createHmac('sha256', secret).update(signingInput).digest());
+}
+
+/**
+ * Verifies an HS256 Supabase JWT (signature, algorithm, expiry) and extracts the user.
+ * Fails closed: without a configured secret, no token is accepted.
+ *
+ * Role is taken only from server-controlled claims (app_metadata.role, then the
+ * top-level role claim). user_metadata is writable by the user and is never trusted.
+ */
+export function verifyJwt(
+  token: string,
+  secret: string | undefined
+): { user: AuthUser | null; error?: string } {
+  if (!secret) {
+    return { user: null, error: 'NO_SECRET_CONFIGURED' };
+  }
   try {
     const parts = token.split('.');
-    const payloadPart = parts[1];
-    if (parts.length !== 3 || !payloadPart) {
+    const [headerPart, payloadPart, signaturePart] = parts;
+    if (parts.length !== 3 || !headerPart || !payloadPart || !signaturePart) {
       return { user: null, error: 'MALFORMED' };
     }
 
-    const payloadJson = base64UrlDecode(payloadPart);
-    const claims = JSON.parse(payloadJson);
-
-    // Check expiration if exp claim is present
-    if (typeof claims.exp === 'number') {
-      const nowSeconds = Math.floor(Date.now() / 1000);
-      if (claims.exp < nowSeconds) {
-        return { user: null, error: 'EXPIRED' };
-      }
+    const header = JSON.parse(base64UrlDecode(headerPart));
+    if (header?.alg !== 'HS256') {
+      return { user: null, error: 'UNSUPPORTED_ALG' };
     }
 
-    const userId = claims.sub || claims.user_id || claims.id;
+    const expected = Buffer.from(signHs256(`${headerPart}.${payloadPart}`, secret));
+    const actual = Buffer.from(signaturePart);
+    if (expected.length !== actual.length || !timingSafeEqual(expected, actual)) {
+      return { user: null, error: 'BAD_SIGNATURE' };
+    }
+
+    const claims = JSON.parse(base64UrlDecode(payloadPart));
+
+    if (typeof claims.exp !== 'number') {
+      return { user: null, error: 'MALFORMED' };
+    }
+    if (claims.exp < Math.floor(Date.now() / 1000)) {
+      return { user: null, error: 'EXPIRED' };
+    }
+
+    const userId = claims.sub;
     if (!userId || typeof userId !== 'string') {
       return { user: null, error: 'MISSING_SUBJECT' };
     }
 
-    // Role can be in top-level claims, app_metadata, or user_metadata (Supabase convention)
-    let role: unknown = claims.role;
-    if (
-      !role &&
-      claims.app_metadata &&
-      typeof claims.app_metadata === 'object' &&
-      'role' in claims.app_metadata
-    ) {
-      role = claims.app_metadata.role;
-    }
-    if (
-      !role &&
-      claims.user_metadata &&
-      typeof claims.user_metadata === 'object' &&
-      'role' in claims.user_metadata
-    ) {
-      role = claims.user_metadata.role;
-    }
-    if (!role) {
-      role = 'authenticated';
-    }
+    const appRole =
+      claims.app_metadata && typeof claims.app_metadata === 'object'
+        ? claims.app_metadata.role
+        : undefined;
+    const role = appRole || claims.role || 'authenticated';
 
     const user: AuthUser = {
       id: userId,
@@ -122,7 +138,7 @@ export function resolveAuth(c: Context<{ Bindings: Env }>): AuthContext {
       };
     }
 
-    const { user, error } = decodeJwtClaims(token);
+    const { user, error } = verifyJwt(token, c.env?.SUPABASE_JWT_SECRET);
     if (error === 'EXPIRED') {
       return {
         user: null,
@@ -165,38 +181,4 @@ export function resolveAuth(c: Context<{ Bindings: Env }>): AuthContext {
     sessionId,
     error: undefined
   };
-}
-
-/**
- * Test helper for generating mock Supabase JWT tokens for unit and integration testing
- */
-export function createTestJwt(options: {
-  sub?: string;
-  id?: string;
-  email?: string;
-  role?: string;
-  app_metadata?: Record<string, unknown>;
-  user_metadata?: Record<string, unknown>;
-  exp?: number;
-}): string {
-  const header = { alg: 'HS256', typ: 'JWT' };
-  const now = Math.floor(Date.now() / 1000);
-  const claims = {
-    sub: options.sub || options.id || 'f0000000-0000-0000-0000-000000000001',
-    email: options.email || 'user@lunhaw.ph',
-    role: options.role || 'authenticated',
-    app_metadata: options.app_metadata || { role: options.role || 'authenticated' },
-    user_metadata: options.user_metadata || {},
-    iat: now,
-    exp: options.exp !== undefined ? options.exp : now + 3600
-  };
-
-  const toB64Url = (json: string): string =>
-    btoa(json).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
-
-  const b64Header = toB64Url(JSON.stringify(header));
-  const b64Claims = toB64Url(JSON.stringify(claims));
-  const signature = 'test_signature_mock';
-
-  return `${b64Header}.${b64Claims}.${signature}`;
 }

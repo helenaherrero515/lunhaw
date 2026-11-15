@@ -1,0 +1,9 @@
+# Copy to apps/api/.dev.vars for `wrangler dev` (never commit .dev.vars).
+# Production/staging: set these with `wrangler secret put <NAME> --env production`.
+
+# Supabase Dashboard -> Project Settings -> API -> JWT Secret (legacy HS256 secret).
+# Without it the API rejects every bearer token.
+SUPABASE_JWT_SECRET=
+
+# Long random string for X-Admin-Key access to /admin/*. Leave empty to disable key access.
+ADMIN_API_KEY=
