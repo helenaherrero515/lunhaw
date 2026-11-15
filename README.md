@@ -360,7 +360,14 @@ Lunti is Lunhaw's grasshopper mascot, representing curiosity, exploration, and a
 
 ---
 
-© 2026 Lunhaw. All rights reserved.
+## License
+
+- **Code:** [MIT](LICENSE).
+- **Map data and base map:** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors (ODbL), served by [OpenFreeMap](https://openfreemap.org) / [OpenMapTiles](https://openmaptiles.org). Data derived from OpenStreetMap stays under the ODbL.
+- **Place photos** (`apps/web/public/places/`): each keeps its own Wikimedia Commons license and author, listed in [`place-photos.json`](apps/web/src/lib/place-photos.json) and credited in the app.
+- **Name, logo and mascot:** the Lunhaw name, logo and Lunti the grasshopper are not covered by the MIT license. Please don't use them for forks or other projects.
+
+Found a security problem? See [SECURITY.md](SECURITY.md).
 
 <p align="center">
   <b>Lunhaw</b><br>
