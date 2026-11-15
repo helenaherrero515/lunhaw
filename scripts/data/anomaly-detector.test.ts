@@ -6,7 +6,7 @@ import {
   detectAnomalies,
   generateAnomalyMarkdownReport,
   type DataAnomaly,
-} from "../../../../scripts/data/anomaly-detector";
+} from "./anomaly-detector";
 import type { NormalizedCivicDataset } from "../../../../scripts/data/normalize-records";
 
 describe("Geographic Anomaly Detector & Quality Pipeline (B-M3-01)", () => {
