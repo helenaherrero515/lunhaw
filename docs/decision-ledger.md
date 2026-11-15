@@ -26,7 +26,7 @@
 |---|---|---|
 | Students in NCR struggle to find free, quiet study spaces with power/Wi-Fi and often pay for commercial cafés. | The 3-tier integrity label (`Verified`, `Estimate`, `Not available yet`) builds stronger long-term user trust than speculative auto-filling. | Long-term operational data licensing and updates can be maintained across all 17 NCR LGUs without dedicated paid staff. `[TBD]` |
 | Civic and green space data in NCR is severely fragmented across unlinked municipal and barangay channels. | OpenStreetMap (OSM) and open satellite canopy data are sufficient to compute baseline Green Index and shade scores for Metro Manila. | Native mobile apps (Phase 2) are required for core user retention vs. an installable Progressive Web App (PWA). `[TBD]` |
-| Generic navigation apps omit barangay reading centers and misstate operating hours. | A platform-neutral API will cleanly support both web frontend and future native iOS/Android clients without breaking changes. | Commercial viability or public sponsorship model for sustained maintenance. `[TBD]` |
+| Generic navigation apps omit barangay reading centers and misstate operating hours. | A platform-neutral API will cleanly support both web frontend and future native iOS/Android clients without breaking changes. | Sustained-maintenance funding: resolved in [ADR-004](decisions/ADR-004-funding-model.md) (free tiers, no personal liability; sponsors via credits, civic partners or transparent donations). |
 
 ## 3. Pivots & decisions (newest first, append at top)
 
