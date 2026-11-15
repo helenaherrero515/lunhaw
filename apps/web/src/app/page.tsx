@@ -12,7 +12,7 @@ import { Footer } from "@/components/Footer";
 import { AuthDialog } from "@/components/AuthDialog";
 import { LandingVisuals } from "@/components/LandingVisuals";
 
-// Landing page — implements the "Lunhaw" landing design (Lunhaw-landingpage.html).
+// Landing page — implements the "Lunhaw" landing design (reference/Lunhaw-landingpage.html).
 export default function HomePage() {
   return (
     <>

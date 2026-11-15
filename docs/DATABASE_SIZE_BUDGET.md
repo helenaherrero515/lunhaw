@@ -364,7 +364,7 @@ REINDEX INDEX CONCURRENTLY idx_transit_stops_coordinates;
 
 #### Action 3: Archive Historical Verifications to Cloudflare R2 (Reclaims ~3–5 MB)
 
-Run `scripts/data/freshness-audit.ts` with `--archive-superseded-to-r2` flag to dump verification history older than 180 days to Cloudflare R2 cold storage, followed by `DELETE FROM verification_meta WHERE id IN (...)`.
+Not automated yet. By hand: export superseded `verification_meta` rows older than 180 days (for example `\copy (SELECT ...) TO 'verification-archive.csv' CSV HEADER`), upload the file to the `lunhaw-db-backups` R2 bucket, then `DELETE FROM verification_meta WHERE id IN (...)` for the exported rows.
 
 #### Action 4: VACUUM FULL during Maintenance Window (Reclaims up to 20 MB)
 

@@ -1,6 +1,6 @@
 // @ts-nocheck
 // Lunhaw landing page: 3D scenes (three.js) + scroll effects (GSAP/ScrollTrigger + Lenis).
-// The scene and effect code is taken from the landing design (Lunhaw-landingpage.html);
+// The scene and effect code is taken from the landing design (reference/Lunhaw-landingpage.html);
 // changes from it: r128-equivalent color/light settings on three r169, a StrictMode-safe hero intro, and
 // teardown support so the page can mount/unmount cleanly under Next.js navigation.
 
