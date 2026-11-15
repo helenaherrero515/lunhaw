@@ -159,7 +159,7 @@ stateDiagram-v2
    - Record carries a green `"Verified Official"` badge in the user interface.
    - Requires active government URL and named auditor.
 2. **Phase 2: `VERIFIED - Audit Required` (Day 181 to 360):**
-   - Flagged by `scripts/data/freshness-audit.ts` into `docs/freshness-audit-report.md`.
+   - Flagged daily by `scripts/data/freshness-audit-live.mjs` (live database, via `/v1/admin/freshness-audit`) into a GitHub issue.
    - UI displays an amber advisory: *"Verified over 6 months ago. Operating hours may vary."*
 3. **Phase 3: `ESTIMATE - Derived Fallback` (Day 181 to 360 if hours estimated):**
    - If operating hours were estimated from general municipal building hours, `status = 'ESTIMATE'` with mandatory derivation note (`chk_verification_derivation`).
@@ -204,7 +204,7 @@ Contact: data@lunhaw.ph | Lead Data Architect
 ### Negative Consequences & Mitigations
 1. **Data Attrition Risk:**
    - *Risk:* If maintainers neglect Tier B/C FOI requests, a significant portion of reading centers will downgrade from `VERIFIED` to `NOT_AVAILABLE` at Day 360.
-   - *Mitigation:* `scripts/data/freshness-audit.ts` runs automatically via GitHub Actions, giving data stewards a 180-day grace window to re-verify records before deprecation occurs.
+   - *Mitigation:* `scripts/data/freshness-audit-live.mjs` runs automatically via GitHub Actions, giving data stewards a 180-day grace window to re-verify records before deprecation occurs.
 2. **LGU FOI Response Latency:**
    - *Risk:* Government agencies under EO 2, s. 2016 have 15 working days to respond, but local LGU compliance may lag up to 45 days.
    - *Mitigation:* Audits are dispatched at Day 150 (30 days before the 180-day threshold expires).

@@ -1079,7 +1079,7 @@ $$\text{Title Format: } \mathbf{[<TRACK>-<MILESTONE>-<NN>]\ <Feature\ refs\ if\ 
 
 ## 6. Execution Roadmap & Next Steps
 
-1. **Review & Approval:** User reviews `ISSUE_PLAN.md` and provides GitHub Project details (Owner + Project Number).
+1. **Review & Approval:** User reviews `docs/ISSUE_PLAN.md` and provides GitHub Project details (Owner + Project Number).
 2. **Label & Milestone Creation:** Programmatically create all 6 milestones and 21 standard labels via GitHub CLI (`gh`).
 3. **Idempotent Issue Generation:** Check for existing issues by code (`code:<CODE>`), creating each issue with title, labels, milestone, and standardized markdown body.
 4. **Project Association:** Add all created issues to the designated GitHub Project and populate custom fields (Track, Milestone, Priority, Estimate).
