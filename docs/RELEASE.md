@@ -108,7 +108,7 @@ Signed off 2026-11-16. Rehearsal also run headless against the live site (deskto
   - [x] **UJ-002** open a park → *How to go there?* → *Enter starting location* → pick *Cubao* → walking estimate shown and labelled *Estimate*; public transport says it isn't available yet.
   - [x] **UJ-003** deny the location prompt → you're offered manual entry; *My Location* → choose a city → only that city's places are listed.
 - [x] Map tab shows the real map (OpenFreeMap streets, pins, ⓘ attribution) on a phone and a desktop; the locate button asks for location only when tapped.
-- [ ] Footer newsletter: sign up once; the row appears in Supabase `newsletter_signups`.
+- [x] Footer newsletter: sign up once; the row appears in Supabase `newsletter_signups`.
 - [x] Security headers present: `curl -I https://lunhaw.pages.dev` shows `content-security-policy` and `x-frame-options: DENY`.
 - [x] GitHub repository visibility decided (it's private today; the site works either way).
 
