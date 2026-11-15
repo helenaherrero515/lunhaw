@@ -139,3 +139,30 @@ describe('Public release: shared rate limit binding', () => {
     expect(res.headers.get('Retry-After')).toBe('60');
   });
 });
+
+describe('Public release: admin freshness audit uses the real data source', () => {
+  const ADMIN = { ENVIRONMENT: 'production', ADMIN_API_KEY: 'prod-admin-key', ...SUPABASE };
+  const asAdmin = { headers: { 'X-Admin-Key': 'prod-admin-key' } };
+
+  beforeEach(() => {
+    resetRateLimitStore();
+    resetPlacesCache();
+  });
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('audits database places in production, not fixtures', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(json([ROW])));
+    const res = await app.request('/admin/freshness-audit', asAdmin, ADMIN);
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { data: { total_facilities: number } };
+    expect(body.data.total_facilities).toBe(1);
+  });
+
+  it('returns 503 in production when the database is not configured', async () => {
+    const res = await app.request('/admin/freshness-audit', asAdmin, {
+      ENVIRONMENT: 'production',
+      ADMIN_API_KEY: 'prod-admin-key'
+    });
+    expect(res.status).toBe(503);
+  });
+});

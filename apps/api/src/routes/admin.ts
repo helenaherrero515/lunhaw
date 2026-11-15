@@ -5,6 +5,7 @@ import { timingSafeEqual } from 'node:crypto';
 import { Buffer } from 'node:buffer';
 import { resolveAuth } from '../utils/auth.js';
 import { MOCK_PLACES } from './places.js';
+import { loadPlaces } from '../data/places-source.js';
 
 export const adminRoute = new Hono<{ Bindings: Env }>();
 
@@ -160,7 +161,7 @@ function checkAdminAuth(c: Context<{ Bindings: Env }>): {
 }
 
 // GET /admin/freshness-audit (A-M3-02, BR-002, T-005)
-adminRoute.get('/freshness-audit', (c) => {
+adminRoute.get('/freshness-audit', async (c) => {
   const authCheck = checkAdminAuth(c);
   if (!authCheck.authorized && authCheck.errorResponse) {
     return authCheck.errorResponse;
@@ -180,7 +181,9 @@ adminRoute.get('/freshness-audit', (c) => {
   const refDate = refDateParam ? new Date(refDateParam) : new Date();
   const thresholdMs = thresholdDays * 24 * 60 * 60 * 1000;
 
-  let placesToAudit = MOCK_PLACES;
+  // Same source as the public API: the database in staging/production (503 if it is not configured),
+  // in-repo fixtures only in local development and tests.
+  let placesToAudit = await loadPlaces(c.env, MOCK_PLACES);
 
   if (cityFilter) {
     placesToAudit = placesToAudit.filter(
