@@ -41,7 +41,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/media/lunhaw.gif" alt="The problem: Metro Manila's parks and libraries are hidden, with information scattered across old posts, PDFs and word of mouth. The solution: Lunhaw maps them, plots a walking route and labels every fact Verified, Estimate or Not available yet. The impact: free places to study, greener walks and data you can trust." width="720">
+  <img src="docs/media/lunhaw-story.gif" alt="The problem: Metro Manila's parks and libraries are hidden, with information scattered across old posts, PDFs and word of mouth. The solution: Lunhaw maps them, plots a walking route and labels every fact Verified, Estimate or Not available yet. The impact: free places to study, greener walks and data you can trust." width="720">
 </p>
 
 <p align="center">
