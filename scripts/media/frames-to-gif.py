@@ -1,6 +1,6 @@
 """Assemble PNG frames into a looping GIF with one shared palette.
 
-    python scripts/media/frames-to-gif.py <frames-dir> docs/media/lunhaw.gif [fps]
+    python scripts/media/frames-to-gif.py <frames-dir> docs/media/lunhaw-story.gif [fps]
 """
 import sys
 from pathlib import Path

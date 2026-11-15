@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Renders scripts/media/readme-story.html frame by frame with Playwright and
-// writes PNG frames to a temp folder. Assemble them into docs/media/lunhaw.gif
+// writes PNG frames to a temp folder. Assemble them into docs/media/lunhaw-story.gif
 // with scripts/media/frames-to-gif.py.
 //
 //   node scripts/media/render-readme-gif.mjs <out-dir> [fps]
