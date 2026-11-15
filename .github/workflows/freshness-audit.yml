@@ -1,8 +1,9 @@
 name: Verification Freshness Audit (BR-002)
 
 # Scheduled daily GitHub Actions cron workflow at 01:00 UTC (D-M3-01).
-# Executes verification freshness audit (BR-002) and opens/updates a GitHub issue
-# if stale facilities exceeding 180 days are detected.
+# Audits the live database through the production API (/v1/admin/freshness-audit; needs the
+# ADMIN_API_KEY secret and the API_URL variable) and opens/updates a GitHub issue if places
+# not re-verified within 180 days are detected.
 
 on:
   schedule:
@@ -35,15 +36,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Run Freshness Audit Pipeline
         id: run_audit
         env:
           THRESHOLD_DAYS: ${{ inputs.threshold_days || '180' }}
+          API_URL: ${{ vars.API_URL }}
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
         run: |
-          echo "Running verification freshness audit with threshold: ${THRESHOLD_DAYS} days..."
-          node scripts/data/freshness-audit.ts \
+          echo "Auditing the live database (threshold: ${THRESHOLD_DAYS} days)..."
+          node scripts/data/freshness-audit-live.mjs \
             --threshold "${THRESHOLD_DAYS}" \
             --report docs/freshness-audit-report.md \
             --json docs/freshness-audit-summary.json
