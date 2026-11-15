@@ -25,7 +25,7 @@ unsubscribes are handled by email (see §6).
 ## 2. One-time setup (needs your accounts)
 
 ### 2.1 Supabase
-1. Create a project at <https://supabase.com/dashboard> (region: **Southeast Asia (Singapore)**, closest to Metro Manila).
+1. Create a project at <https://supabase.com/dashboard> (the live project `lunhaw` is in **South Asia (Mumbai), `ap-south-1`**; Singapore `ap-southeast-1` is slightly closer to Metro Manila if you ever recreate it, but moving an existing project isn't worth it).
    Save the **database password**.
 2. Note from *Project Settings → API*: the **Project URL**, the **anon** key and the **service_role** key. The
    service_role key is a secret: never put it in the website.
