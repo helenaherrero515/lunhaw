@@ -194,6 +194,14 @@ export async function createRealMap(container: HTMLElement, options: RealMapOpti
     throw err;
   }
 
+  // MapLibre opens a compact attribution expanded and only folds it after the first drag. On phones it then
+  // spans the top of the map and hides pins, so show it on load (as OSM asks) and fold it to the ⓘ shortly after.
+  if (window.matchMedia("(max-width: 720px)").matches) {
+    setTimeout(() => {
+      container.querySelector(".maplibregl-ctrl-attrib.maplibregl-compact-show")?.classList.remove("maplibregl-compact-show");
+    }, 4000);
+  }
+
   // 3D-style pins (pin-art.ts). The image has room for a ground shadow below the tip, so it is shifted down
   // by that much to keep the tip exactly on the place.
   const art = {
