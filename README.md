@@ -30,6 +30,7 @@
 
 <p align="center">
   <a href="#about">About</a> ·
+  <a href="#screenshots">Screenshots</a> ·
   <a href="#what-you-can-explore">Explore</a> ·
   <a href="#tech-stack">Tech Stack</a> ·
   <a href="#quick-start">Quick Start</a> ·
@@ -37,6 +38,14 @@
   <a href="#data-integrity">Data Integrity</a> ·
   <a href="#project-layout">Project Layout</a> ·
   <a href="#faq">FAQ</a>
+</p>
+
+<p align="center">
+  <img src="docs/media/lunhaw.gif" alt="Lunhaw in use: the signed-in home page, browsing popular places, filtering libraries, then the map of Metro Manila with a place selected" width="800">
+</p>
+
+<p align="center">
+  <b>Try it live → <a href="https://lunhaw.pages.dev">lunhaw.pages.dev</a></b>
 </p>
 
 ---
@@ -56,6 +65,26 @@ Lunhaw is built around three core ideas:
 | **Discover** | `#245C43` (Forest Green) | Find public spaces, parks, gardens, and learning destinations |
 | **Understand** | `#98D746` (Lunhaw Green) | Explore environmental insights and understand how estimates are calculated |
 | **Explore** | `#6B9B72` (Leaf Green) | Discover routes and make public spaces easier to reach |
+
+---
+
+## Screenshots
+
+### Laptop
+
+| Landing page | Home |
+| :-: | :-: |
+| <img src="docs/media/laptop-1-landing.png" alt="Landing page: Discover your space. Explore your city. Go greener." width="440"> | <img src="docs/media/laptop-2-home.png" alt="Signed-in home with 5 parks, 19 libraries and 2 gardens across Metro Manila" width="440"> |
+| **Map** | **Place details** |
+| <img src="docs/media/laptop-3-map.png" alt="Map of Metro Manila with library pins, clusters and a place list" width="440"> | <img src="docs/media/laptop-4-place.png" alt="National Library of the Philippines details, with Estimate and Not available yet labels" width="440"> |
+
+### Mobile
+
+| Landing page | Home | Map | Route options |
+| :-: | :-: | :-: | :-: |
+| <img src="docs/media/phone-1-landing.png" alt="Landing page on a phone" width="200"> | <img src="docs/media/phone-2-home.png" alt="Home on a phone" width="200"> | <img src="docs/media/phone-3-map.png" alt="Map on a phone" width="200"> | <img src="docs/media/phone-4-route.png" alt="Route options from Cubao: walking estimate, public transport not guessed" width="200"> |
+
+<sub>Captured from the real app with the live place data (26 places). Labels such as <i>Estimate</i> and <i>Not available yet</i> are shown until a person verifies each detail.</sub>
 
 ---
 
