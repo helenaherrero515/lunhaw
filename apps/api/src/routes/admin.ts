@@ -1,6 +1,8 @@
 import { Hono } from 'hono';
 import type { Context } from 'hono';
 import type { Env, ProblemDetails, VerificationStatus } from '../types/index.js';
+import { timingSafeEqual } from 'node:crypto';
+import { Buffer } from 'node:buffer';
 import { resolveAuth } from '../utils/auth.js';
 import { MOCK_PLACES } from './places.js';
 
@@ -95,10 +97,15 @@ function checkAdminAuth(c: Context<{ Bindings: Env }>): {
   errorResponse?: Response;
 } {
   // 1. Check X-Admin-Key header
+  // No fallback key: if ADMIN_API_KEY is not configured, key-based access is disabled.
   const adminKey = c.req.header('x-admin-key');
-  const envAdminKey = c.env?.ADMIN_API_KEY || 'lunhaw-admin-secret-2026';
-  if (adminKey && adminKey === envAdminKey) {
-    return { authorized: true };
+  const envAdminKey = c.env?.ADMIN_API_KEY;
+  if (adminKey && envAdminKey) {
+    const given = Buffer.from(adminKey);
+    const expected = Buffer.from(envAdminKey);
+    if (given.length === expected.length && timingSafeEqual(given, expected)) {
+      return { authorized: true };
+    }
   }
 
   // 2. Check JWT Bearer token
