@@ -77,7 +77,7 @@ pnpm exec wrangler secret put SUPABASE_URL --env production
 pnpm exec wrangler secret put SUPABASE_ANON_KEY --env production
 pnpm exec wrangler secret put SUPABASE_SERVICE_ROLE_KEY --env production
 pnpm exec wrangler deploy --env production        # prints https://lunhaw-api-production.<account>.workers.dev
-curl https://lunhaw-api-production.<account>.workers.dev/v1/places | head -c 300   # expect 26 places
+curl https://lunhaw-api-production.<account>.workers.dev/v1/places?per_page=100 | head -c 300   # expect "total":26 (default page size is 20)
 
 # 3. Website
 pnpm exec wrangler pages project create lunhaw --production-branch main
@@ -100,7 +100,7 @@ database → API → website → smoke test).
 
 - [ ] Privacy Notice and Terms of Use (`/privacy`, `/terms`) reviewed by someone qualified in Philippine law.
 - [ ] Custom SMTP configured, and a test sign-up confirmation email received at a non-team address.
-- [ ] `curl $API_URL/v1/places` returns 26 places, none `VERIFIED` (until the worksheet is used, §5).
+- [ ] `curl "$API_URL/v1/places?per_page=100"` returns all 26 places, none `VERIFIED` (until the worksheet is used, §5).
 - [ ] Release rehearsal (E-MR-01) on the live site, on a phone and a desktop:
   - [ ] **UJ-001** sign up → confirm email → `/home` → Libraries → open a library → hours show *Not available yet*, the facility notice is shown → save it → it appears under *Saved*.
   - [ ] **UJ-002** open a park → *How to go there?* → *Enter starting location* → pick *Cubao* → walking estimate shown and labelled *Estimate*; public transport says it isn't available yet.
